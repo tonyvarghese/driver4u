@@ -1,93 +1,89 @@
-{% extends 'base.html.twig' %}
 
-{% block body_id 'login' %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('build/js/login.js') }}"></script>
-{% endblock %}
+        <title>Driver4u Login</title>
 
-{% block main %}
-    {% if error %}
-        <div class="alert alert-danger">
-            {{ error.messageKey|trans(error.messageData, 'security') }}
-        </div>
-    {% endif %}
+        <!-- Bootstrap Core CSS -->
+        <link href="{{ asset('build/css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <div class="row">
-        <div class="col-sm-5">
-            <div class="well">
-                <form action="{{ path('security_login') }}" method="post">
-                    <fieldset>
-                        <legend><i class="fa fa-lock" aria-hidden="true"></i> {{ 'title.login'|trans }}</legend>
-                        <div class="form-group">
-                            <label for="username">{{ 'label.username'|trans }}</label>
-                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control"/>
+        <!-- MetisMenu CSS -->
+        <link href="{{ asset('build/css/metisMenu.min.css') }}" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="{{ asset('build/css/startmin.css') }}" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="{{ asset('build/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Please Sign In</h3>
                         </div>
-                        <div class="form-group">
-                            <label for="password">{{ 'label.password'|trans }}</label>
-                            <input type="password" id="password" name="_password" class="form-control" />
+                        <div class="panel-body">
+
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                            <form action="{{ path('security_login') }}" method="post">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Username" id="username" name="_username" value="{{ last_username }}" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Password" id="password" name="_password" type="password" value="">
+                                    </div>
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="remember" type="checkbox" value="Remember Me">Remember Me
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-lg btn-success btn-block">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i> Login
+                                    </button>
+
+                                </fieldset>
+                            </form>
                         </div>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-sign-in" aria-hidden="true"></i> {{ 'action.sign_in'|trans }}
-                        </button>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-
-        <div id="login-help" class="col-sm-7">
-            <h3>
-                <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-                {{ 'help.login_users'|trans }}
-            </h3>
-
-            <table class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">{{ 'label.username'|trans }}</th>
-                        <th scope="col">{{ 'label.password'|trans }}</th>
-                        <th scope="col">{{ 'label.role'|trans }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>john_user</td>
-                        <td>kitten</td>
-                        <td><code>ROLE_USER</code> ({{ 'help.role_user'|trans }})</td>
-                    </tr>
-                    <tr>
-                        <td>jane_admin</td>
-                        <td>kitten</td>
-                        <td><code>ROLE_ADMIN</code> ({{ 'help.role_admin'|trans }})</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div id="login-users-help" class="panel panel-default">
-                <div class="panel-body">
-                    <p>
-                        <span class="label label-success">{{ 'note'|trans }}</span>
-                        {{ 'help.reload_fixtures'|trans }}<br/>
-
-                        <code class="console">$ php bin/console doctrine:fixtures:load</code>
-                    </p>
-
-                    <p>
-                        <span class="label label-success">{{ 'tip'|trans }}</span>
-                        {{ 'help.add_user'|trans }}<br/>
-
-                        <code class="console">$ php bin/console app:add-user</code>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endblock %}
 
-{% block sidebar %}
-    {{ parent() }}
+        <!-- jQuery -->
+        <script src="{{ asset('build/js/jquery.min.js') }}"></script>
 
-    {{ show_source_code(_self) }}
-{% endblock %}
+        <!-- Bootstrap Core JavaScript -->
+        <script src="{{ asset('build/js/bootstrap.min.js') }}"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="{{ asset('build/js/metisMenu.min.js') }}"></script>
+
+        <!-- Custom Theme JavaScript -->
+        <script src="{{ asset('build/js/startmin.js') }}"></script>
+
+    </body>
+</html>

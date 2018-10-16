@@ -185,6 +185,6 @@ class BlogController extends Controller
      */
     public function showLayout()
     {
-        return $this->render('admin/base.html.twig');
+        return $this->render('admin/auth/login.html.twig');
     }    
 }

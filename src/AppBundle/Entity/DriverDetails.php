@@ -7,8 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DriverDetails
  *
- * @ORM\Table(name="driver_details")
+ * @ORM\Table(name="driver_details",indexes={@ORM\Index(name="index_uid", columns={"uid"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DriverDetailsRepository")
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class DriverDetails
 {
@@ -23,8 +25,9 @@ class DriverDetails
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="uid", type="integer", unique=true)
+     * @ORM\Column(name="uid", type="integer")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="DriverDetails")
+     * @ORM\JoinColumn(name="uid", referencedColumnName="id")
      */
     private $uid;
 
@@ -38,42 +41,42 @@ class DriverDetails
     /**
      * @var int
      *
-     * @ORM\Column(name="driver_type", type="integer")
+     * @ORM\Column(name="driver_type", type="integer", options={"comment":"1:Full Time, 2:Part Time"})
      */
     private $driverType;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="expertise", type="integer")
+     * @ORM\Column(name="expertise", type="integer", options={"comment":"1:Manual, 2:Automatic, 3:Premium"})
      */
     private $expertise;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="pcc_submitted", type="integer")
+     * @ORM\Column(name="pcc_submitted", type="integer", options={"comment":"0 for no, 1 for yes"})
      */
     private $pccSubmitted;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="document", type="integer")
+     * @ORM\Column(name="document", type="integer", nullable=true, options={"comment":"1:Driving Licence, 2:Pan Card, 3:Aadhar"})
      */
     private $document;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="doc_number", type="string", length=255)
+     * @ORM\Column(name="doc_number", type="string", length=255, unique=true, nullable=true)
      */
     private $docNumber;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="driver_assignment", type="integer")
+     * @ORM\Column(name="driver_assignment", type="integer",options={"comment":"1:Monthly, 2:On Demand"})
      */
     private $driverAssignment;
 

@@ -73,6 +73,13 @@ class User implements UserInterface, \Serializable
      */
     private $roles = [];
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint",options={"comment":"0:Inactive, 1:Active"})
+     */
+    private $status;
+
     public function getId()
     {
         return $this->id;
@@ -115,6 +122,19 @@ class User implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     public function getPassword()

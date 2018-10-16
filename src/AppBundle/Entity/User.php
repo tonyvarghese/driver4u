@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\Table(name="symfony_demo_user")
+ * @ORM\Table(name="users")
  *
  * Defines the properties of the User entity to represent the application users.
  * See https://symfony.com/doc/current/book/doctrine.html#creating-an-entity-class

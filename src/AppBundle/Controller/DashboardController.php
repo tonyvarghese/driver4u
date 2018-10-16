@@ -15,6 +15,6 @@ class DashboardController extends Controller
      */
     public function showLayout()
     {
-        return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/pages/dashboard/dashboard.html.twig');
     } 
 }

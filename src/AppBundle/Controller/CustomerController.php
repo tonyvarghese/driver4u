@@ -13,7 +13,7 @@ class CustomerController extends Controller
         /**
      * Creates a new Post entity.
      *
-     * @Route("/customer/new", name="customer_new")
+     * @Route("admin/customer/new", name="customer_new")
      * @Method({"GET", "POST"})
      *
      * NOTE: the Method annotation is optional, but it's a recommended practice

@@ -31,12 +31,13 @@ class DriverDetails
      */
     private $uid;
 
+
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="location", type="string", length=255)
+     * @ORM\Column(name="age", type="integer", length=20, nullable=true)
      */
-    private $location;
+    private $age;
 
     /**
      * @var int
@@ -76,16 +77,16 @@ class DriverDetails
     /**
      * @var int
      *
-     * @ORM\Column(name="driver_assignment", type="integer",options={"comment":"1:Monthly, 2:On Demand"})
+     * @ORM\Column(name="driver_assignment", type="integer", options={"comment":"1:Monthly, 2:On Demand"})
      */
     private $driverAssignment;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="drawback", type="text", nullable=true)
+     * @ORM\Column(name="note", type="text", nullable=true)
      */
-    private $drawback;
+    private $note;
 
 
     /**
@@ -123,29 +124,31 @@ class DriverDetails
     }
 
     /**
-     * Set location
+     * Set age
      *
-     * @param string $location
+     * @param integer $age
      *
      * @return DriverDetails
      */
-    public function setLocation($location)
+    public function setAge($age)
     {
-        $this->location = $location;
+        $this->age = $age;
 
         return $this;
     }
 
     /**
-     * Get location
+     * Get age
      *
-     * @return string
+     * @return int
      */
-    public function getLocation()
+    public function getAge()
     {
-        return $this->location;
+        return $this->age;
     }
 
+
+    
     /**
      * Set driverType
      *
@@ -291,27 +294,27 @@ class DriverDetails
     }
 
     /**
-     * Set drawback
+     * Set note
      *
-     * @param string $drawback
+     * @param string $note
      *
      * @return DriverDetails
      */
-    public function setDrawback($drawback)
+    public function setNote($note)
     {
-        $this->drawback = $drawback;
+        $this->note = $note;
 
         return $this;
     }
 
     /**
-     * Get drawback
+     * Get note
      *
      * @return string
      */
-    public function getDrawback()
+    public function getNote()
     {
-        return $this->drawback;
+        return $this->note;
     }
 }
 

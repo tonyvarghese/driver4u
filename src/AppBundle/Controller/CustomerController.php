@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use AppBundle\Entity\User;
 
 class CustomerController extends Controller
 {
@@ -22,45 +23,31 @@ class CustomerController extends Controller
      */
     public function newAction(Request $request)
     {
-        return $this->render('admin/pages/customer/new.html.twig');
         
+        $user = new User();
         
-        $post = new Post();
-        $post->setAuthor($this->getUser());
 
-        // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
-        $form = $this->createForm(PostType::class, $post)
-            ->add('saveAndCreateNew', SubmitType::class);
+        if ($request->request->has('submit')) {
 
-        $form->handleRequest($request);
-
-        // the isSubmitted() method is completely optional because the other
-        // isValid() method already checks whether the form is submitted.
-        // However, we explicitly add it to improve code readability.
-        // See https://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
-        if ($form->isSubmitted() && $form->isValid()) {
-            $post->setSlug($slugger->slugify($post->getTitle()));
-
+            $user->setFullName($request->request->get('fullname'));
+            $user->setEmail($request->request->get('email'));
+            $user->setPassword('');
+            $user->setStatus(0);
+            $user->setRoles([]);
+            
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
+            $em->persist($user);
             $em->flush();
 
             // Flash messages are used to notify the user about the result of the
             // actions. They are deleted automatically from the session as soon
             // as they are accessed.
             // See https://symfony.com/doc/current/book/controller.html#flash-messages
-            $this->addFlash('success', 'post.created_successfully');
+            $this->addFlash('success', 'Customer created_successfully');
 
-            if ($form->get('saveAndCreateNew')->isClicked()) {
-                return $this->redirectToRoute('admin_post_new');
-            }
-
-            return $this->redirectToRoute('admin_post_index');
+            return $this->redirectToRoute('customer_new');
         }
 
-        return $this->render('admin/blog/new.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('admin/pages/customer/new.html.twig');
     }
 }

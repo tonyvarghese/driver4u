@@ -76,7 +76,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint",options={"comment":"0:Inactive, 1:Active"})
+     * @ORM\Column(type="smallint",options={"default" : 0, "comment":"0:Inactive, 1:Active"})
      */
     private $status;
 

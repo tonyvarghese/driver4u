@@ -32,13 +32,6 @@ class CustomerDetails
     /**
      * @var string
      *
-     * @ORM\Column(name="location", type="string", length=255)
-     */
-    private $location;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="usual_trip", type="string", length=500)
      */
     private $usualTrip;
@@ -83,30 +76,6 @@ class CustomerDetails
     public function getUid()
     {
         return $this->uid;
-    }
-
-    /**
-     * Set location
-     *
-     * @param string $location
-     *
-     * @return customerDetails
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
-    /**
-     * Get location
-     *
-     * @return string
-     */
-    public function getLocation()
-    {
-        return $this->location;
     }
 
     /**

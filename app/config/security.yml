@@ -17,6 +17,8 @@ security:
         secured_area:
             # this firewall applies to all URLs
             pattern: ^/
+            
+            user_checker: AppBundle\Security\UserChecker
 
             # but the firewall does not require login on every page
             # denying access is done in access_control or in your controllers

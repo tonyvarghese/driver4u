@@ -49,3 +49,6 @@
 
 #Phpstorm
 /.idea/
+
+#Netbeans
+/nbproject/

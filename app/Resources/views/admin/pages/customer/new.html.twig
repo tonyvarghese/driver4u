@@ -63,8 +63,16 @@
                                     <label class="col-sm-2 col-form-label">Driver Preference</label>
                                     <div class="col-sm-10">
                                         <select name="driver" class="form-control">
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
+
+                                            <option value="">--Select--</option>
+
+                                            
+                                            {% for driver in drivers %}
+
+                                                <option value="{{ driver.id }}">{{ driver.fullName }}</option>
+
+                                            {% endfor %}
+                                            
                                         </select>
                                     </div>
                                 </div>

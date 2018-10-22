@@ -1,0 +1,64 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Driver</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                View Driver
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                {#<th scope="col">ID</th>#}
+                                <th scope="col">Full Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Phone</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for driver in drivers %}
+
+                                <tr>
+                                    {#<th scope="row">{{ driver.id }}</th>#}
+
+                                    <td>{{ driver.fullname }}</td>
+                                    <td>{{ driver.email }}</td>
+                                    <td>{{ driver.address }}</td>
+                                    <td>{{ driver.phone }}</td>
+
+                                    <td><a href="{{ absolute_url(asset('')) }}app_dev.php/drivers/{{ post.id }}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{{ absolute_url(asset('')) }}app_dev.php/update/{{ post.id }}" class="btn btn-success btn-sm">Edit</a>
+                                        <a href="{{ absolute_url(asset('')) }}app_dev.php/post/delete/{{ post.id }}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+
+
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td>No records found!</td>
+                                </tr>
+                            {% endfor %}
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+                {% endblock %}

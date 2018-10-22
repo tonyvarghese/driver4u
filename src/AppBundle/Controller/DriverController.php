@@ -2,65 +2,117 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\DriverDetails;
+use AppBundle\Entity\User;
+use AppBundle\Entity\UserAddresses;
+use AppBundle\Entity\UserContactNos;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class DriverController extends Controller
 {
+
     /**
-     * Creates a new Post entity.
-     *
-     * @Route("admin/driver/new", name="driver_new")
+     * @Route("admin/driver/newest", name="driver_newest")
      * @Method({"GET", "POST"})
-     *
-     * NOTE: the Method annotation is optional, but it's a recommended practice
-     * to constraint the HTTP methods each controller responds to (by default
-     * it responds to all methods).
      */
-    public function newAction(Request $request)
+    public function AddDriverAction(Request $request)
     {
-        return $this->render('admin/pages/driver/new.html.twig');
+
+        $user= new User();
+        if ($request->request->has('submit')) {
+            //for get the data
+            $name = $request->get('name');
+            $email = $request->get('email');
 
 
-        $post = new Post();
-        $post->setAuthor($this->getUser());
 
-        // See https://symfony.com/doc/current/book/forms.html#submitting-forms-with-multiple-buttons
-        $form = $this->createForm(PostType::class, $post)
-            ->add('saveAndCreateNew', SubmitType::class);
-
-        $form->handleRequest($request);
-
-        // the isSubmitted() method is completely optional because the other
-        // isValid() method already checks whether the form is submitted.
-        // However, we explicitly add it to improve code readability.
-        // See https://symfony.com/doc/current/best_practices/forms.html#handling-form-submits
-        if ($form->isSubmitted() && $form->isValid()) {
-            $post->setSlug($slugger->slugify($post->getTitle()));
-
+            $user->setFullName($name);
+            $user->setEmail($email);
+            $user->setPassword('');
+            $user->setStatus(0);
+            $user->setRoles([]);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
+            $em->persist($user);
             $em->flush();
 
-            // Flash messages are used to notify the user about the result of the
-            // actions. They are deleted automatically from the session as soon
-            // as they are accessed.
-            // See https://symfony.com/doc/current/book/controller.html#flash-messages
-            $this->addFlash('success', 'post.created_successfully');
+            $uid = $user->getId();
 
-            if ($form->get('saveAndCreateNew')->isClicked()) {
-                return $this->redirectToRoute('admin_post_new');
-            }
-
-            return $this->redirectToRoute('admin_post_index');
+            $this->insertDriver($request, $uid);
         }
 
-        return $this->render('admin/blog/new.html.twig', [
-            'post' => $post,
-            'form' => $form->createView(),
-        ]);
+
+
+//        //if ($request->query->has('submit'))
+//        if ($request->request->has('submit'))
+//        {
+//
+//
+//            $useraddress = new UserAddresses();
+//            if ($request->request->has('submit'))
+//            {
+//                $address = $request->get('address');
+//                $useraddress->setAddress($address);
+//                $em = $this->getDoctrine()->getManager();
+//                $em->persist($driver);
+//                $em->flush();
+//            }
+//
+//            $usercontact = new UserContactNos();
+//            if ($request->request->has('submit'))
+//            {
+//                $usercontactno = $request->get('phoneno');
+//                $usercontact->setContactNumber($usercontactno);
+//                $em = $this->getDoctrine()->getManager();
+//                $em->persist($driver);
+//                $em->flush();
+//            }
+//        }
+
+
+        return $this->render("admin/pages/driver/new.html.twig");
     }
+
+    public function insertDriver($request, $uid){
+
+        $driver = new DriverDetails();
+
+        //for get the data
+        $age = $request->get('age');
+        $drivertype= $request->get('drivertype');
+        $expertise = $request->get('expertise');
+        $pccsubmitted = $request->get('pccsubmitted');
+        $documenttype = $request->get('documenttype');
+        $documentnumber = $request->get('documentnumber');
+        $driverassignment = $request->get('driverassignment');
+        $note = $request->get('note');
+        //call the setters
+
+        $driver->setAge($age);
+        $driver->setDriverType($drivertype);
+        $driver->setExpertise($expertise);
+        $driver->setPccSubmitted($pccsubmitted);
+        $driver->setDriverType($documenttype);
+        $driver->setDocNumber($documentnumber);
+        $driver->setDriverAssignment($driverassignment);
+        $driver->setNote($note);
+        $driver->setUid($uid);
+
+
+
+
+
+        //create entity manager ,save data to table
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($driver);
+        $em->flush();
+    }
+    
+     
 }

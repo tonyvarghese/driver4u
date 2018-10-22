@@ -40,7 +40,7 @@
                                     <td>{{ driver.address }}</td>
                                     <td>{{ driver.phone }}</td>
 
-                                    <td><a href="{{ absolute_url(asset('')) }}app_dev.php/drivers/{{ driver.id }}" class="btn btn-primary btn-sm">View</a>
+                                    <td><a href="{{ path('driver_view', {id: driver.id}) }}" class="btn btn-primary btn-sm">View</a>
                                         <a href="{{ path('driver_edit', {id: driver.id}) }}" class="btn btn-success btn-sm">Edit</a>
                                         <a href="{{ absolute_url(asset('')) }}app_dev.php/post/delete/{{ driver.id }}" class="btn btn-danger btn-sm">Delete</a>
                                     </td>

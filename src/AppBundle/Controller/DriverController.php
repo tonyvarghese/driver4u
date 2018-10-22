@@ -128,4 +128,31 @@ class DriverController extends Controller
 
         return $this->render('admin/pages/driver/edit.html.twig', ['data' => $data]);
     }
+    /**
+     * @Route("admin/driver/view/{id}", name="driver_view")
+     * @Method({"GET", "POST"})
+     */
+    public function viewAction($id)
+    {
+        //$driver= $this->getDoctrine()->getRepository('AppBundle:Driver')->find($id);
+
+        $repository = $this->getDoctrine()->getRepository(Driver::class);
+        $driverObj = $repository->find($id);
+        $data['name'] = $driverObj->getFullName();
+        $data['email'] = $driverObj->getEmail();
+        $data['address'] = json_decode($driverObj->getAddress());
+        $data['phone'] = json_decode($driverObj->getPhone());
+        $data['age'] = $driverObj->getAge();
+        $data['drivertype'] = $driverObj->getDriverType();
+        $data['expertise'] = $driverObj->getExpertise();
+        $data['pcc'] = $driverObj->getPccSubmitted();
+        $data['document'] = $driverObj->getDocument();
+        $data['docnumber'] = $driverObj->getDocNumber();
+        $data['driverassignment'] = $driverObj->getDriverAssignment();
+        $data['note'] = $driverObj->getNote();
+        $data['status'] = $driverObj->getStatus();
+
+
+        return $this->render("admin/pages/driver/view.html.twig",['driver'=>$data]);
+    }
 }

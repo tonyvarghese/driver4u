@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Drivers;
+use AppBundle\Entity\Driver;
 
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,15 +17,27 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class DriverController extends Controller
 {
     /**
-     * @Route("admin/drivers", name="driver_view")
+     * @Route("admin/drivers", name="driver_index")
      * @Method({"GET", "POST"})
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $drivers = $em->getRepository(Drivers::class)->findAll();
+        $drivers = $em->getRepository(Driver::class)->findAll();
 
-        return $this->render('admin/pages/driver/index.html.twig', ['drivers' => $drivers]);
+        $data = [];
+        foreach ($drivers as $key => $value)
+        {
+            $data[$key]['id'] = $value->getId();
+            $data[$key]['fullName'] = $value->getFullName();
+            $data[$key]['email'] = $value->getEmail();
+            $data[$key]['phone'] = json_decode($value->getPhone());
+            $data[$key]['address'] = json_decode($value->getAddress());
+        }
+
+        //print_r($data); die;
+
+        return $this->render('admin/pages/driver/index.html.twig',['drivers' => $data]);
     }
     /**
      * @Route("admin/driver/new", name="driver_new")
@@ -33,35 +45,23 @@ class DriverController extends Controller
      */
     public function AddDriverAction(Request $request)
     {
-        $driver = new Drivers();
+        $driver = new Driver();
         if ($request->request->has('submit')) {
             //for get the data
-            $fullname = $request->get('name');
-            $email = $request->get('email');
-            $phone = $request->get('phone');
-            $address = $request->get('address');
-            $age = $request->get('age');
-            $drivertype = $request->get('drivertype');
-            $expertise = $request->get('expertise');
-            $pccsubmitted = $request->get('pcc');
-            $document = $request->get('document');
-            $docnumber = $request->get('docnumber');
-            $driverassignment = $request->get('driverassignment');
-            $note = $request->get('note');
 
-
-            $driver->setFullName($fullname);
-            $driver->setEmail($email);
-            $driver->setPhone($phone);
-            $driver->setAddress($address);
-            $driver->setAge($age);
-            $driver->setDriverType($drivertype);
-            $driver->setExpertise($expertise);
-            $driver->setPccSubmitted($pccsubmitted);
-            $driver->setDocument($document);
-            $driver->setDocNumber($docnumber);
-            $driver->setDriverAssignment($driverassignment);
-            $driver->setNote($note);
+            $driver->setFullName($request->request->get('name'));
+            $driver->setEmail($request->request->get('email'));
+            $driver->setAddress(json_encode($request->request->get('address')));
+            $driver->setPhone(json_encode($request->request->get('phone')));
+            $driver->setAge($request->request->get('age'));
+            $driver->setDriverType($request->request->get('drivertype'));
+            $driver->setExpertise($request->request->get('expertise'));
+            $driver->setPccSubmitted($request->request->get('pcc'));
+            $driver->setDocument($request->request->get('document'));
+            $driver->setDocNumber($request->request->get('docnumber'));
+            $driver->setDriverAssignment($request->request->get('driverassignment'));
+            $driver->setNote($request->request->get('note'));
+            $driver->setStatus(1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($driver);
@@ -72,5 +72,50 @@ class DriverController extends Controller
 
         }
         return $this->render("admin/pages/driver/new.html.twig");
+    }
+
+    /**
+     * @Route("admin/driver/edit/{id}", name="driver_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, $id)
+    {
+        $driver = new Driver();
+        if ($request->request->has('submit'))
+        {
+
+            $driver->setFullName($request->request->get('name'));
+            $driver->setEmail($request->request->get('email'));
+            $driver->setAddress(json_encode($request->request->get('address')));
+            $driver->setPhone(json_encode($request->request->get('phone')));
+            $driver->setAge($request->request->get('age'));
+            $driver->setDriverType($request->request->get('drivertype'));
+            $driver->setExpertise($request->request->get('expertise'));
+            $driver->setPccSubmitted($request->request->get('pcc'));
+            $driver->setDocument($request->request->get('document'));
+            $driver->setDocNumber($request->request->get('docnumber'));
+            $driver->setDriverAssignment($request->request->get('driverassignment'));
+            $driver->setNote($request->request->get('note'));
+            $driver->setStatus(1);
+
+            $this->addFlash('success', 'Driver Updated Successfully');
+        }
+        $repository = $this->getDoctrine()->getRepository(Driver::class);
+        $driverObj = $repository->find($id);
+        $data['name'] = $driverObj->getFullName();
+        $data['email'] = $driverObj->getEmail();
+        $data['address'] = json_decode($driverObj->getAddress());
+        $data['phone'] = json_decode($driverObj->getPhone());
+        $data['age'] = $driverObj->getAge();
+        $data['drivertype'] = $driverObj->getDriverType();
+        $data['expertise'] = $driverObj->getExpertise();
+        $data['pcc'] = $driverObj->getPccSubmitted();
+        $data['document'] = $driverObj->getDocument();
+        $data['docnumber'] = $driverObj->getDocNumber();
+        $data['driverassignment'] = $driverObj->getDriverAssignment();
+        $data['note'] = $driverObj->getNote();
+        $data['status'] = $driverObj->getStatus();
+
+            return $this->redirectToRoute('driver_index');
     }
 }

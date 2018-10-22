@@ -5,14 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Drivers
+ * Driver
  *
  * @ORM\Table(name="drivers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DriversRepository")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class Drivers
+class Driver
 {
     /**
      * @var int
@@ -111,6 +111,13 @@ class Drivers
      */
     private $note;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint",options={"default" : 0, "comment":"0:Inactive, 1:Active"})
+     */
+
+    private $status;
 
     /**
      * Get id
@@ -211,7 +218,7 @@ class Drivers
      *
      * @param integer $age
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setAge($age)
     {
@@ -236,7 +243,7 @@ class Drivers
      *
      * @param integer $driverType
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setDriverType($driverType)
     {
@@ -260,7 +267,7 @@ class Drivers
      *
      * @param integer $expertise
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setExpertise($expertise)
     {
@@ -284,7 +291,7 @@ class Drivers
      *
      * @param integer $pccSubmitted
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setPccSubmitted($pccSubmitted)
     {
@@ -308,7 +315,7 @@ class Drivers
      *
      * @param integer $document
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setDocument($document)
     {
@@ -332,7 +339,7 @@ class Drivers
      *
      * @param string $docNumber
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setDocNumber($docNumber)
     {
@@ -356,7 +363,7 @@ class Drivers
      *
      * @param integer $driverAssignment
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setDriverAssignment($driverAssignment)
     {
@@ -380,7 +387,7 @@ class Drivers
      *
      * @param string $note
      *
-     * @return Drivers
+     * @return Driver
      */
     public function setNote($note)
     {
@@ -389,6 +396,18 @@ class Drivers
         return $this;
     }
 
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
     /**
      * Get note
      *

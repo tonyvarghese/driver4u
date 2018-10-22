@@ -35,14 +35,14 @@
                                 <tr>
                                     {#<th scope="row">{{ driver.id }}</th>#}
 
-                                    <td>{{ driver.fullname }}</td>
+                                    <td>{{ driver.fullName }}</td>
                                     <td>{{ driver.email }}</td>
                                     <td>{{ driver.address }}</td>
                                     <td>{{ driver.phone }}</td>
 
-                                    <td><a href="{{ absolute_url(asset('')) }}app_dev.php/drivers/{{ post.id }}" class="btn btn-primary btn-sm">View</a>
-                                        <a href="{{ absolute_url(asset('')) }}app_dev.php/update/{{ post.id }}" class="btn btn-success btn-sm">Edit</a>
-                                        <a href="{{ absolute_url(asset('')) }}app_dev.php/post/delete/{{ post.id }}" class="btn btn-danger btn-sm">Delete</a>
+                                    <td><a href="{{ absolute_url(asset('')) }}app_dev.php/drivers/{{ driver.id }}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{{ path('driver_edit', {id: driver.id}) }}" class="btn btn-success btn-sm">Edit</a>
+                                        <a href="{{ absolute_url(asset('')) }}app_dev.php/post/delete/{{ driver.id }}" class="btn btn-danger btn-sm">Delete</a>
                                     </td>
 
 

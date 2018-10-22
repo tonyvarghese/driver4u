@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * DriverDetails
  *
- * @ORM\Table(name="driver_details",indexes={@ORM\Index(name="index_uid", columns={"uid"})})
+ * @ORM\Table(name="driver_details")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DriverDetailsRepository")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
@@ -24,12 +24,18 @@ class DriverDetails
     private $id;
 
     /**
-     * @var int
-     * @ORM\Column(name="uid", type="integer")
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="DriverDetails")
-     * @ORM\JoinColumn(name="uid", referencedColumnName="id")
+     * @var string
+     *
+     * @ORM\Column(type="string")
      */
-    private $uid;
+    private $fullName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $email;
 
 
     /**
@@ -315,6 +321,32 @@ class DriverDetails
     public function getNote()
     {
         return $this->note;
+    }
+
+    /**
+     * @param string $fullName
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 }
 

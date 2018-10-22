@@ -125,12 +125,32 @@ class CustomerController extends Controller
 //            'post' => $post,
 //            'form' => $form->createView(),
 //        ]);
-        
-        $customer = new Customer();
-        
+       
 
         if ($request->request->has('submit')) {
 
+            
+             $entityManager = $this->getDoctrine()->getManager();
+            $product = $entityManager->getRepository(Product::class)->find($id);
+
+            if (!$product) {
+                throw $this->createNotFoundException(
+                    'No product found for id '.$id
+                );
+            }
+
+            $product->setName('New product name!');
+            $entityManager->flush();
+
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $customer = $entityManager->getRepository(Customer::class)->find($id);
+            if (!$customer) {
+                throw $this->createNotFoundException(
+                    'No customer found for id '.$id
+                );
+            }
+            
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
             $customer->setAddress(json_encode($request->request->get('address')));
@@ -139,9 +159,7 @@ class CustomerController extends Controller
             $customer->setUsualTrip($request->request->get('usualTrip'));
             $customer->setPreferredDriver($request->request->get('driver'));
             
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($customer);
-            $em->flush();
+            $entityManager->flush();
         
             // Flash messages are used to notify the user about the result of the
             // actions. They are deleted automatically from the session as soon

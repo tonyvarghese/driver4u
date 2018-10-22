@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\customer_detailsRepository")
  *
  */
-class Customers
+class Customer
 {
     /**
      * @var int
@@ -25,9 +25,9 @@ class Customers
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="full_name", type="string", length=500)
      */
-    private $full_name;
+    private $fullName;
 
     /**
      * @var string
@@ -64,7 +64,13 @@ class Customers
      */
     private $preferredDriver;
 
-
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="smallint",options={"default" : 0, "comment":"0:Inactive, 1:Active"})
+     */
+    private $status;
+    
     /**
      * Get id
      *
@@ -202,5 +208,19 @@ class Customers
     {
         return $this->preferredDriver;
     }
+    
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }    
 }
 

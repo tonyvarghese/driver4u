@@ -84,6 +84,14 @@ class DriverController extends Controller
         if ($request->request->has('submit'))
         {
 
+            $entityManager = $this->getDoctrine()->getManager();
+            $driver = $entityManager->getRepository(Driver::class)->find($id);
+            if (!$driver) {
+                throw $this->createNotFoundException(
+                    'No customer found for id '.$id
+                );
+            }
+
             $driver->setFullName($request->request->get('name'));
             $driver->setEmail($request->request->get('email'));
             $driver->setAddress(json_encode($request->request->get('address')));
@@ -99,6 +107,8 @@ class DriverController extends Controller
             $driver->setStatus(1);
 
             $this->addFlash('success', 'Driver Updated Successfully');
+            $entityManager->flush();
+            return $this->redirectToRoute('driver_edit', ['id' => $id]);
         }
         $repository = $this->getDoctrine()->getRepository(Driver::class);
         $driverObj = $repository->find($id);

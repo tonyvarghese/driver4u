@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * customerDetails
  *
- * @ORM\Table(name="customer_details")
+ * @ORM\Table(name="customers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\customer_detailsRepository")
  *
  */
-class CustomerDetails
+class Customers
 {
     /**
      * @var int
@@ -23,12 +23,33 @@ class CustomerDetails
     private $id;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="uid", type="integer")
+     * @ORM\Column(type="string")
      */
-    private $uid;
+    private $full_name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $phone;
+    
     /**
      * @var string
      *
@@ -54,6 +75,62 @@ class CustomerDetails
         return $this->id;
     }
 
+
+    /**
+     * @param string $fullName
+     */
+    public function setFullName($fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    public function getFullName()
+    {
+        return $this->fullName;
+    }
+    
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    
+
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+    
+
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param string $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }    
+    
     /**
      * Set uid
      *

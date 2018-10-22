@@ -40,25 +40,25 @@ class UserFixtures extends AbstractFixture implements ContainerAwareInterface
     {
         $passwordEncoder = $this->container->get('security.password_encoder');
 
-        $janeAdmin = new User();
-        $janeAdmin->setFullName('Jane Doe');
-        $janeAdmin->setUsername('jane_admin');
-        $janeAdmin->setEmail('jane_admin@symfony.com');
-        $janeAdmin->setRoles(['ROLE_ADMIN']);
-        $janeAdmin->setStatus(1);
-        $encodedPassword = $passwordEncoder->encodePassword($janeAdmin, 'kitten');
-        $janeAdmin->setPassword($encodedPassword);
-        $manager->persist($janeAdmin);
+        $admin = new User();
+        $admin->setFullName('Admin');
+        $admin->setUsername('admin');
+        $admin->setEmail('admin@gmail.com');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setStatus(1);
+        $encodedPassword = $passwordEncoder->encodePassword($admin, 'kitten');
+        $admin->setPassword($encodedPassword);
+        $manager->persist($admin);
         // In case if fixture objects have relations to other fixtures, adds a reference
         // to that object by name and later reference it to form a relation.
         // See https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html#sharing-objects-between-fixtures
-        $this->addReference('jane-admin', $janeAdmin);
+        $this->addReference('admin', $admin);
 
         $tomAdmin = new User();
         $tomAdmin->setFullName('Tom Doe');
         $tomAdmin->setUsername('tom_admin');
         $tomAdmin->setEmail('tom_admin@symfony.com');
-        $tomAdmin->setRoles(['ROLE_ADMIN']);
+        $tomAdmin->setRoles([]);
         $tomAdmin->setStatus(1);
         $encodedPassword = $passwordEncoder->encodePassword($tomAdmin, 'kitten');
         $tomAdmin->setPassword($encodedPassword);

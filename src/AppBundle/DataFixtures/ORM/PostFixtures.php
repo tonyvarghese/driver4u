@@ -55,7 +55,7 @@ class PostFixtures extends AbstractFixture implements DependentFixtureInterface,
             // "References" are the way to share objects between fixtures defined
             // in different files. This reference has been added in the UserFixtures
             // file and it contains an instance of the User entity.
-            $post->setAuthor(0 === $i ? $this->getReference('jane-admin') : $this->getRandomUser());
+            $post->setAuthor(0 === $i ? $this->getReference('admin') : $this->getRandomUser());
 
             // for aesthetic reasons, the first blog post always has 2 tags
             foreach ($this->getRandomTags($i > 0 ? mt_rand(0, 3) : 2) as $tag) {
@@ -97,7 +97,7 @@ class PostFixtures extends AbstractFixture implements DependentFixtureInterface,
 
     private function getRandomUser()
     {
-        $admins = ['jane-admin', 'tom-admin'];
+        $admins = ['admin', 'tom-admin'];
         $index = array_rand($admins);
 
         return $this->getReference($admins[$index]);

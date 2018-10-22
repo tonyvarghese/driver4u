@@ -1,0 +1,73 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Customers</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Customers
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <table class="table table-striped table-middle-aligned">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col"></i> Email</th>
+                                        <th scope="col" class=""> Phone</th>
+                                        <th scope="col" class=""> Address</th>
+                                        <th scope="col" class=""> Usual Trip</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for customer in customers %}
+                                        <tr>
+                                            <td>{{ customer.fullName }}</td>
+                                            <td>{{ customer.email }}</td>
+                                            <td>{{ customer.phone }}</td>
+                                            <td>{{ customer.address }}</td>
+                                            <td>{{ customer.usualTrip }}</td>
+                                            
+                                            <td class="text-right">
+                                                <div class="item-actions">
+                                                    <a href="{{ path('customer_edit', {id: customer.id}) }}" class="btn btn-sm btn-default">
+                                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                                    </a>
+
+                                                    <a href="{{ path('customer_new', {id: customer.id}) }}" class="btn btn-sm btn-primary">
+                                                        <i class="fa fa-delete" aria-hidden="true"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="6" align="center">No Customers Found</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+{% endblock %}

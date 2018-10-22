@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Customer;
+use AppBundle\Entity\Driver;
 
 
 class CustomerController extends Controller
@@ -80,23 +81,26 @@ class CustomerController extends Controller
         }
         
 
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
+//        $em = $this->getDoctrine()->getManager();
+//        $qb = $em->createQueryBuilder();
 
         // this returns an array 
-        $drivers = $qb->select(array('u.id', 'u.fullName'))
-            ->from('AppBundle:DriverDetails', 'd')
-            ->join('AppBundle:User', 'u')
-            ->where('d.uid = u.id')
-            //->andWhere('e.user = :userName')
-//            ->setParameter('userName', 'scott')
-            ->andWhere('u.roles like :roles') 
-            ->setParameter('roles',  '%ROLE_DRIVER%')                
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();    
-        
-  
+//        $drivers = $qb->select(array('u.id', 'u.fullName'))
+//            ->from('AppBundle:DriverDetails', 'd')
+//            ->join('AppBundle:User', 'u')
+//            ->where('d.uid = u.id')
+//            //->andWhere('e.user = :userName')
+////            ->setParameter('userName', 'scott')
+//            ->andWhere('u.roles like :roles')
+//            ->setParameter('roles',  '%ROLE_DRIVER%')
+//            ->orderBy('u.id', 'ASC')
+//            ->getQuery()
+//            ->getResult();
+
+        $em = $this->getDoctrine()->getManager();
+        $drivers = $em->getRepository(Driver::class)->findAll();
+
+
         return $this->render('admin/pages/customer/new.html.twig', ['drivers' => $drivers]);
     }
     
@@ -162,22 +166,25 @@ class CustomerController extends Controller
         $data['preferredDriver'] = $customerObj->getPreferredDriver();
         
         
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
+//        $em = $this->getDoctrine()->getManager();
+//        $qb = $em->createQueryBuilder();
+//
+//        // this returns an array
+//        $drivers = $qb->select(array('u.id', 'u.fullName'))
+//            ->from('AppBundle:DriverDetails', 'd')
+//            ->join('AppBundle:User', 'u')
+//            ->where('d.uid = u.id')
+//            //->andWhere('e.user = :userName')
+////            ->setParameter('userName', 'scott')
+//            ->andWhere('u.roles like :roles')
+//            ->setParameter('roles',  '%ROLE_DRIVER%')
+//            ->orderBy('u.id', 'ASC')
+//            ->getQuery()
+//            ->getResult();
 
-        // this returns an array 
-        $drivers = $qb->select(array('u.id', 'u.fullName'))
-            ->from('AppBundle:DriverDetails', 'd')
-            ->join('AppBundle:User', 'u')
-            ->where('d.uid = u.id')
-            //->andWhere('e.user = :userName')
-//            ->setParameter('userName', 'scott')
-            ->andWhere('u.roles like :roles') 
-            ->setParameter('roles',  '%ROLE_DRIVER%')                
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();    
-        
+        $em = $this->getDoctrine()->getManager();
+        $drivers = $em->getRepository(Driver::class)->findAll();
+
         return $this->render('admin/pages/customer/edit.html.twig', ['drivers' => $drivers, 'data' => $data]);
         
     }    

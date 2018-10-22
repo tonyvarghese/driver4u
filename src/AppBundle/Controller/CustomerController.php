@@ -132,20 +132,6 @@ class CustomerController extends Controller
        
 
         if ($request->request->has('submit')) {
-
-            
-             $entityManager = $this->getDoctrine()->getManager();
-            $product = $entityManager->getRepository(Product::class)->find($id);
-
-            if (!$product) {
-                throw $this->createNotFoundException(
-                    'No product found for id '.$id
-                );
-            }
-
-            $product->setName('New product name!');
-            $entityManager->flush();
-
             
             $entityManager = $this->getDoctrine()->getManager();
             $customer = $entityManager->getRepository(Customer::class)->find($id);
@@ -169,9 +155,9 @@ class CustomerController extends Controller
             // actions. They are deleted automatically from the session as soon
             // as they are accessed.
             // See https://symfony.com/doc/current/book/controller.html#flash-messages
-            $this->addFlash('success', 'Customer created_successfully');
+            $this->addFlash('success', 'Customer updated successfully');
 
-            return $this->redirectToRoute('customer_new');
+            return $this->redirectToRoute('customer_edit', ['id' => $id]);
         }
         
         $repository = $this->getDoctrine()->getRepository(Customer::class);

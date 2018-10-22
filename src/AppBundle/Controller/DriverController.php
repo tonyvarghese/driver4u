@@ -116,6 +116,6 @@ class DriverController extends Controller
         $data['note'] = $driverObj->getNote();
         $data['status'] = $driverObj->getStatus();
 
-            return $this->redirectToRoute('driver_index');
+        return $this->render('admin/pages/driver/edit.html.twig', ['data' => $data]);
     }
 }

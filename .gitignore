@@ -47,8 +47,8 @@
 # Embedded web-server pid file
 /.web-server-pid
 
-#Phpstorm
+# Phpstorm
 /.idea/
 
-#Netbeans
+# Netbeans
 /nbproject/

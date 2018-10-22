@@ -19,7 +19,7 @@ class DriverController extends Controller
 {
 
     /**
-     * @Route("admin/driver/newest", name="driver_newest")
+     * @Route("admin/driver/new", name="driver_new")
      * @Method({"GET", "POST"})
      */
     public function AddDriverAction(Request $request)
@@ -84,14 +84,17 @@ class DriverController extends Controller
         $driver = new DriverDetails();
 
         //for get the data
+
+
         $age = $request->get('age');
         $drivertype= $request->get('drivertype');
         $expertise = $request->get('expertise');
         $pccsubmitted = $request->get('pccsubmitted');
         $documenttype = $request->get('documenttype');
-        $documentnumber = $request->get('documentnumber');
+        $docnumber = $request->get('docnumber');
         $driverassignment = $request->get('driverassignment');
         $note = $request->get('note');
+
         //call the setters
 
         $driver->setAge($age);
@@ -99,13 +102,10 @@ class DriverController extends Controller
         $driver->setExpertise($expertise);
         $driver->setPccSubmitted($pccsubmitted);
         $driver->setDriverType($documenttype);
-        $driver->setDocNumber($documentnumber);
+        $driver->setDocNumber($docnumber);
         $driver->setDriverAssignment($driverassignment);
         $driver->setNote($note);
         $driver->setUid($uid);
-
-
-
 
 
         //create entity manager ,save data to table

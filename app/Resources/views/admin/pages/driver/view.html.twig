@@ -1,0 +1,43 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Driver</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<div class="row">
+    <div class="col-lg-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Add Driver
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-10">
+
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action active"></a>
+
+                            <p class="list-group-item list-group-item-action">Name: {{ driver.name }}
+                            </p>
+                            <p class="list-group-item list-group-item-action disabled">{{ driver.email }}
+                            </p>
+                            <p class="list-group-item list-group-item-action disabled">{{ driver.address }}
+                            </p>
+                            <p class="list-group-item list-group-item-action disabled">{{ driver.phone }}
+                            </p>
+                            <p class="list-group-item"><a href="{{ path('driver_index')}}" class="btn btn-primary btn-sm">Back</a>
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                {% endblock %}

@@ -2,10 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\DriverDetails;
-use AppBundle\Entity\User;
-use AppBundle\Entity\UserAddresses;
-use AppBundle\Entity\UserContactNos;
+use AppBundle\Entity\Drivers;
+
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,102 +16,61 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class DriverController extends Controller
 {
+    /**
+     * @Route("admin/drivers", name="driver_view")
+     * @Method({"GET", "POST"})
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $drivers = $em->getRepository(Drivers::class)->findAll();
 
+        return $this->render('admin/pages/driver/index.html.twig', ['drivers' => $drivers]);
+    }
     /**
      * @Route("admin/driver/new", name="driver_new")
      * @Method({"GET", "POST"})
      */
     public function AddDriverAction(Request $request)
     {
-
-        $user= new User();
+        $driver = new Drivers();
         if ($request->request->has('submit')) {
             //for get the data
-            $name = $request->get('name');
+            $fullname = $request->get('name');
             $email = $request->get('email');
+            $phone = $request->get('phone');
+            $address = $request->get('address');
+            $age = $request->get('age');
+            $drivertype = $request->get('drivertype');
+            $expertise = $request->get('expertise');
+            $pccsubmitted = $request->get('pcc');
+            $document = $request->get('document');
+            $docnumber = $request->get('docnumber');
+            $driverassignment = $request->get('driverassignment');
+            $note = $request->get('note');
 
 
+            $driver->setFullName($fullname);
+            $driver->setEmail($email);
+            $driver->setPhone($phone);
+            $driver->setAddress($address);
+            $driver->setAge($age);
+            $driver->setDriverType($drivertype);
+            $driver->setExpertise($expertise);
+            $driver->setPccSubmitted($pccsubmitted);
+            $driver->setDocument($document);
+            $driver->setDocNumber($docnumber);
+            $driver->setDriverAssignment($driverassignment);
+            $driver->setNote($note);
 
-            $user->setFullName($name);
-            $user->setEmail($email);
-            $user->setPassword('');
-            $user->setStatus(0);
-            $user->setRoles([]);
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            $em->persist($driver);
             $em->flush();
 
-            $uid = $user->getId();
+            $this->addFlash('success', 'Driver created Successfully');
+            return $this->redirectToRoute('driver_new');
 
-            $this->insertDriver($request, $uid);
         }
-
-
-
-//        //if ($request->query->has('submit'))
-//        if ($request->request->has('submit'))
-//        {
-//
-//
-//            $useraddress = new UserAddresses();
-//            if ($request->request->has('submit'))
-//            {
-//                $address = $request->get('address');
-//                $useraddress->setAddress($address);
-//                $em = $this->getDoctrine()->getManager();
-//                $em->persist($driver);
-//                $em->flush();
-//            }
-//
-//            $usercontact = new UserContactNos();
-//            if ($request->request->has('submit'))
-//            {
-//                $usercontactno = $request->get('phoneno');
-//                $usercontact->setContactNumber($usercontactno);
-//                $em = $this->getDoctrine()->getManager();
-//                $em->persist($driver);
-//                $em->flush();
-//            }
-//        }
-
-
         return $this->render("admin/pages/driver/new.html.twig");
     }
-
-    public function insertDriver($request, $uid){
-
-        $driver = new DriverDetails();
-
-        //for get the data
-
-
-        $age = $request->get('age');
-        $drivertype= $request->get('drivertype');
-        $expertise = $request->get('expertise');
-        $pccsubmitted = $request->get('pccsubmitted');
-        $documenttype = $request->get('documenttype');
-        $docnumber = $request->get('docnumber');
-        $driverassignment = $request->get('driverassignment');
-        $note = $request->get('note');
-
-        //call the setters
-
-        $driver->setAge($age);
-        $driver->setDriverType($drivertype);
-        $driver->setExpertise($expertise);
-        $driver->setPccSubmitted($pccsubmitted);
-        $driver->setDriverType($documenttype);
-        $driver->setDocNumber($docnumber);
-        $driver->setDriverAssignment($driverassignment);
-        $driver->setNote($note);
-        $driver->setUid($uid);
-
-
-        //create entity manager ,save data to table
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($driver);
-        $em->flush();
-    }
-    
-     
 }

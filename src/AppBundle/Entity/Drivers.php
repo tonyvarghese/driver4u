@@ -5,14 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * DriverDetails
+ * Drivers
  *
- * @ORM\Table(name="driver_details")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\DriverDetailsRepository")
+ * @ORM\Table(name="drivers")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\DriversRepository")
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class DriverDetails
+class Drivers
 {
     /**
      * @var int
@@ -26,16 +26,31 @@ class DriverDetails
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="full_name", type="string", length=500)
      */
     private $fullName;
 
     /**
      * @var string
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(name="email", type="string")
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=500)
+     */
+    private $address;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255)
+     */
+    private $phone;
 
 
     /**
@@ -43,6 +58,8 @@ class DriverDetails
      *
      * @ORM\Column(name="age", type="integer", length=20, nullable=true)
      */
+
+
     private $age;
 
     /**
@@ -90,7 +107,7 @@ class DriverDetails
     /**
      * @var string
      *
-     * @ORM\Column(name="note", type="text", nullable=true)
+     * @ORM\Column(name="note", type="text", nullable = true)
      */
     private $note;
 
@@ -106,35 +123,95 @@ class DriverDetails
     }
 
     /**
-     * Set uid
-     *
-     * @param integer $uid
-     *
-     * @return DriverDetails
+     * @param string $fullname
      */
-    public function setUid($uid)
+    public function setFullName($fullname)
     {
-        $this->uid = $uid;
-
+        $this->fullName = $fullname;
         return $this;
+
+    }
+
+    public function getFullName()
+    {
+        return $this->fullName;
     }
 
     /**
-     * Get uid
+     * Set email
      *
-     * @return int
+     * @param string $email
+     *
+     * @return string
      */
-    public function getUid()
+    public function setEmail($email)
     {
-        return $this->uid;
+        $this->email = $email;
+        return $this;
     }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return string
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return string
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
 
     /**
      * Set age
      *
      * @param integer $age
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setAge($age)
     {
@@ -154,13 +231,12 @@ class DriverDetails
     }
 
 
-    
     /**
      * Set driverType
      *
      * @param integer $driverType
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setDriverType($driverType)
     {
@@ -184,7 +260,7 @@ class DriverDetails
      *
      * @param integer $expertise
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setExpertise($expertise)
     {
@@ -208,7 +284,7 @@ class DriverDetails
      *
      * @param integer $pccSubmitted
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setPccSubmitted($pccSubmitted)
     {
@@ -232,7 +308,7 @@ class DriverDetails
      *
      * @param integer $document
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setDocument($document)
     {
@@ -256,7 +332,7 @@ class DriverDetails
      *
      * @param string $docNumber
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setDocNumber($docNumber)
     {
@@ -280,7 +356,7 @@ class DriverDetails
      *
      * @param integer $driverAssignment
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setDriverAssignment($driverAssignment)
     {
@@ -304,7 +380,7 @@ class DriverDetails
      *
      * @param string $note
      *
-     * @return DriverDetails
+     * @return Drivers
      */
     public function setNote($note)
     {
@@ -323,30 +399,5 @@ class DriverDetails
         return $this->note;
     }
 
-    /**
-     * @param string $fullName
-     */
-    public function setFullName($fullName)
-    {
-        $this->fullName = $fullName;
-    }
-
-    public function getFullName()
-    {
-        return $this->fullName;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
 }
 

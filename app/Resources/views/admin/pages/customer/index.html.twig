@@ -16,6 +16,16 @@
                     Customers
                 </div>
                 <div class="panel-body">
+                    
+
+                                {% for flashMessage in app.session.flashbag.get('success') %}    
+
+                                    <div class="alert alert-success" role="alert">
+                                        {{ flashMessage }}
+                                    </div>    
+
+                                {% endfor %}
+                                
                     <div class="row">
                         <div class="col-lg-6">
                             <table class="table table-striped table-middle-aligned">
@@ -44,9 +54,9 @@
                                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                                     </a>
 
-                                                    <a href="{{ path('customer_new', {id: customer.id}) }}" class="btn btn-sm btn-primary">
+                                                    <button data-url="{{ path('customer_delete', {id: customer.id}) }}" id="delete-button" class="btn btn-sm btn-primary">
                                                         <i class="fa fa-delete" aria-hidden="true"></i> Delete
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -69,5 +79,32 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        
+$(document).ready(function(){
+    
+$("body").on('click', '#delete-button', function() {
+        if(confirm("Are you sure you want to delete this?")){
+            
+            var url = $(this).data('url');  
+            
+            location.href = url;
+            // window.location = "www.example.com/index.php?id=" + this.id;
+        }
+        else{
+            return false;
+        }
+});
+
+});
+
+
+    </script>
 
 {% endblock %}

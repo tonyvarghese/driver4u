@@ -191,6 +191,25 @@ class CustomerController extends Controller
 
         return $this->render('admin/pages/customer/edit.html.twig', ['drivers' => $drivers, 'data' => $data]);
         
+    }   
+    
+ /**
+     * Deletes a Customer entity.
+     *
+     * @Route("/admin/customer/delete/{id}", name="customer_delete")
+     * @Method("GET")
+     *
+     */
+    public function deleteAction(Request $request, Customer $customer)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($customer);
+        $em->flush();
+
+        $this->addFlash('success', 'Customer Deleted successfully');
+
+        return $this->redirectToRoute('customer_index');
     }    
  
 }

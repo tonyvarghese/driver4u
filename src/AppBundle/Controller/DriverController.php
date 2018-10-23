@@ -155,4 +155,20 @@ class DriverController extends Controller
 
         return $this->render("admin/pages/driver/view.html.twig",['driver'=>$data]);
     }
+
+    /**
+     * @Route("admin/driver/delete/{id}", name="driver_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $driver = $em->getRepository('AppBundle:Post')->find($id);
+        $em->remove($driver);
+        $em->flush();
+        //display the message
+        $this->addFlash('message','Post Deleted Successfully');
+        return $this->redirectToRoute('driver_index');
+    }
+
 }

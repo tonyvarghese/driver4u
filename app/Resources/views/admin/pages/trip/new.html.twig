@@ -1,0 +1,99 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Trips</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Add Trip
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form method="post">
+
+                                {% for flashMessage in app.session.flashbag.get('success') %}    
+
+                                    <div class="alert alert-success" role="alert">
+                                        {{ flashMessage }}
+                                    </div>    
+
+                                {% endfor %}
+
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 col-form-label">Full Name</label>
+                                    <div class="col-sm-10">
+                                        <input name="fullname" type="text" class="form-control" id="inputEmail3" placeholder="Full Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputPassword3" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input name="email" type="email" class="form-control" id="inputPassword3" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Phone</label>
+                                    <div class="col-sm-10">
+                                        <input name="phone" type="number" class="form-control" placeholder="Phone">
+                                    </div>
+                                </div>   
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Address</label>
+                                    <div class="col-sm-10">
+                                        <textarea name="address" placeholder="Address" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    </div>
+                                </div>     
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Usual Trip</label>
+                                    <div class="col-sm-10">
+                                        <input name="usualTrip" type="text" class="form-control" placeholder="Usual Trip">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Driver Preference</label>
+                                    <div class="col-sm-10">
+                                        <select name="driver" class="form-control">
+
+                                            <option value="">--Select--</option>
+
+                                            
+                                            {% for driver in drivers %}
+
+                                                <option value="{{ driver.id }}">{{ driver.fullName }}</option>
+
+                                            {% endfor %}
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button name="submit" type="submit" class="btn btn-primary">Create</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+{% endblock %}

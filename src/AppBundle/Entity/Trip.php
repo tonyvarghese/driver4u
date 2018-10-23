@@ -48,7 +48,7 @@ class Trip
      *
      * @ORM\Column(name="scheduled_time", type="datetime")
      */
-    private $tripTime;
+    private $scheduledTime;
 
     /**
      * @var int
@@ -75,7 +75,7 @@ class Trip
     /**
      * @var string
      *
-     * @ORM\Column(name="feedback", type="text")
+     * @ORM\Column(name="feedback", type="text", nullable=true)
      */
     private $feedback;
     
@@ -176,7 +176,7 @@ class Trip
     }
 
     /**
-     * Set tripTime
+     * Set scheduledTime
      *
      * @param \DateTime $scheduledTime
      *

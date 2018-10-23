@@ -28,30 +28,35 @@ class TripController extends Controller
      */
     public function newAction(Request $request)
     {        
-        $customer = new Trip();
+        $trip = new Trip();
         
-
         if ($request->request->has('submit')) {
+            
+            $scheduledTime = new \DateTime($request->request->get('stime'));
+            //var_dump($scheduledTime); die;
 
-            $customer->setFullName($request->request->get('fullname'));
-            $customer->setEmail($request->request->get('email'));
-            $customer->setAddress(json_encode($request->request->get('address')));
-            $customer->setPhone(json_encode($request->request->get('phone')));
-            $customer->setStatus(1);
-            $customer->setUsualTrip($request->request->get('usualTrip'));
-            $customer->setPreferredDriver($request->request->get('driver'));
+            $trip->setCustomerId($request->request->get('customer'));
+            $trip->setDriverId($request->request->get('driver'));
+            $trip->setVehicleId($request->request->get('vehicle'));
+            $trip->setScheduledTime($scheduledTime);
+            $trip->setStatus(1);
+            $trip->setRate($request->request->get('rate'));
+            $trip->setDiscount($request->request->get('discount'));
+            $trip->setAmountCollected(0);
+            $trip->setCreatedAt(new \DateTime("now"));
+            $trip->setUpdatedAt(new \DateTime("now"));
             
             $em = $this->getDoctrine()->getManager();
-            $em->persist($customer);
+            $em->persist($trip);
             $em->flush();
         
             // Flash messages are used to notify the user about the result of the
             // actions. They are deleted automatically from the session as soon
             // as they are accessed.
             // See https://symfony.com/doc/current/book/controller.html#flash-messages
-            $this->addFlash('success', 'Customer created_successfully');
+            $this->addFlash('success', 'Trip Added Successfully');
 
-            return $this->redirectToRoute('customer_new');
+            return $this->redirectToRoute('trip_new');
         }
         
 

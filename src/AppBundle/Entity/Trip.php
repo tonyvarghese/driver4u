@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="trips",indexes={@ORM\Index(name="index_cust_id", columns={"customer_id"}), @ORM\Index(name="index_driver_id", columns={"driver_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TripScheduleRepository")
  */
-class Trips
+class Trip
 {
     /**
      * @var int

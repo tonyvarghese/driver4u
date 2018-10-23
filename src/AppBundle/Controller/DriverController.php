@@ -58,6 +58,7 @@ class DriverController extends Controller
             $driver->setExpertise($request->request->get('expertise'));
             $driver->setPccSubmitted($request->request->get('pcc'));
             $driver->setDocument($request->request->get('document'));
+            if ($request->request->get('docnumber') != '')
             $driver->setDocNumber($request->request->get('docnumber'));
             $driver->setDriverAssignment($request->request->get('driverassignment'));
             $driver->setNote($request->request->get('note'));

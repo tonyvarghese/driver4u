@@ -24,16 +24,29 @@ class Leads
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="fullname", type="string", length=255)
      */
-    private $name;
+    private $fullname;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string")
+     */
+    private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="contact_number", type="string", length=255)
+     * @ORM\Column(name="address", type="string", length=500)
      */
-    private $contactNumber;
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="phone", type="string", length=255)
+     */
+    private $phone;
 
     /**
      * @var string
@@ -50,9 +63,23 @@ class Leads
     private $status;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="feedback", type="string", length=255, nullable=true)
+     */
+    private $feedback;
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime")
+     * @ORM\Column(name="followup_date", type="datetime", nullable=true)
+     */
+    private $followupDate;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime" )
      */
     private $createdAt;
 
@@ -77,13 +104,13 @@ class Leads
     /**
      * Set name
      *
-     * @param string $name
+     * @param string $fullname
      *
      * @return Leads
      */
-    public function setName($name)
+    public function setFullName($fullname)
     {
-        $this->name = $name;
+        $this->fullname = $fullname;
 
         return $this;
     }
@@ -93,33 +120,76 @@ class Leads
      *
      * @return string
      */
-    public function getName()
+    public function getFullName()
     {
-        return $this->name;
+        return $this->fullname;
+    }
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return string
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
     }
 
     /**
-     * Set contactNumber
+     * Set address
      *
-     * @param string $contactNumber
+     * @param string $address
+     *
+     * @return string
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
      *
      * @return Leads
      */
-    public function setContactNumber($contactNumber)
+    public function setPhone($phone)
     {
-        $this->contactNumber = $contactNumber;
+        $this->phone = $phone;
 
         return $this;
     }
 
     /**
-     * Get contactNumber
+     * Get phone
      *
      * @return string
      */
-    public function getContactNumber()
+    public function getPhone()
     {
-        return $this->contactNumber;
+        return $this->phone;
     }
 
     /**
@@ -147,6 +217,32 @@ class Leads
     }
 
     /**
+     * Set location
+     *
+     * @param string $feedback
+     *
+     * @return Leads
+     */
+    public function setFeedback($feedback)
+    {
+        $this->feedback= $feedback;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    public function getFeedback()
+    {
+        return $this->feedback;
+    }
+
+
+
+    /**
      * Set status
      *
      * @param integer $status
@@ -168,6 +264,30 @@ class Leads
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set followupDate
+     *
+     * @param \DateTime $followupDate
+     *
+     * @return Leads
+     */
+    public function setFollowupDate($followupDate)
+    {
+        $this->followupDate = $followupDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getFollowupDate()
+    {
+        return $this->followupDate;
     }
 
     /**

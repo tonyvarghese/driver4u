@@ -58,6 +58,7 @@ class DriverController extends Controller
             $driver->setExpertise($request->request->get('expertise'));
             $driver->setPccSubmitted($request->request->get('pcc'));
             $driver->setDocument($request->request->get('document'));
+            if ($request->request->get('docnumber') != '')
             $driver->setDocNumber($request->request->get('docnumber'));
             $driver->setDriverAssignment($request->request->get('driverassignment'));
             $driver->setNote($request->request->get('note'));
@@ -160,14 +161,13 @@ class DriverController extends Controller
      * @Route("admin/driver/delete/{id}", name="driver_delete")
      * @Method({"GET", "POST"})
      */
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, Driver $driver)
     {
         $em = $this->getDoctrine()->getManager();
-        $driver = $em->getRepository('AppBundle:Post')->find($id);
         $em->remove($driver);
         $em->flush();
         //display the message
-        $this->addFlash('message','Post Deleted Successfully');
+        $this->addFlash('success','Post Deleted Successfully');
         return $this->redirectToRoute('driver_index');
     }
 

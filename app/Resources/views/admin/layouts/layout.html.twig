@@ -21,6 +21,8 @@
         <!-- Custom CSS -->
         <link href="{{ asset('build/css/startmin.css') }}" rel="stylesheet">
 
+            <link href="{{ asset('build/css/jquery-ui.css') }}" rel="stylesheet">
+
         <!-- Custom Fonts -->
         <link href="{{ asset('build/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -144,10 +146,16 @@
                                 <a href="{{ path('dashboard') }}" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>                          
                             <li>
-                                <a href=""><i class="fa fa-table fa-fw"></i> Customers </a>
+                                <a href="{{ path('customer_index')}}"><i class="fa fa-users fa-fw"></i> Customers </a>
                             </li>
                             <li>
-                                <a href=""><i class="fa fa-edit fa-fw"></i> Drivers</a>
+                                <a href="{{ path('driver_index')}}"><i class="fa fa-edit fa-fw"></i> Drivers</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="fa fa-edit fa-fw"></i> Trips</a>
+                            </li>
+                            <li>
+                                <a href=""><i class="fa fa-edit fa-fw"></i> Leads</a>
                             </li>
                       
                           {#  <li>
@@ -189,6 +197,14 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="{{ asset('build/js/startmin.js') }}"></script>
+
+            <script src="{{ asset('build/js/jquery-ui.js') }}"></script>
+
+            <script>
+                $( function() {
+                    $( ".datepicker" ).datepicker();
+                } );
+            </script>
 
         {% endblock %}        
         

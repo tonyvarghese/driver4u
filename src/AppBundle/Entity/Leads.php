@@ -65,14 +65,21 @@ class Leads
     /**
      * @var string
      *
-     * @ORM\Column(name="feedback", type="string", length=255,)
+     * @ORM\Column(name="feedback", type="string", length=255, nullable=true)
      */
     private $feedback;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="followup_date", type="datetime", nullable=true)
+     */
+    private $followupDate;
+
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime" )
      */
     private $createdAt;
 
@@ -257,6 +264,30 @@ class Leads
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set followupDate
+     *
+     * @param \DateTime $followupDate
+     *
+     * @return Leads
+     */
+    public function setFollowupDate($followupDate)
+    {
+        $this->followupDate = $followupDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getFollowupDate()
+    {
+        return $this->followupDate;
     }
 
     /**

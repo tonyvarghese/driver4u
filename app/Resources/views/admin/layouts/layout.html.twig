@@ -21,6 +21,8 @@
         <!-- Custom CSS -->
         <link href="{{ asset('build/css/startmin.css') }}" rel="stylesheet">
 
+            <link href="{{ asset('build/css/jquery-ui.css') }}" rel="stylesheet">
+
         <!-- Custom Fonts -->
         <link href="{{ asset('build/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
@@ -195,6 +197,14 @@
 
         <!-- Custom Theme JavaScript -->
         <script src="{{ asset('build/js/startmin.js') }}"></script>
+
+            <script src="{{ asset('build/js/jquery-ui.js') }}"></script>
+
+            <script>
+                $( function() {
+                    $( ".datepicker" ).datepicker();
+                } );
+            </script>
 
         {% endblock %}        
         

@@ -3,9 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * customerDetails
+ * customer
  *
  * @ORM\Table(name="customers")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\customer_detailsRepository")
@@ -153,7 +154,7 @@ class Customer
      *
      * @param integer $uid
      *
-     * @return customerDetails
+     * @return customer
      */
     public function setUid($uid)
     {
@@ -177,7 +178,7 @@ class Customer
      *
      * @param string $usualTrip
      *
-     * @return customerDetails
+     * @return customer
      */
     public function setUsualTrip($usualTrip)
     {
@@ -201,7 +202,7 @@ class Customer
      *
      * @param string $preferredDriver
      *
-     * @return customerDetails
+     * @return customer
      */
     public function setPreferredDriver($preferredDriver)
     {

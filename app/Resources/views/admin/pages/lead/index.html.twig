@@ -54,9 +54,12 @@
                                     <td>{{ lead.phone }}</td>
                                     <td>{{ lead.followupDate|date('m/d/Y') }}</td>
 
-                                    <td><a href="{{ path('lead_view', {id: lead.id}) }}" class="btn btn-primary btn-sm">View</a>
-                                        <a href="{{ path('lead_edit', {id: lead.id}) }}" class="btn btn-success btn-sm">Edit</a>
-                                        <button data-url= "{{ path('lead_delete', {id: lead.id}) }}" id="delete-button" class="btn btn-danger btn-sm">Delete</button>
+                                    <td><a href="{{ path('lead_view', {id: lead.id}) }}" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View</a>
+                                        <a href="{{ path('lead_edit', {id: lead.id}) }}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit</a>
+                                        <button data-url= "{{ path('lead_delete', {id: lead.id}) }}" id="delete-button" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-remove" aria-hidden="true"></i> Delete</button>
                                     </td>
 
 

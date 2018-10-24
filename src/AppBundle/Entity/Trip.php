@@ -5,13 +5,27 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TripSchedule
+ * Trips
  *
  * @ORM\Table(name="trips",indexes={@ORM\Index(name="index_cust_id", columns={"customer_id"}), @ORM\Index(name="index_driver_id", columns={"driver_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TripScheduleRepository")
  */
 class Trip
 {
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="trips")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     */
+    private $customer;
+
+     /**
+     * @ORM\ManyToOne(targetEntity="Driver", inversedBy="trips")
+     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
+     */
+    private $driver;
+
+    
     /**
      * @var int
      *
@@ -115,6 +129,28 @@ class Trip
      * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updatedAt;
+    
+
+    /**
+     * Get customer
+     *
+     * @return Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }  
+    
+
+    /**
+     * Get driver
+     *
+     * @return Driver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }      
 
 
     /**
@@ -150,6 +186,7 @@ class Trip
     {
         return $this->customerId;
     }
+     
 
     /**
      * Set driverId

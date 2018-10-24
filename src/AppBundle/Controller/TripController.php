@@ -15,7 +15,44 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class TripController extends Controller
 {
+    
+    public function statusCodes(){
+        return [
+            1 => 'Scheduled',
+            2 => 'Completed',
+            3 => 'Cancelled'
+        ];
+    }
 
+    /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/trips", name="trip_index")
+     * @Method("GET")
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $trips = $em->getRepository(Trip::class)->findAll();
+        
+//        $data = [];
+//        foreach ($trips as $key => $value) {
+//            $data[$key]['id'] = $value->getId();
+//            $data[$key]['customer'] = $value->getCustomerId();
+//            $data[$key]['vehicle'] = $value->getDriverId();
+//            $data[$key]['driver'] = json_decode($value->getPhone());
+//            $data[$key]['stime'] = json_decode($value->getAddress());
+//            $data[$key]['rate'] = $value->getUsualTrip();
+//            $data[$key]['discount'] = $value->getUsualTrip();
+//            $data[$key]['status'] = $value->getUsualTrip();
+//        }
+        
+        //print_r($data); die;
+
+        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
+    }
+    
         /**
      * Creates a new Trip entity.
      *

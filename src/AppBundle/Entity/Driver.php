@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,7 +26,7 @@ class Driver
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="full_name", type="string", length=500)
      */
     private $fullName;
@@ -47,7 +48,7 @@ class Driver
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="phone", type="string", length=255)
      */
     private $phone;

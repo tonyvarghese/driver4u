@@ -16,6 +16,27 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class DriverController extends Controller
 {
+    public function driverType()
+    {
+        return [0=>"", 1 => "Full Time", 2=> "Part time"];
+    }
+    public function expertise()
+    {
+        return [0=>"", 1 => "Manual", 2=> "Automatic",3=>"Premium"];
+    }
+    public function pcc()
+    {
+        return [0=>"", 1 => "Yes", 2=> "No"];
+    }
+    public function document()
+    {
+        return [0=>"", 1 => "Driving Licence", 2=> "Pan Card",3=>"Aadhar"];
+    }
+    public function drivingAssignment()
+    {
+        return [0=>"", 1 => "Monthly", 2=> "On Demand"];
+    }
+
     /**
      * @Route("admin/drivers", name="driver_index")
      * @Method({"GET", "POST"})
@@ -31,8 +52,19 @@ class DriverController extends Controller
             $data[$key]['id'] = $value->getId();
             $data[$key]['fullName'] = $value->getFullName();
             $data[$key]['email'] = $value->getEmail();
-            $data[$key]['phone'] = json_decode($value->getPhone());
             $data[$key]['address'] = json_decode($value->getAddress());
+            $data[$key]['phone'] = json_decode($value->getPhone());
+            $data[$key]['age'] = $value->getAge();
+            $data[$key]['drivertype'] = $this->driverType()[$value->getDriverType()];
+            $data[$key]['expertise'] = $this->expertise()[$value->getExpertise()];
+            $data[$key]['pcc'] = $this->pcc()[$value->getPccSubmitted()];
+            $data[$key]['document'] = $this->document()[$value->getDocument()];
+            $data[$key]['docnumber'] = $value->getDocNumber();
+            $data[$key]['driverassignment'] = $this->drivingAssignment()[$value->getDriverAssignment()];
+            $data[$key]['note'] = $value->getNote();
+            $data[$key]['status'] = $value->getStatus();
+
+
         }
 
         //print_r($data); die;
@@ -47,7 +79,6 @@ class DriverController extends Controller
     {
         $driver = new Driver();
         if ($request->request->has('submit')) {
-            //for get the data
 
             $driver->setFullName($request->request->get('name'));
             $driver->setEmail($request->request->get('email'));
@@ -63,6 +94,18 @@ class DriverController extends Controller
             $driver->setDriverAssignment($request->request->get('driverassignment'));
             $driver->setNote($request->request->get('note'));
             $driver->setStatus(1);
+
+            $validator = $this->get('validator');
+            $errors = $validator->validate($driver);
+
+            if (count($errors) > 0)
+            {
+
+                $errorsString = (string)$errors;
+
+                return new Response($errorsString);
+            }
+            //for get the data
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($driver);
@@ -107,6 +150,18 @@ class DriverController extends Controller
             $driver->setNote($request->request->get('note'));
             $driver->setStatus(1);
 
+            $validator = $this->get('validator');
+            $errors = $validator->validate($driver);
+
+            if (count($errors) > 0)
+            {
+
+                $errorsString = (string)$errors;
+
+                return new Response($errorsString);
+            }
+
+
             $this->addFlash('success', 'Driver Updated Successfully');
             $entityManager->flush();
             return $this->redirectToRoute('driver_edit', ['id' => $id]);
@@ -144,12 +199,12 @@ class DriverController extends Controller
         $data['address'] = json_decode($driverObj->getAddress());
         $data['phone'] = json_decode($driverObj->getPhone());
         $data['age'] = $driverObj->getAge();
-        $data['drivertype'] = $driverObj->getDriverType();
-        $data['expertise'] = $driverObj->getExpertise();
-        $data['pcc'] = $driverObj->getPccSubmitted();
-        $data['document'] = $driverObj->getDocument();
+        $data['drivertype'] = $this->driverType()[$driverObj->getDriverType()];
+        $data['expertise'] = $this->expertise()[$driverObj->getExpertise()];
+        $data['pcc'] = $this->pcc()[$driverObj->getPccSubmitted()];
+        $data['document'] = $this->document()[$driverObj->getDocument()];
         $data['docnumber'] = $driverObj->getDocNumber();
-        $data['driverassignment'] = $driverObj->getDriverAssignment();
+        $data['driverassignment'] = $this->drivingAssignment()[$driverObj->getDriverAssignment()];
         $data['note'] = $driverObj->getNote();
         $data['status'] = $driverObj->getStatus();
 

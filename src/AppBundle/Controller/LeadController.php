@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Leads;
+use AppBundle\Entity\Lead;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,6 +16,11 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class LeadController extends Controller
 {
 
+    public function statusValues()
+    {
+        return [0 => "", 1 => "Interested", 2 => "Not Interested", 3 => "Cancelled"];
+    }
+
     /**
      * @Route("admin/leads", name="lead_index")
      * @Method({"GET", "POST"})
@@ -23,11 +28,10 @@ class LeadController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $leads = $em->getRepository(Leads::class)->findAll();
+        $leads = $em->getRepository(Lead::class)->findAll();
 
         $data = [];
-        foreach ($leads as $key => $value)
-        {
+        foreach ($leads as $key => $value) {
             $data[$key]['id'] = $value->getId();
             $data[$key]['fullName'] = $value->getFullName();
             $data[$key]['email'] = $value->getEmail();
@@ -35,13 +39,13 @@ class LeadController extends Controller
             $data[$key]['address'] = json_decode($value->getAddress());
             $data[$key]['location'] = $value->getLocation();
             $data[$key]['feedback'] = $value->getFeedback();
-            $data[$key]['status'] = $value->getStatus();
+            $data[$key]['status'] = $this->statusValues()[$value->getStatus()];
             $data[$key]['followupDate'] = $value->getFollowupDate();
         }
 
         //print_r($data); die;
 
-        return $this->render('admin/pages/lead/index.html.twig',['leads' => $data]);
+        return $this->render('admin/pages/lead/index.html.twig', ['leads' => $data]);
     }
 
     /**
@@ -50,9 +54,8 @@ class LeadController extends Controller
      */
     public function addLeadAction(Request $request)
     {
-       $lead = new Leads();
-        if ($request->request->has('submit'))
-        {
+        $lead = new Lead();
+        if ($request->request->has('submit')) {
             //for get the data
 
             //$followupDate = date("Y-m-d H:i:s", strtotime($request->request->get('followup')));
@@ -70,6 +73,18 @@ class LeadController extends Controller
             $lead->setFollowupDate($followupDate);
             $lead->setCreatedAt($currentTime);
             $lead->setUpdatedAt($currentTime);
+//validator
+
+            $validator = $this->get('validator');
+            $errors = $validator->validate($lead);
+
+            if (count($errors) > 0)
+            {
+
+                $errorsString = (string)$errors;
+
+                return new Response($errorsString);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($lead);
@@ -81,24 +96,23 @@ class LeadController extends Controller
         }
         return $this->render("admin/pages/lead/new.html.twig");
     }
+
     /**
      * @Route("admin/lead/edit/{id}", name="lead_edit")
      * @Method({"GET", "POST"})
      */
     public function editLeadAction(Request $request, $id)
     {
-        $lead = new Leads();
+        $lead = new Lead();
         $followupDate = new \DateTime($request->request->get('followup'));
 
-        if ($request->request->has('submit'))
-        {
+        if ($request->request->has('submit')) {
 
             $entityManager = $this->getDoctrine()->getManager();
-            $lead = $entityManager->getRepository(Leads::class)->find($id);
-            if (!$lead)
-            {
+            $lead = $entityManager->getRepository(Lead::class)->find($id);
+            if (!$lead) {
                 throw $this->createNotFoundException(
-                    'No customer found for id '.$id
+                    'No customer found for id ' . $id
                 );
             }
 
@@ -110,12 +124,23 @@ class LeadController extends Controller
             $lead->setFeedback($request->request->get('feedback'));
             $lead->setStatus($request->request->get('status'));
             $lead->setFollowupDate($followupDate);
+        //validation
+            $validator = $this->get('validator');
+            $errors = $validator->validate($lead);
+
+            if (count($errors) > 0)
+            {
+
+                $errorsString = (string)$errors;
+
+                return new Response($errorsString);
+            }
 
             $this->addFlash('success', 'Lead Updated Successfully');
             $entityManager->flush();
             return $this->redirectToRoute('lead_edit', ['id' => $id]);
         }
-        $repository = $this->getDoctrine()->getRepository(Leads::class);
+        $repository = $this->getDoctrine()->getRepository(Lead::class);
         $leadObj = $repository->find($id);
         $data['name'] = $leadObj->getFullName();
         $data['email'] = $leadObj->getEmail();
@@ -136,20 +161,33 @@ class LeadController extends Controller
     {
         //$driver= $this->getDoctrine()->getRepository('AppBundle:Driver')->find($id);
 
-        $repository = $this->getDoctrine()->getRepository(Leads::class);
-        $driverObj = $repository->find($id);
-        $data['name'] = $driverObj->getFullName();
-        $data['email'] = $driverObj->getEmail();
-        $data['address'] = json_decode($driverObj->getAddress());
-        $data['phone'] = json_decode($driverObj->getPhone());
-        $data['location'] = $driverObj->getLocation();
-        $data['status'] = $driverObj->getStatus();
-        $data['feedback'] = $driverObj->getFeedback();
-        $data['followupDate'] = $driverObj->getFollowupDate();
-        $data['createdAt'] = $driverObj->getCreatedAt();
+        $repository = $this->getDoctrine()->getRepository(Lead::class);
+        $leadObj = $repository->find($id);
+        $data['name'] = $leadObj->getFullName();
+        $data['email'] = $leadObj->getEmail();
+        $data['address'] = json_decode($leadObj->getAddress());
+        $data['phone'] = json_decode($leadObj->getPhone());
+        $data['location'] = $leadObj->getLocation();
+        $data['status'] = $this->statusValues()[$leadObj->getStatus()];
+        $data['feedback'] = $leadObj->getFeedback();
+        $data['followupDate'] = $leadObj->getFollowupDate();
+        $data['createdAt'] = $leadObj->getCreatedAt();
 
 
-        return $this->render("admin/pages/lead/view.html.twig",['lead'=>$data]);
+        return $this->render("admin/pages/lead/view.html.twig", ['lead' => $data]);
     }
 
+    /**
+     * @Route("admin/lead/delete/{id}", name="lead_delete")
+     * @Method({"GET", "POST"})
+     */
+    public function deleteAction(Request $request, Lead $leads)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($leads);
+        $em->flush();
+        //display the message
+        $this->addFlash('success', 'Post Deleted Successfully');
+        return $this->redirectToRoute('lead_index');
+    }
 }

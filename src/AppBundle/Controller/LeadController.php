@@ -25,7 +25,7 @@ class LeadController extends Controller
      * @Route("admin/leads", name="lead_index")
      * @Method({"GET", "POST"})
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $leads = $em->getRepository(Lead::class)->findAll();
@@ -42,10 +42,19 @@ class LeadController extends Controller
             $data[$key]['status'] = $this->statusValues()[$value->getStatus()];
             $data[$key]['followupDate'] = $value->getFollowupDate();
         }
+//pagination
 
-        //print_r($data); die;
+        $paginator  = $this->get('knp_paginator');
 
-        return $this->render('admin/pages/lead/index.html.twig', ['leads' => $data]);
+        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
+
+
+        return $this->render('admin/pages/lead/index.html.twig', ['leads' => $pagination]);
     }
 
     /**

@@ -43,22 +43,7 @@ class DriverController extends Controller
      */
     public function indexAction(Request $request)
     {
-//
-//
-//        $em    = $this->get('doctrine.orm.entity_manager');
-//        $dql   = "SELECT a FROM AcmeMainBundle:Article a";
-//        $query = $em->createQuery($dql);
-//
-//        $paginator  = $this->get('knp_paginator');
-//        $pagination = $paginator->paginate(
-//            $query, /* query NOT result */
-//            $request->query->getInt('page', 1)/*page number*/,
-//            10/*limit per page*/
-//        );
-//
-//        // parameters to template
-//        return $this->render('AcmeMainBundle:Article:list.html.twig', array('pagination' => $pagination));
-//
+
         $em = $this->getDoctrine()->getManager();
         $drivers = $em->getRepository(Driver::class)->findAll();
 
@@ -91,7 +76,7 @@ class DriverController extends Controller
             10/*limit per page*/
         );
 
-        //print_r($data); die;
+
 
         return $this->render('admin/pages/driver/index.html.twig',['drivers' => $pagination]);
     }

@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * TripSchedule
  *
- * @ORM\Table(name="trip_schedule",indexes={@ORM\Index(name="index_cust_id", columns={"customer_id"}), @ORM\Index(name="index_driver_id", columns={"driver_id"})})
+ * @ORM\Table(name="trips",indexes={@ORM\Index(name="index_cust_id", columns={"customer_id"}), @ORM\Index(name="index_driver_id", columns={"driver_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TripScheduleRepository")
  */
-class TripSchedule
+class Trip
 {
     /**
      * @var int
@@ -36,11 +36,19 @@ class TripSchedule
     private $driverId;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="vehicle_id", type="integer")
+     */
+    private $vehicleId;
+
+    
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="trip_time", type="datetime")
+     * @ORM\Column(name="scheduled_time", type="datetime")
      */
-    private $tripTime;
+    private $scheduledTime;
 
     /**
      * @var int
@@ -56,12 +64,6 @@ class TripSchedule
      */
     private $discount;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="vehicle_id", type="integer")
-     */
-    private $vehicleId;
 
     /**
      * @var int
@@ -73,9 +75,32 @@ class TripSchedule
     /**
      * @var string
      *
-     * @ORM\Column(name="feedback", type="text")
+     * @ORM\Column(name="feedback", type="text", nullable=true)
      */
     private $feedback;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="started_time", type="datetime", nullable=true)
+     */
+    private $startedTime;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="ended_time", type="datetime", nullable=true)
+     */
+    private $endedTime;    
+    
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="amount_collected", type="smallint")
+     */
+    private $amountCollected;    
+    
 
     /**
      * @var \DateTime
@@ -107,7 +132,7 @@ class TripSchedule
      *
      * @param integer $customerId
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setCustomerId($customerId)
     {
@@ -131,7 +156,7 @@ class TripSchedule
      *
      * @param integer $driverId
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setDriverId($driverId)
     {
@@ -151,27 +176,27 @@ class TripSchedule
     }
 
     /**
-     * Set tripTime
+     * Set scheduledTime
      *
-     * @param \DateTime $tripTime
+     * @param \DateTime $scheduledTime
      *
-     * @return TripSchedule
+     * @return Trip
      */
-    public function setTripTime($tripTime)
+    public function setScheduledTime($scheduledTime)
     {
-        $this->tripTime = $tripTime;
+        $this->scheduledTime = $scheduledTime;
 
         return $this;
     }
 
     /**
-     * Get tripTime
+     * Get scheduledTime
      *
      * @return \DateTime
      */
-    public function getTripTime()
+    public function getScheduledTime()
     {
-        return $this->tripTime;
+        return $this->scheduledTime;
     }
 
     /**
@@ -179,7 +204,7 @@ class TripSchedule
      *
      * @param integer $rate
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setRate($rate)
     {
@@ -203,7 +228,7 @@ class TripSchedule
      *
      * @param integer $discount
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setDiscount($discount)
     {
@@ -227,7 +252,7 @@ class TripSchedule
      *
      * @param integer $vehicleId
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setVehicleId($vehicleId)
     {
@@ -251,7 +276,7 @@ class TripSchedule
      *
      * @param integer $status
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setStatus($status)
     {
@@ -275,7 +300,7 @@ class TripSchedule
      *
      * @param string $feedback
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setFeedback($feedback)
     {
@@ -294,12 +319,86 @@ class TripSchedule
         return $this->feedback;
     }
 
+
+    /**
+     * Set startedTime
+     *
+     * @param string $startedTime
+     *
+     * @return Trip
+     */
+    public function setStartedTime($startedTime)
+    {
+        $this->startedTime = $startedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get startedTime
+     *
+     * @return string
+     */
+    public function getStartedTime()
+    {
+        return $this->startedTime;
+    }
+    
+
+    /**
+     * Set endedTime
+     *
+     * @param string $endedTime
+     *
+     * @return Trip
+     */
+    public function setEndedTime($endedTime)
+    {
+        $this->endedTime = $endedTime;
+
+        return $this;
+    }
+
+    /**
+     * Get endedTime
+     *
+     * @return string
+     */
+    public function getEndedTime()
+    {
+        return $this->endedTime;
+    }
+
+     /**
+     * Set amountCollected
+     *
+     * @param string $amountCollected
+     *
+     * @return Trip
+     */
+    public function setAmountCollected($amountCollected)
+    {
+        $this->amountCollected = $amountCollected;
+
+        return $this;
+    }
+
+    /**
+     * Get amountCollected
+     *
+     * @return string
+     */
+    public function getAmountCollected()
+    {
+        return $this->amountCollected;
+    }
+    
     /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setCreatedAt($createdAt)
     {
@@ -323,7 +422,7 @@ class TripSchedule
      *
      * @param \DateTime $updatedAt
      *
-     * @return TripSchedule
+     * @return Trip
      */
     public function setUpdatedAt($updatedAt)
     {

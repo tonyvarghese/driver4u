@@ -1,7 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="leads")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\LeadsRepository")
  */
-class Leads
+class Lead
 {
     /**
      * @var int
@@ -23,7 +23,7 @@ class Leads
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="fullname", type="string", length=255)
      */
     private $fullname;
@@ -50,7 +50,7 @@ class Leads
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="location", type="string", length=255,)
      */
     private $location;
@@ -106,7 +106,7 @@ class Leads
      *
      * @param string $fullname
      *
-     * @return Leads
+     * @return Lead
      */
     public function setFullName($fullname)
     {
@@ -173,7 +173,7 @@ class Leads
      *
      * @param string $phone
      *
-     * @return Leads
+     * @return Lead
      */
     public function setPhone($phone)
     {
@@ -197,7 +197,7 @@ class Leads
      *
      * @param string $location
      *
-     * @return Leads
+     * @return Lead
      */
     public function setLocation($location)
     {
@@ -221,7 +221,7 @@ class Leads
      *
      * @param string $feedback
      *
-     * @return Leads
+     * @return Lead
      */
     public function setFeedback($feedback)
     {
@@ -247,7 +247,7 @@ class Leads
      *
      * @param integer $status
      *
-     * @return Leads
+     * @return int
      */
     public function setStatus($status)
     {
@@ -271,7 +271,7 @@ class Leads
      *
      * @param \DateTime $followupDate
      *
-     * @return Leads
+     * @return Lead
      */
     public function setFollowupDate($followupDate)
     {
@@ -295,7 +295,7 @@ class Leads
      *
      * @param \DateTime $createdAt
      *
-     * @return Leads
+     * @return Lead
      */
     public function setCreatedAt($createdAt)
     {
@@ -319,7 +319,7 @@ class Leads
      *
      * @param \DateTime $updatedAt
      *
-     * @return Leads
+     * @return Lead
      */
     public function setUpdatedAt($updatedAt)
     {

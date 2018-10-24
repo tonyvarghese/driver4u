@@ -30,7 +30,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                    <input name="name" type="text" class="form-control" id="name" placeholder="Name"
+                                    <input name="fullName" type="text" class="form-control" id="name" placeholder="Name"
                                            required>
                                 </div>
                             </div>
@@ -38,14 +38,14 @@
                                 <label class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
                                     <input name="email" type="email" class="form-control" id="name" placeholder="Email"
-                                           required>
+                                           >
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Phone Number</label>
                                 <div class="col-sm-10">
-                                    <input name="phone" type="text" class="form-control" id="name"
-                                           placeholder="Phone Number" required>
+                                    <input name="phone" type="text" class="form-control" id="phone"
+                                           placeholder="Phone Number" required >
                                 </div>
                             </div>
 
@@ -54,7 +54,7 @@
                                 <label for="exampleTextarea" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" name="address" id="address" placeholder="Address"
-                                              required></textarea>
+                                              ></textarea>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -67,8 +67,8 @@
                                 <label class="col-sm-2 col-form-label">Driver Type</label>
                                 <div class="col-sm-10">
                                     <select name="drivertype" class="form-control">
-                                        <option>Full Time</option>
-                                        <option>Part Time</option>
+                                        <option value="1">Full Time</option>
+                                        <option value="2">Part Time</option>
                                     </select>
                                 </div>
                             </div>
@@ -76,9 +76,9 @@
                                 <label class="col-sm-2 col-form-label">Expertise</label>
                                 <div class="col-sm-10">
                                     <select name="expertise" class="form-control">
-                                        <option>Manuel</option>
-                                        <option>Automatic</option>
-                                        <option>Premium</option>
+                                        <option value="1">Manuel</option>
+                                        <option value="2">Automatic</option>
+                                        <option value="3">Premium</option>
                                     </select>
                                 </div>
                             </div>
@@ -89,11 +89,11 @@
                                 <div class="col-sm-10">
                                     <div class="radio">
                                         <label class="col-form-label col-sm-2 pt-0">
-                                            <input type="radio" name="pcc" id="optionsRadios1" value="1"
+                                            <input type="radio" name="pcc" id="yes" value="1"
                                                    checked>Yes
                                         </label>
                                         <label class="col-form-label col-sm-2 pt-0">
-                                            <input type="radio" name="pcc" id="optionsRadios2"
+                                            <input type="radio" name="pcc" id="no"
                                                    value="0">No
                                         </label>
                                     </div>
@@ -107,9 +107,9 @@
                                 <label class="col-sm-2 col-form-label">Document Type</label>
                                 <div class="col-sm-10">
                                     <select name="document" class="form-control">
-                                        <option>Driving Licence</option>
-                                        <option>Pan Card</option>
-                                        <option>Aadhar</option>
+                                        <option value="1">Driving Licence</option>
+                                        <option value="2">Pan Card</option>
+                                        <option value="3">Aadhar</option>
                                     </select>
                                 </div>
                             </div>
@@ -124,8 +124,8 @@
                                 <label class="col-sm-2 col-form-label">Driver Assignment</label>
                                 <div class="col-sm-10">
                                     <select name="driverassignment" class="form-control">
-                                        <option>Monthly</option>
-                                        <option>On Demand</option>
+                                        <option value="1">Monthly</option>
+                                        <option value="2">On Demand</option>
                                     </select>
                                 </div>
                             </div>

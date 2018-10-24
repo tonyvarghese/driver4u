@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Customer
 {
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Trip", mappedBy="customer")
+     */
+    private $trips;
+    
     /**
      * @var int
      *
@@ -70,6 +76,11 @@ class Customer
      * @ORM\Column(type="smallint",options={"default" : 0, "comment":"0:Inactive, 1:Active"})
      */
     private $status;
+    
+    
+    public function __construct() {
+        $this->trips = new ArrayCollection();
+    }
     
     /**
      * Get id

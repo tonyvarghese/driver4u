@@ -14,6 +14,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Driver
 {
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Trip", mappedBy="driver")
+     */
+    private $trips;
+
+    
     /**
      * @var int
      *

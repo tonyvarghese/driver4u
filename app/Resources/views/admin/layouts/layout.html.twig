@@ -34,6 +34,13 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+
+        <style>
+            .form-horizontal .control-label{
+                text-align: left;
+            }
+        </style>
+
     </head>
     <body>
 
@@ -155,7 +162,7 @@
                                 <a href=""><i class="fa fa-edit fa-fw"></i> Trips</a>
                             </li>
                             <li>
-                                <a href=""><i class="fa fa-edit fa-fw"></i> Leads</a>
+                                <a href="{{ path('lead_index')}}"><i class="fa fa-edit fa-fw"></i> Leads</a>
                             </li>
                       
                           {#  <li>

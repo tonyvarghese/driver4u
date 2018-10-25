@@ -15,106 +15,82 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-lg-6">
 
+                        <div class="col-lg-6 ">
 
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.name }}</p>
-                                </div>
-                            </div>
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td><strong>Name</strong></td>
+                                    <td>{{ driver.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email</strong></td>
+                                    <td>{{ driver.email }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address</strong></td>
+                                    <td>{{  driver.address|nl2br }}</td>
+                                </tr>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Email</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.email }}</p>
-                                </div>
-                            </div>
+                                <tr>
+                                </tr><tr>
+                                    <td><strong>Phone</strong></td>
+                                    <td>{{ driver.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Age</strong></td>
+                                    <td>{{ driver.age }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Driver Type</strong></td>
+                                    <td>{{ driver.drivertype }}</td>
+                                </tr>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Address</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{  driver.address|nl2br }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Phone</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.phone }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Age</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.age }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Driver Type</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.drivertype }}</p>
-                                </div>
-                            </div>
+                                </tbody>
+                            </table>
 
 
 
-                        </form>
 
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 ">
+                        <table class="table table-user-information">
+                            <tbody>
+                            <tr>
+                                <td><strong>Expertise</strong></td>
+                                <td>{{ driver.expertise }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>PCC</strong></td>
+                                <td>{{ driver.pcc }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Document</strong></td>
+                                <td>{{  driver.document}}</td>
+                            </tr>
+
+                            <tr>
+                            </tr><tr>
+                                <td><strong>Document No</strong></td>
+                                <td>{{ driver.docnumber }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Driver Assignment</strong></td>
+                                <td>{{ driver.driverassignment }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Note</strong></td>
+                                <td>{{ driver.note }}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
 
 
-                        <form class="form-horizontal">
 
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Expertise</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.expertise }}</p>
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">PCC</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.pcc }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Document</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.document }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Document No</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.docnumber }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Document Assignment</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.driverassignment }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Note</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.note|nl2br }}</p>
-                                </div>
-                            </div>
-
-                        </form>
 
                     </div>
                 </div>

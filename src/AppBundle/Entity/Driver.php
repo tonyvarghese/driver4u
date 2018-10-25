@@ -66,6 +66,12 @@ class Driver
      */
     private $phone;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=255)
+     */
+    private $location;
 
     /**
      * @var int
@@ -77,16 +83,16 @@ class Driver
     private $age;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="driver_type", type="integer", options={"comment":"1:Full Time, 2:Part Time"})
+     * @ORM\Column(name="driver_type", type="string", options={"comment":"1:Full Time, 2:Part Time"})
      */
     private $driverType;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="expertise", type="integer", options={"comment":"1:Manual, 2:Automatic, 3:Premium"})
+     * @ORM\Column(name="expertise", type="string", options={"comment":"1:Manual, 2:Automatic, 3:Premium"})
      */
     private $expertise;
 
@@ -98,9 +104,9 @@ class Driver
     private $pccSubmitted;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="document", type="integer", nullable=true, options={"comment":"1:Driving Licence, 2:Pan Card, 3:Aadhar"})
+     * @ORM\Column(name="document", type="string", nullable=true, options={"comment":"1:Driving Licence, 2:Pan Card, 3:Aadhar"})
      */
     private $document;
 
@@ -112,9 +118,9 @@ class Driver
     private $docNumber;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="driver_assignment", type="integer", options={"comment":"1:Monthly, 2:On Demand"})
+     * @ORM\Column(name="driver_assignment", type="string", options={"comment":"1:Monthly, 2:On Demand"})
      */
     private $driverAssignment;
 
@@ -185,6 +191,22 @@ class Driver
     {
         return $this->email;
     }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+        return $this;
+
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
 
     /**
      * Set address
@@ -265,7 +287,7 @@ class Driver
     /**
      * Set driverType
      *
-     * @param integer $driverType
+     * @param string $driverType
      *
      * @return Driver
      */
@@ -279,7 +301,7 @@ class Driver
     /**
      * Get driverType
      *
-     * @return int
+     * @return string
      */
     public function getDriverType()
     {
@@ -289,7 +311,7 @@ class Driver
     /**
      * Set expertise
      *
-     * @param integer $expertise
+     * @param string $expertise
      *
      * @return Driver
      */
@@ -303,7 +325,7 @@ class Driver
     /**
      * Get expertise
      *
-     * @return int
+     * @return string
      */
     public function getExpertise()
     {
@@ -337,7 +359,7 @@ class Driver
     /**
      * Set document
      *
-     * @param integer $document
+     * @param string $document
      *
      * @return Driver
      */
@@ -351,7 +373,7 @@ class Driver
     /**
      * Get document
      *
-     * @return int
+     * @return string
      */
     public function getDocument()
     {

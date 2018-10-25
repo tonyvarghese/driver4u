@@ -49,6 +49,14 @@ class Customer
      */
     private $email;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="location", type="string", length=255)
+     */
+    private $location;
+
     /**
      * @var string
      *
@@ -69,6 +77,14 @@ class Customer
      * @ORM\Column(name="usual_trip", type="string", length=500)
      */
     private $usualTrip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_type", type="string", options={"comment":"1:Monthly, 2:On Demand"})
+     */
+    private $customertype;
+
 
     /**
      * @var string
@@ -131,7 +147,24 @@ class Customer
     {
         $this->email = $email;
     }
-    
+
+    /**
+     * @param string $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+        return $this;
+
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+
+
 
     public function getAddress()
     {
@@ -222,6 +255,7 @@ class Customer
         return $this;
     }
 
+
     /**
      * Get preferredDriver
      *
@@ -231,7 +265,30 @@ class Customer
     {
         return $this->preferredDriver;
     }
-    
+
+    /**
+     * Set customerType
+     *
+     * @param string $customertype
+     *
+     * @return Customer
+     */
+    public function setCustomerType($customertype)
+    {
+        $this->customertype = $customertype;
+
+        return $this;
+    }
+
+    /**
+     * Get $customertype
+     *
+     * @return string
+     */
+    public function getCustomerType()
+    {
+        return $this->customertype;
+    }
 
     public function getStatus()
     {

@@ -421,7 +421,7 @@ class Driver
     /**
      * Get driverAssignment
      *
-     * @return int
+     * @return string
      */
     public function getDriverAssignment()
     {

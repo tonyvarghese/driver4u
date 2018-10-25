@@ -14,7 +14,27 @@ use AppBundle\Entity\Driver;
 
 class CustomerController extends Controller
 {
-    
+    public function customerType()
+    {
+        return [0=>"", 1 => "Monthly", 2=> "On Demand"];
+    }
+
+    public function jsonToString($json, $values){
+        $data  = [];
+        $jsonObj = json_decode($json);
+
+        if ($jsonObj) {
+            foreach ($jsonObj as $item){
+                $data[] = $values[$item];
+            }
+
+            return implode(',', $data);
+        }
+
+        return "";
+    }
+
+
     /**
      * Lists all Customer entities.
      *
@@ -33,8 +53,13 @@ class CustomerController extends Controller
             $data[$key]['fullName'] = $value->getFullName();
             $data[$key]['email'] = $value->getEmail();
             $data[$key]['phone'] = json_decode($value->getPhone());
+            $data[$key]['location'] = $value->getLocation();
             $data[$key]['address'] = json_decode($value->getAddress());
             $data[$key]['usualTrip'] = $value->getUsualTrip();
+//            $data[$key]['customertype'] =json_decode($this->jsonToString($value->getCustomerType(), $this->customerType()));
+            $data[$key]['customertype'] =json_decode($value->getLocation());
+
+
         }
         
         $paginator  = $this->get('knp_paginator');
@@ -70,10 +95,12 @@ class CustomerController extends Controller
 
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
+            $customer->setLocation($request->request->get('location'));
             $customer->setAddress(json_encode($request->request->get('address')));
             $customer->setPhone(json_encode($request->request->get('phone')));
             $customer->setStatus(1);
             $customer->setUsualTrip($request->request->get('usualTrip'));
+            $customer->setCustomerType(json_encode($request->request->get('customertype')));
             $customer->setPreferredDriver($request->request->get('driver'));
             
             $em = $this->getDoctrine()->getManager();
@@ -134,10 +161,12 @@ class CustomerController extends Controller
             
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
+            $customer->setLocation($request->request->get('location'));
             $customer->setAddress(json_encode($request->request->get('address')));
             $customer->setPhone(json_encode($request->request->get('phone')));
             $customer->setStatus(1);
             $customer->setUsualTrip($request->request->get('usualTrip'));
+            $customer->setCustomerType(json_encode($request->request->get('customertype')));
             $customer->setPreferredDriver($request->request->get('driver'));
             
             $entityManager->flush();
@@ -151,9 +180,11 @@ class CustomerController extends Controller
         $customerObj = $repository->find($id);
         $data['fullName'] = $customerObj->getFullName();
         $data['email'] = $customerObj->getEmail();
+        $data['location'] = $customerObj->getLocation();
         $data['address'] = json_decode($customerObj->getAddress());
         $data['phone'] = json_decode($customerObj->getPhone());
         $data['usualTrip'] = $customerObj->getUsualTrip();
+        $data['customertype'] = json_decode($customerObj->getCustomerType());
         $data['preferredDriver'] = $customerObj->getPreferredDriver();
         
         

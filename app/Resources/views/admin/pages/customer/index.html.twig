@@ -34,9 +34,11 @@
                                         <th scope="col">Name</th>
                                         <th scope="col"></i> Email</th>
                                         <th scope="col" class=""> Phone</th>
+                                        <th scope="col" class=""> Location</th>
                                         <th scope="col" class=""> Address</th>
                                         <th scope="col" class=""> Usual Trip</th>
-                                        <th scope="col"></th>
+                                        <th scope="col" class=""> Customer Type</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,8 +47,10 @@
                                             <td>{{ customer.fullName }}</td>
                                             <td>{{ customer.email }}</td>
                                             <td>{{ customer.phone }}</td>
+                                            <td>{{ customer.location }}</td>
                                             <td>{{ customer.address }}</td>
                                             <td>{{ customer.usualTrip }}</td>
+                                            <td>{{ customer.customertype}}</td>
 
                                             <td class="text-right">
                                                 <div class="item-actions">

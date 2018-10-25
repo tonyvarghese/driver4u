@@ -16,9 +16,15 @@ class Customer
 {
     
     /**
-     * @ORM\OneToMany(targetEntity="Trip", mappedBy="customer")
+     * @var Trip[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Trip",
+     *      mappedBy="customer",
+     *      orphanRemoval=true)
      */
     private $trips;
+        
     
     /**
      * @var int
@@ -82,6 +88,11 @@ class Customer
     public function __construct() {
         $this->trips = new ArrayCollection();
     }
+    
+    public function getTrips()
+    {
+        return $this->trips;
+    }    
     
     /**
      * Get id

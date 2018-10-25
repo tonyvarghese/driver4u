@@ -13,19 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Trip
 {
     
-     /**
-     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="trips")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
-     */
-    private $customer;
-
-     /**
-     * @ORM\ManyToOne(targetEntity="Driver", inversedBy="trips")
-     * @ORM\JoinColumn(name="driver_id", referencedColumnName="id")
-     */
-    private $driver;
-
-    
     /**
      * @var int
      *
@@ -35,19 +22,23 @@ class Trip
      */
     private $id;
 
+    
     /**
-     * @var int
+     * @var Customer
      *
-     * @ORM\Column(name="customer_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="trips")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $customerId;
+    private $customer;    
 
     /**
-     * @var int
+     * @var Driver
      *
-     * @ORM\Column(name="driver_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Driver", inversedBy="trips")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $driverId;
+    private $driver;    
+    
 
     /**
      * @var int
@@ -130,29 +121,12 @@ class Trip
      */
     private $updatedAt;
     
-
-    /**
-     * Get customer
-     *
-     * @return Customer
-     */
-    public function getCustomer()
+   
+    public function getTrips()
     {
-        return $this->customer;
-    }  
+        return $this->trips;
+    }
     
-
-    /**
-     * Get driver
-     *
-     * @return Driver
-     */
-    public function getDriver()
-    {
-        return $this->driver;
-    }      
-
-
     /**
      * Get id
      *
@@ -163,53 +137,25 @@ class Trip
         return $this->id;
     }
 
-    /**
-     * Set customerId
-     *
-     * @param integer $customerId
-     *
-     * @return Trip
-     */
-    public function setCustomerId($customerId)
+    
+    public function getCustomer()
     {
-        $this->customerId = $customerId;
-
-        return $this;
+        return $this->customer;
     }
 
-    /**
-     * Get customerId
-     *
-     * @return int
-     */
-    public function getCustomerId()
+    public function setCustomer(Customer $customer)
     {
-        return $this->customerId;
+        $this->customer = $customer;
     }
      
-
-    /**
-     * Set driverId
-     *
-     * @param integer $driverId
-     *
-     * @return Trip
-     */
-    public function setDriverId($driverId)
+    public function getDriver()
     {
-        $this->driverId = $driverId;
-
-        return $this;
+        return $this->driver;
     }
 
-    /**
-     * Get driverId
-     *
-     * @return int
-     */
-    public function getDriverId()
+    public function setDriver(Driver $driver)
     {
-        return $this->driverId;
+        $this->driver = $driver;
     }
 
     /**

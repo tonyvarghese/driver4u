@@ -200,5 +200,53 @@ class TripController extends Controller
         return $this->render('admin/pages/trip/edit.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'status' => $this->statusCodes()]);
         
     }   
+
     
+ /**
+     * Deletes a Trip entity.
+     *
+     * @Route("/admin/trip/delete/{id}", name="trip_delete")
+     * @Method("GET")
+     *
+     */
+    public function deleteAction(Request $request, Trip $trip)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($trip);
+        $em->flush();
+
+        $this->addFlash('success', 'Trip Deleted!');
+
+        return $this->redirectToRoute('trip_index');
+    }   
+
+ 
+
+    /**
+     * @Route("admin/trip/view/{id}", name="trip_view")
+     * @Method({"GET", "POST"})
+     */
+    public function viewAction($id)
+    {
+        $repository = $this->getDoctrine()->getRepository(Trip::class);
+        $trip = $repository->find($id);
+//        $data['name'] = $driverObj->getFullName();
+//        $data['email'] = $driverObj->getEmail();
+//        $data['location'] = $driverObj->getLocation();
+//        $data['address'] = json_decode($driverObj->getAddress());
+//        $data['phone'] = json_decode($driverObj->getPhone());
+//        $data['age'] = $driverObj->getAge();
+//        $data['drivertype'] =$this->jsonToString($driverObj->getDriverType(), $this->driverType()) ;
+//        $data['expertise'] =($this->jsonToString($driverObj->getExpertise(), $this->expertise()));
+//        $data['pcc'] = $this->pcc()[$driverObj->getPccSubmitted()];
+//        $data['document'] =($this->jsonToString($driverObj->getDocument(), $this->document()));
+//        $data['docnumber'] = $driverObj->getDocNumber();
+//        $data['driverassignment'] = ($this->jsonToString($driverObj->getDriverAssignment(), $this->driverAssignment()));
+//        $data['note'] = $driverObj->getNote();
+//        $data['status'] = $driverObj->getStatus();
+
+
+        return $this->render("admin/pages/trip/view.html.twig",['trip'=>$trip, 'status' => $this->statusCodes()]);
+    }        
 }

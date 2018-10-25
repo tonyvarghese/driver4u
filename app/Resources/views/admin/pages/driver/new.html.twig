@@ -38,48 +38,86 @@
                                 <label class="col-sm-2 col-form-label">Email</label>
                                 <div class="col-sm-10">
                                     <input name="email" type="email" class="form-control" id="name" placeholder="Email"
-                                           >
+                                    >
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Phone Number</label>
                                 <div class="col-sm-10">
                                     <input name="phone" type="text" class="form-control" id="phone"
-                                           placeholder="Phone Number" required >
+                                           placeholder="Phone Number" required>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Location</label>
+                                <div class="col-sm-10">
+                                    <input name="location" type="text" class="form-control" id="age" placeholder="Location">
+                                </div>
+                            </div>
+
+                            {#<div class="form-group row">#}
+                            {#<div class="form-inline">#}
+                            {#<label class="col-sm-2 col-form-label">Address</label>#}
+
+                            {#<div class="col-sm-10">#}
+
+                            {#<div class="form-group">#}
+                            {#<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">#}
+                            {#</div>#}
+                            {#<div class="form-group">#}
+                            {#<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">#}
+                            {#</div>#}
+                            {#<div class="form-group">#}
+                            {#<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">#}
+                            {#</div>#}
+                            {#</div>#}
+
+                            {#</div>#}
+                            {#</div>#}
 
 
                             <div class="form-group row">
                                 <label for="exampleTextarea" class="col-sm-2 col-form-label">Address</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" name="address" id="address" placeholder="Address"
-                                              ></textarea>
+                                    ></textarea>
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Age</label>
                                 <div class="col-sm-10">
                                     <input name="age" type="text" class="form-control" id="age" placeholder="Age">
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Driver Type</label>
                                 <div class="col-sm-10">
-                                    <select name="drivertype" class="form-control">
-                                        <option value="1">Full Time</option>
-                                        <option value="2">Part Time</option>
-                                    </select>
+
+                                    <label class="checkbox-inline">
+                                        <input name="drivertype[]" type="checkbox" value="1"> Full Time
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="drivertype[]" type="checkbox" value="2"> Part Time
+                                    </label>
+
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Expertise</label>
                                 <div class="col-sm-10">
-                                    <select name="expertise" class="form-control">
-                                        <option value="1">Manuel</option>
-                                        <option value="2">Automatic</option>
-                                        <option value="3">Premium</option>
-                                    </select>
+                                    <label class="checkbox-inline">
+                                        <input name="expertise[]" type="checkbox" value="1"> Manuel
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="expertise[]" type="checkbox" value="2"> Automatic
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="expertise[]" type="checkbox" value="3"> Premium
+                                    </label>
                                 </div>
                             </div>
 
@@ -106,11 +144,15 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Document Type</label>
                                 <div class="col-sm-10">
-                                    <select name="document" class="form-control">
-                                        <option value="1">Driving Licence</option>
-                                        <option value="2">Pan Card</option>
-                                        <option value="3">Aadhar</option>
-                                    </select>
+                                    <label class="checkbox-inline">
+                                        <input name="document[]" type="checkbox" value="1"> Driving Licence
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="document[]" type="checkbox" value="2"> Pan Card
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="document[]" type="checkbox" value="3"> Aadhar
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -123,10 +165,13 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Driver Assignment</label>
                                 <div class="col-sm-10">
-                                    <select name="driverassignment" class="form-control">
-                                        <option value="1">Monthly</option>
-                                        <option value="2">On Demand</option>
-                                    </select>
+
+                                    <label class="checkbox-inline">
+                                        <input name="driverassignment[]" type="checkbox" value="1"> Monthly
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input name="driverassignment[]" type="checkbox" value="2"> On Demand
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group row">

@@ -32,9 +32,24 @@ class DriverController extends Controller
     {
         return [0=>"", 1 => "Driving Licence", 2=> "Pan Card",3=>"Aadhar"];
     }
-    public function drivingAssignment()
+    public function driverAssignment()
     {
         return [0=>"", 1 => "Monthly", 2=> "On Demand"];
+    }
+
+    public function jsonToString($json, $values){
+        $data  = [];
+        $jsonObj = json_decode($json);
+
+        if ($jsonObj) {
+            foreach ($jsonObj as $item){
+                $data[] = $values[$item];
+            }
+
+            return implode(',', $data);
+        }
+
+        return "";
     }
 
     /**
@@ -55,15 +70,16 @@ class DriverController extends Controller
             $data[$key]['email'] = $value->getEmail();
             $data[$key]['address'] = json_decode($value->getAddress());
             $data[$key]['phone'] = json_decode($value->getPhone());
-            $data[$key]['age'] = $value->getAge();
-            $data[$key]['drivertype'] = $this->driverType()[$value->getDriverType()];
-            $data[$key]['expertise'] = $this->expertise()[$value->getExpertise()];
-            $data[$key]['pcc'] = $this->pcc()[$value->getPccSubmitted()];
-            $data[$key]['document'] = $this->document()[$value->getDocument()];
-            $data[$key]['docnumber'] = $value->getDocNumber();
-            $data[$key]['driverassignment'] = $this->drivingAssignment()[$value->getDriverAssignment()];
-            $data[$key]['note'] = $value->getNote();
-            $data[$key]['status'] = $value->getStatus();
+//            $data[$key]['age'] = $value->getAge();
+//            $data[$key]['drivertype'] = $this->driverType()[$value->getDriverType()];
+            //$data[$key]['expertise'] = $this->expertise()[$value->getExpertise()];
+//            $data[$key]['expertise'] = $value->getExpertise();
+//            $data[$key]['pcc'] = $this->pcc()[$value->getPccSubmitted()];
+//            $data[$key]['document'] = $this->document()[$value->getDocument()];
+//            $data[$key]['docnumber'] = $value->getDocNumber();
+//            $data[$key]['driverassignment'] = $this->drivingAssignment()[$value->getDriverAssignment()];
+//            $data[$key]['note'] = $value->getNote();
+//            $data[$key]['status'] = $value->getStatus();
 
 
         }
@@ -93,14 +109,15 @@ class DriverController extends Controller
             $driver->setEmail($request->request->get('email'));
             $driver->setAddress(json_encode($request->request->get('address')));
             $driver->setPhone(json_encode($request->request->get('phone')));
+            $driver->setLocation($request->request->get('location'));
             $driver->setAge($request->request->get('age'));
-            $driver->setDriverType($request->request->get('drivertype'));
-            $driver->setExpertise($request->request->get('expertise'));
+            $driver->setDriverType(json_encode($request->request->get('drivertype')));
+            $driver->setExpertise(json_encode($request->request->get('expertise')));
             $driver->setPccSubmitted($request->request->get('pcc'));
-            $driver->setDocument($request->request->get('document'));
+            $driver->setDocument(json_encode($request->request->get('document')));
             if ($request->request->get('docnumber') != '')
             $driver->setDocNumber($request->request->get('docnumber'));
-            $driver->setDriverAssignment($request->request->get('driverassignment'));
+            $driver->setDriverAssignment(json_encode($request->request->get('driverassignment')));
             $driver->setNote($request->request->get('note'));
             $driver->setStatus(1);
 
@@ -147,15 +164,16 @@ class DriverController extends Controller
 
             $driver->setFullName($request->request->get('name'));
             $driver->setEmail($request->request->get('email'));
+            $driver->setLocation($request->request->get('location'));
             $driver->setAddress(json_encode($request->request->get('address')));
             $driver->setPhone(json_encode($request->request->get('phone')));
             $driver->setAge($request->request->get('age'));
-            $driver->setDriverType($request->request->get('drivertype'));
-            $driver->setExpertise($request->request->get('expertise'));
+            $driver->setDriverType(json_encode($request->request->get('drivertype')));
+            $driver->setExpertise(json_encode($request->request->get('expertise')));
             $driver->setPccSubmitted($request->request->get('pcc'));
-            $driver->setDocument($request->request->get('document'));
+            $driver->setDocument(json_encode($request->request->get('document')));
             $driver->setDocNumber($request->request->get('docnumber'));
-            $driver->setDriverAssignment($request->request->get('driverassignment'));
+            $driver->setDriverAssignment(json_encode($request->request->get('driverassignment')));
             $driver->setNote($request->request->get('note'));
             $driver->setStatus(1);
 
@@ -179,15 +197,16 @@ class DriverController extends Controller
         $driverObj = $repository->find($id);
         $data['name'] = $driverObj->getFullName();
         $data['email'] = $driverObj->getEmail();
+        $data['location'] = $driverObj->getLocation();
         $data['address'] = json_decode($driverObj->getAddress());
         $data['phone'] = json_decode($driverObj->getPhone());
         $data['age'] = $driverObj->getAge();
-        $data['drivertype'] = $driverObj->getDriverType();
-        $data['expertise'] = $driverObj->getExpertise();
+        $data['drivertype'] = json_decode($driverObj->getDriverType());
+        $data['expertise'] = json_decode($driverObj->getExpertise());
         $data['pcc'] = $driverObj->getPccSubmitted();
-        $data['document'] = $driverObj->getDocument();
+        $data['document'] = json_decode($driverObj->getDocument());
         $data['docnumber'] = $driverObj->getDocNumber();
-        $data['driverassignment'] = $driverObj->getDriverAssignment();
+        $data['driverassignment'] = json_decode($driverObj->getDriverAssignment());
         $data['note'] = $driverObj->getNote();
         $data['status'] = $driverObj->getStatus();
 
@@ -205,15 +224,16 @@ class DriverController extends Controller
         $driverObj = $repository->find($id);
         $data['name'] = $driverObj->getFullName();
         $data['email'] = $driverObj->getEmail();
+        $data['location'] = $driverObj->getLocation();
         $data['address'] = json_decode($driverObj->getAddress());
         $data['phone'] = json_decode($driverObj->getPhone());
         $data['age'] = $driverObj->getAge();
-        $data['drivertype'] = $this->driverType()[$driverObj->getDriverType()];
-        $data['expertise'] = $this->expertise()[$driverObj->getExpertise()];
+        $data['drivertype'] =$this->jsonToString($driverObj->getDriverType(), $this->driverType()) ;
+        $data['expertise'] =($this->jsonToString($driverObj->getExpertise(), $this->expertise()));
         $data['pcc'] = $this->pcc()[$driverObj->getPccSubmitted()];
-        $data['document'] = $this->document()[$driverObj->getDocument()];
+        $data['document'] =($this->jsonToString($driverObj->getDocument(), $this->document()));
         $data['docnumber'] = $driverObj->getDocNumber();
-        $data['driverassignment'] = $this->drivingAssignment()[$driverObj->getDriverAssignment()];
+        $data['driverassignment'] = ($this->jsonToString($driverObj->getDriverAssignment(), $this->driverAssignment()));
         $data['note'] = $driverObj->getNote();
         $data['status'] = $driverObj->getStatus();
 

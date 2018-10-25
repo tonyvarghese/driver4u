@@ -122,24 +122,6 @@ class CustomerController extends Controller
     public function editAction(Request $request, $id)
     {
         
-//        $form = $this->createForm(PostType::class, $post);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $post->setSlug($slugger->slugify($post->getTitle()));
-//            $this->getDoctrine()->getManager()->flush();
-//
-//            $this->addFlash('success', 'post.updated_successfully');
-//
-//            return $this->redirectToRoute('admin_post_edit', ['id' => $post->getId()]);
-//        }
-//
-//        return $this->render('admin/blog/edit.html.twig', [
-//            'post' => $post,
-//            'form' => $form->createView(),
-//        ]);
-       
-
         if ($request->request->has('submit')) {
             
             $entityManager = $this->getDoctrine()->getManager();
@@ -160,10 +142,6 @@ class CustomerController extends Controller
             
             $entityManager->flush();
         
-            // Flash messages are used to notify the user about the result of the
-            // actions. They are deleted automatically from the session as soon
-            // as they are accessed.
-            // See https://symfony.com/doc/current/book/controller.html#flash-messages
             $this->addFlash('success', 'Customer updated successfully');
 
             return $this->redirectToRoute('customer_edit', ['id' => $id]);

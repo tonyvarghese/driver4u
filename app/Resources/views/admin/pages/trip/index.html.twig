@@ -34,6 +34,7 @@
                                         <th scope="col">Customer</th>
                                         <th scope="col"> Driver</th>
                                         <th scope="col" class=""> Scheduled Time</th>
+                                        <th scope="col" class=""> Location</th>
                                         <th scope="col" class=""> Rate</th>
                                         <th scope="col" class=""> Discount</th>
                                         <th scope="col" class=""> Status</th>
@@ -44,7 +45,9 @@
                                     {% for trip in trips %}
                                         <tr>
                                             <td>{{ trip.customer.fullName }}</td>
-                                            <td>{{ trip.driver.email }}</td>
+                                            <td>{{ trip.driver.fullName }}</td>
+                                            <td>{{ trip.scheduledTime|date('d/m/Y h:m A') }}</td>
+                                            <td>{{ trip.location }}</td>
                                             <td>{{ trip.rate }}</td>
                                             <td>{{ trip.discount }}</td>
                                             <td>{{ status[trip.status] }}</td>
@@ -54,7 +57,7 @@
                                                     <a href="{{ path('driver_view', {id: trip.id}) }}" class="btn btn-primary btn-sm">
                                                         <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </a>
-                                                    <a href="{{ path('customer_edit', {id: trip.id}) }}" class="btn btn-sm btn-success">
+                                                    <a href="{{ path('trip_edit', {id: trip.id}) }}" class="btn btn-sm btn-success">
                                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                                     </a>
 

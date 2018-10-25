@@ -36,19 +36,26 @@ class TripController extends Controller
         $em = $this->getDoctrine()->getManager();
         $trips = $em->getRepository(Trip::class)->findAll();
         
+//        $customer = $em->getRepository(Customer::class)->find($value->getCustomer());
+//        if (!$customer) {
+//            throw $this->createNotFoundException(
+//                'No customer found for id '.$id
+//            );
+//        }        
+        
 //        $data = [];
 //        foreach ($trips as $key => $value) {
 //            $data[$key]['id'] = $value->getId();
-//            $data[$key]['customer'] = $value->getCustomerId();
-//            $data[$key]['vehicle'] = $value->getDriverId();
-//            $data[$key]['driver'] = json_decode($value->getPhone());
-//            $data[$key]['stime'] = json_decode($value->getAddress());
-//            $data[$key]['rate'] = $value->getUsualTrip();
-//            $data[$key]['discount'] = $value->getUsualTrip();
-//            $data[$key]['status'] = $value->getUsualTrip();
+//            $data[$key]['customer'] = $value->getCustomer()->email;
+//            $data[$key]['vehicle'] = $value->getVehicleId();
+//            $data[$key]['driver'] = $value->getDriver();
+//            $data[$key]['stime'] = $value->getScheduledTime();
+//            $data[$key]['rate'] = $value->getRate();
+//            $data[$key]['discount'] = $value->getDiscount();
+//            $data[$key]['status'] = $value->getStatus();
 //        }
-        
-        //print_r($data); die;
+//        
+//       print_r($data); die;
 
         return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
     }
@@ -71,9 +78,15 @@ class TripController extends Controller
             
             $scheduledTime = new \DateTime($request->request->get('stime'));
             //var_dump($scheduledTime); die;
+            
+            
+            $em = $this->getDoctrine()->getManager();
+            $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
+            $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
+            
 
-            $trip->setCustomerId($request->request->get('customer'));
-            $trip->setDriverId($request->request->get('driver'));
+            $trip->setCustomer($customer);
+            $trip->setDriver($driver);
             $trip->setVehicleId($request->request->get('vehicle'));
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus(1);

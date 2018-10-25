@@ -32,7 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Customer</th>
-                                        <th scope="col"></i> Driver</th>
+                                        <th scope="col"> Driver</th>
                                         <th scope="col" class=""> Scheduled Time</th>
                                         <th scope="col" class=""> Rate</th>
                                         <th scope="col" class=""> Discount</th>
@@ -44,8 +44,7 @@
                                     {% for trip in trips %}
                                         <tr>
                                             <td>{{ trip.customer.fullName }}</td>
-                                            <td>{{ trip.driver.fullName }}</td>
-                                            <td>{{ trip.scheduledTime|date('d/m/Y h:m A') }}</td>
+                                            <td>{{ trip.driver.email }}</td>
                                             <td>{{ trip.rate }}</td>
                                             <td>{{ trip.discount }}</td>
                                             <td>{{ status[trip.status] }}</td>

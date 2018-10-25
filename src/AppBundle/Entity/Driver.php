@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,12 +17,17 @@ use Doctrine\ORM\Mapping as ORM;
 class Driver
 {
     
-    /**
-     * @ORM\OneToMany(targetEntity="Trip", mappedBy="driver")
+
+   /**
+     * @var Trip[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Trip",
+     *      mappedBy="driver",
+     *      orphanRemoval=true)
      */
     private $trips;
 
-    
     /**
      * @var int
      *
@@ -127,6 +133,16 @@ class Driver
 
     private $status;
 
+    
+    public function __construct() {
+        $this->trips = new ArrayCollection();
+    }
+    
+    public function getTrips()
+    {
+        return $this->trips;
+    } 
+    
     /**
      * Get id
      *

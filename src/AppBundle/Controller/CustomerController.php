@@ -22,7 +22,7 @@ class CustomerController extends Controller
      * @Route("/admin/customers", name="customer_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $customers = $em->getRepository(Customer::class)->findAll();
@@ -37,9 +37,18 @@ class CustomerController extends Controller
             $data[$key]['usualTrip'] = $value->getUsualTrip();
         }
         
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
+        
         //print_r($data); die;
 
-        return $this->render('admin/pages/customer/index.html.twig', ['customers' => $data]);
+        return $this->render('admin/pages/customer/index.html.twig', ['customers' => $pagination]);
     }
     
         /**

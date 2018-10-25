@@ -19,8 +19,9 @@ class TripController extends Controller
     public function statusCodes(){
         return [
             1 => 'Scheduled',
-            2 => 'Completed',
-            3 => 'Cancelled'
+            2 => 'In Progress',
+            3 => 'Completed',
+            4 => 'Cancelled'
         ];
     }
 
@@ -76,9 +77,7 @@ class TripController extends Controller
         
         if ($request->request->has('submit')) {
             
-            $scheduledTime = new \DateTime($request->request->get('stime'));
-            //var_dump($scheduledTime); die;
-            
+            $scheduledTime = new \DateTime($request->request->get('stime'));            
             
             $em = $this->getDoctrine()->getManager();
             $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
@@ -91,6 +90,7 @@ class TripController extends Controller
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus(1);
             $trip->setRate($request->request->get('rate'));
+            $trip->setLocation($request->request->get('location'));
             $trip->setDiscount($request->request->get('discount'));
             $trip->setAmountCollected(0);
             $trip->setCreatedAt(new \DateTime("now"));
@@ -117,4 +117,88 @@ class TripController extends Controller
 
         return $this->render('admin/pages/trip/new.html.twig', ['drivers' => $drivers, 'customers' => $customers]);
     }    
+    
+ /**
+     * Displays a form to edit an existing Trip entity.
+     *
+     * @Route("/admin/trip/edit/{id}", requirements={"id": "\d+"}, name="trip_edit")
+     * @Method({"GET", "POST"})
+     */
+    public function editAction(Request $request, $id)
+    {
+        
+        if ($request->request->has('submit')) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $trip = $em->getRepository(Trip::class)->find($id);
+            if (!$trip) {
+                throw $this->createNotFoundException(
+                    'No record found for id '.$id
+                );
+            }
+            
+            
+            $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
+            $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
+            $scheduledTime = new \DateTime($request->request->get('stime'));
+            
+            $trip->setCustomer($customer);
+            $trip->setDriver($driver);
+            $trip->setVehicleId($request->request->get('vehicle'));
+            $trip->setScheduledTime($scheduledTime);
+            $trip->setStatus($request->request->get('status'));
+            $trip->setRate($request->request->get('rate'));
+            $trip->setLocation($request->request->get('location'));
+            $trip->setDiscount($request->request->get('discount'));
+//            $trip->setAmountCollected(0);
+//            $trip->setCreatedAt(new \DateTime("now"));
+//            $trip->setUpdatedAt(new \DateTime("now"));
+
+            
+            $em->flush();
+        
+            $this->addFlash('success', 'Trip updated successfully');
+
+            return $this->redirectToRoute('trip_edit', ['id' => $id]);
+        }
+        
+//        $repository = $this->getDoctrine()->getRepository(Trip::class);
+//        $tripObj = $repository->find($id);
+//        $data['customer'] = $tripObj->getCustomer();
+//        $data['driver'] = $tripObj->getDriver();
+//        $data['scheduledTime'] = json_decode($tripObj->getAddress());
+//        $data['phone'] = json_decode($tripObj->getPhone());
+//        $data['usualTrip'] = $tripObj->getUsualTrip();
+//        $data['preferredDriver'] = $tripObj->getPreferredDriver();
+        
+        
+//        $em = $this->getDoctrine()->getManager();
+//        $qb = $em->createQueryBuilder();
+//
+//        // this returns an array
+//        $drivers = $qb->select(array('u.id', 'u.fullName'))
+//            ->from('AppBundle:DriverDetails', 'd')
+//            ->join('AppBundle:User', 'u')
+//            ->where('d.uid = u.id')
+//            //->andWhere('e.user = :userName')
+////            ->setParameter('userName', 'scott')
+//            ->andWhere('u.roles like :roles')
+//            ->setParameter('roles',  '%ROLE_DRIVER%')
+//            ->orderBy('u.id', 'ASC')
+//            ->getQuery()
+//            ->getResult();
+
+        
+        $repository = $this->getDoctrine()->getRepository(Trip::class);
+        $trip = $repository->find($id);        
+                
+        $em = $this->getDoctrine()->getManager();
+        $drivers = $em->getRepository(Driver::class)->findAll();
+        $customers = $em->getRepository(Customer::class)->findAll();
+
+
+        return $this->render('admin/pages/trip/edit.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'status' => $this->statusCodes()]);
+        
+    }   
+    
 }

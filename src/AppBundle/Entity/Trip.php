@@ -56,6 +56,13 @@ class Trip
     private $scheduledTime;
 
     /**
+     * @var location
+     *
+     * @ORM\Column(name="location", type="string", nullable=true)
+     */
+    private $location;
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="rate", type="integer")
@@ -73,7 +80,7 @@ class Trip
     /**
      * @var int
      *
-     * @ORM\Column(name="status", type="smallint",options={"comment":"1:Scheduled, 2:Completed, 3:Cancelled"})
+     * @ORM\Column(name="status", type="smallint",options={"comment":"1:Scheduled, 2:In Progress, 3:Completed, 4:Cancelled"})
      */
     private $status;
 
@@ -182,6 +189,31 @@ class Trip
         return $this->scheduledTime;
     }
 
+
+    /**
+     * Set Location
+     *
+     * @param string $location
+     *
+     * @return Trip
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get rate
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+    
     /**
      * Set rate
      *

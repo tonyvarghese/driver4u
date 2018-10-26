@@ -70,6 +70,7 @@ class DriverController extends Controller
             $data[$key]['email'] = $value->getEmail();
             $data[$key]['address'] = json_decode($value->getAddress());
             $data[$key]['phone'] = json_decode($value->getPhone());
+            $data[$key]['doj'] = ($value->getDoj());
 //            $data[$key]['age'] = $value->getAge();
 //            $data[$key]['drivertype'] = $this->driverType()[$value->getDriverType()];
             //$data[$key]['expertise'] = $this->expertise()[$value->getExpertise()];
@@ -104,13 +105,14 @@ class DriverController extends Controller
     {
         $driver = new Driver();
         if ($request->request->has('submit')) {
-
+            
             $driver->setFullName($request->request->get('name'));
             $driver->setEmail($request->request->get('email'));
             $driver->setAddress(json_encode($request->request->get('address')));
             $driver->setPhone(json_encode($request->request->get('phone')));
             $driver->setLocation($request->request->get('location'));
             $driver->setAge($request->request->get('age'));
+            $driver->setDoj(new \DateTime($request->request->get('doj')));
             $driver->setDriverType(json_encode($request->request->get('drivertype')));
             $driver->setExpertise(json_encode($request->request->get('expertise')));
             $driver->setPccSubmitted($request->request->get('pcc'));
@@ -120,6 +122,7 @@ class DriverController extends Controller
             $driver->setDriverAssignment(json_encode($request->request->get('driverassignment')));
             $driver->setNote($request->request->get('note'));
             $driver->setStatus(1);
+            $driver->setCreatedAt(new \DateTime("now"));
 
             $validator = $this->get('validator');
             $errors = $validator->validate($driver);
@@ -201,6 +204,7 @@ class DriverController extends Controller
         $data['address'] = json_decode($driverObj->getAddress());
         $data['phone'] = json_decode($driverObj->getPhone());
         $data['age'] = $driverObj->getAge();
+        $data['doj'] = $driverObj->getDoj();
         $data['drivertype'] = json_decode($driverObj->getDriverType());
         $data['expertise'] = json_decode($driverObj->getExpertise());
         $data['pcc'] = $driverObj->getPccSubmitted();
@@ -228,6 +232,7 @@ class DriverController extends Controller
         $data['address'] = json_decode($driverObj->getAddress());
         $data['phone'] = json_decode($driverObj->getPhone());
         $data['age'] = $driverObj->getAge();
+        $data['doj'] = $driverObj->getDoj();
         $data['drivertype'] =$this->jsonToString($driverObj->getDriverType(), $this->driverType()) ;
         $data['expertise'] =($this->jsonToString($driverObj->getExpertise(), $this->expertise()));
         $data['pcc'] = $this->pcc()[$driverObj->getPccSubmitted()];

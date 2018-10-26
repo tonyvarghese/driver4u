@@ -25,6 +25,10 @@ class Customer
      */
     private $trips;
         
+    /**
+     * @ORM\OneToMany(targetEntity="Address", mappedBy="userId", orphanRemoval=true)
+     */
+    private $addresses;
     
     /**
      * @var int
@@ -57,12 +61,6 @@ class Customer
      */
     private $location;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string")
-     */
-    private $address;
 
     /**
      * @var string
@@ -100,14 +98,35 @@ class Customer
      */
     private $status;
     
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime" )
+     */
+    private $createdAt;    
+    
     
     public function __construct() {
         $this->trips = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
     
     public function getTrips()
     {
         return $this->trips;
+    }    
+
+    
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }   
+    
+    public function removeAddress(Address $address)
+    {
+        $address->setCustomer(null);
+        $this->addresses->removeElement($address);
     }    
     
     /**
@@ -162,23 +181,6 @@ class Customer
     {
         return $this->location;
     }
-
-
-
-
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * @param string $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-    
 
     public function getPhone()
     {
@@ -301,6 +303,31 @@ class Customer
     public function setStatus($status)
     {
         $this->status = $status;
+    }    
+    
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Lead
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }    
 }
 

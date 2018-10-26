@@ -35,6 +35,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Phone</th>
+                                <th scope="col">DOJ</th>
                                 <th scope="col" style="width: 215px;">Action</th>
                             </tr>
                             </thead>
@@ -48,7 +49,9 @@
                                     <td>{{ driver.email }}</td>
                                     <td>{{ driver.address|nl2br }}</td>
                                     <td>{{ driver.phone }}</td>
+                                    <td>{{ driver.doj|date('m/d/Y') }}</td>
 
+                                  
                                     <td ><a href="{{ path('driver_view', {id: driver.id}) }}" class="btn btn-primary btn-sm">
                                             <i class="fa fa-eye" aria-hidden="true"></i> View</a>
                                         <a href="{{ path('driver_edit', {id: driver.id}) }}" class="btn btn-success btn-sm">

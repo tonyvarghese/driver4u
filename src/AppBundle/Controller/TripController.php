@@ -116,7 +116,7 @@ class TripController extends Controller
 
 
         return $this->render('admin/pages/trip/new.html.twig', ['drivers' => $drivers, 'customers' => $customers]);
-    }    
+    }
     
  /**
      * Displays a form to edit an existing Trip entity.

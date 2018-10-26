@@ -78,10 +78,16 @@ class Driver
      *
      * @ORM\Column(name="age", type="integer", length=20, nullable=true)
      */
-
-
     private $age;
 
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="doj", type="datetime", options={"comment":"Date of Joining"})
+     */
+    private $doj;
+    
     /**
      * @var string
      *
@@ -136,9 +142,15 @@ class Driver
      *
      * @ORM\Column(type="smallint",options={"default" : 0, "comment":"0:Inactive, 1:Active"})
      */
-
     private $status;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime" )
+     */
+    private $createdAt;
+    
     
     public function __construct() {
         $this->trips = new ArrayCollection();
@@ -464,5 +476,53 @@ class Driver
         return $this->note;
     }
 
-}
 
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Lead
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }    
+    
+
+    /**
+     * Set DOJ
+     *
+     * @param \DateTime $doj
+     *
+     * @return Driver
+     */
+    public function setDoj($doj)
+    {
+        $this->doj = $doj;
+
+        return $this;
+    }
+
+    /**
+     * Get doj
+     *
+     * @return \DateTime
+     */
+    public function getDoj()
+    {
+        return $this->doj;
+    }        
+}

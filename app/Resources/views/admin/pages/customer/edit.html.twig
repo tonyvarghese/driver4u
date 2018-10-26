@@ -39,27 +39,101 @@
                                     <div class="col-sm-10">
                                         <input name="email" type="email" class="form-control" id="inputPassword3" placeholder="Email" value="{{data.email}}">
                                     </div>
-                                </div>
+                                </div>                
+
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Phone</label>
-                                    <div class="col-sm-10">
-                                        <input name="phone" type="number" class="form-control" placeholder="Phone" value="{{data.phone}}">
+                                    <div class="col-sm-10" id="phone-wrapper">
+
+                                        <div class="input-group">
+                                            <input required name="phone[]" type="number" class="form-control" placeholder="Phone" value="{{data.phone[0]}}">
+                                            <div style="cursor: pointer;" id="add_phone" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                        </div>
+
+                                        {% for key, phone in data.phone %}                                            
+                                            {% if key > 0 %}
+
+                                                <div class="input-group">
+                                                    <input required name="phone[]" type="number" class="form-control" placeholder="Phone" value="{{phone}}">
+                                                    <div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                                                </div>
+
+                                            {% endif %}                                            
+                                        {% endfor %}                                                
+
                                     </div>
                                 </div>
 
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Location</label>
-                            <div class="col-sm-10">
-                                <input name="location" type="text" class="form-control" id="age" placeholder="Location">
-                            </div>
-                        </div>
 
                                 <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Location</label>
+                                    <div class="col-sm-10">
+                                        <input name="location" type="text" class="form-control" id="age" placeholder="Location" value="{{data.location}}">
+                                    </div>
+                                </div>
+
+          {#                      <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Address</label>
                                     <div class="col-sm-10">
                                         <textarea name="address" placeholder="Address" class="form-control" id="exampleFormControlTextarea1" rows="3"> {{data.address}}</textarea>
                                     </div>
-                                </div>     
+                                </div>#}     
+          
+                                <div class="form-group row">
+                                    <div class="form-inline">
+                                        <label class="col-sm-2 col-form-label">Address</label>
+
+                                        <div class="col-sm-10" id="address-wrapper">   
+                                            
+                                            <div class="input-group">
+                                                <div class="form-group" style="width: 25%">
+                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{{data.addresses[0].houseNo}}">
+                                                </div>
+                                                <div class="form-group" style="width: 25%">
+                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{{data.addresses[0].street}}">
+                                                </div>
+                                                <div class="form-group" style="width: 25%">
+                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{{data.addresses[0].city}}">
+                                                </div>
+                                                <div class="form-group" style="width: 24%">
+                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{{data.addresses[0].landmark}}">
+                                                </div>           
+
+                                                <p class="form-control-static">&nbsp;</p>
+                                                <div style="cursor: pointer; border-left: 1px solid #ccc;" id="add_address" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>                                            
+
+                                            {% for key, address in data.addresses %}                                            
+                                                {% if key > 0 %}
+
+                                                    <div class="input-group">
+                                                        <div class="form-group" style="width: 25%">
+                                                            <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{{address.HouseNo}}">
+                                                        </div>
+                                                        <div class="form-group" style="width: 25%">
+                                                            <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{{address.street}}">
+                                                        </div>
+                                                        <div class="form-group" style="width: 25%">
+                                                            <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{{address.city}}">
+                                                        </div>
+                                                        <div class="form-group" style="width: 24%">
+                                                            <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{{address.landmark}}">
+                                                        </div>           
+
+                                                        <p class="form-control-static">&nbsp;</p>
+                                                        <div style="cursor: pointer; border-left: 1px solid #ccc;" id="remove_address" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                                                    </div>
+
+                                                {% endif %}                                            
+                                            {% endfor %}    
+                                        
+
+                                        </div>
+
+                                    </div>
+                                </div>
+          
+                                    
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Usual Trip</label>
                                     <div class="col-sm-10">
@@ -86,13 +160,13 @@
 
                                             <option value="">--Select--</option>
 
-                                            
+
                                             {% for driver in drivers %}
 
                                                 <option value="{{ driver.id }}">{{ driver.fullName }}</option>
 
                                             {% endfor %}
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -116,5 +190,64 @@
     </div>
 
     <!-- /.row -->
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function () {
+
+             addPhone();
+             addAddress();
+
+        });
+        
+        function addAddress(){
+            //Address add/remove
+            var wrapperAddress = $('#address-wrapper'); //Input field wrapper
+            var fieldHTML = '<div class="input-group"><div class="form-group" style="width: 25%"><input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;"></div><div class="form-group" style="width: 25%"><input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;"></div><div class="form-group" style="width: 25%"><input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;"></div><div class="form-group" style="width: 24%"><input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;"></div><p class="form-control-static">&nbsp;</p><div style="cursor: pointer; border-left: 1px solid #ccc;" id="remove_address" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+
+            //Once add button is clicked
+            $($('#add_address')).click(function () {
+                //Check maximum number of input fields
+                $(wrapperAddress).append(fieldHTML); //Add field html
+            });
+
+            //Once remove button is clicked
+            $(wrapperAddress).on('click', '#remove_address', function (e) {
+                e.preventDefault();
+                $(this).parent('.input-group').remove(); //Remove field html
+            });            
+        }
+        
+        function addPhone(){
+            var maxField = 20; //Input fields increment limitation
+            var wrapper = $('#phone-wrapper'); //Input field wrapper
+            var fieldHTML = '<div class="input-group"><input required name="phone[]" type="number" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+            var x = 1; //Initial field counter is 1
+
+            //Once add button is clicked
+            $($('#add_phone')).click(function () {
+                //Check maximum number of input fields
+                if (x < maxField) {
+                    x++; //Increment field counter
+                    $(wrapper).append(fieldHTML); //Add field html
+                }
+            });
+
+            //Once remove button is clicked
+            $(wrapper).on('click', '#remove_phone', function (e) {
+                e.preventDefault();
+                $(this).parent('.input-group').remove(); //Remove field html
+            });            
+        }
+
+
+    </script>
 
 {% endblock %}

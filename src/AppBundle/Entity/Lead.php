@@ -281,7 +281,7 @@ class Lead
     }
 
     /**
-     * Get createdAt
+     * Get followupDate
      *
      * @return \DateTime
      */

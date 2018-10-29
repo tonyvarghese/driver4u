@@ -2,180 +2,262 @@
 
 {% block main %}
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Driver</h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Driver</h1>
+        </div>
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.col-lg-12 -->
-</div>
-<div class="row">
-    <div class="col-lg-10">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Add Driver
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-10">
-                        <form method="post">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Add Driver
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <form method="post">
 
-                            {% for flashMessage in app.session.flashbag.get('success') %}
+                                {% for flashMessage in app.session.flashbag.get('success') %}
 
-                                <div class="alert alert-success" role="alert">
-                                    {{ flashMessage }}
-                                </div>
-
-                            {% endfor %}
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Name</label>
-                                <div class="col-sm-10">
-                                    <input name="name" type="text" class="form-control" id="name" placeholder="Name"
-                                           required>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    <input name="email" type="email" class="form-control" id="name" placeholder="Email"
-                                    >
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Phone Number</label>
-                                <div class="col-sm-10">
-                                    <input name="phone" type="text" class="form-control" id="phone"
-                                           placeholder="Phone Number" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Location</label>
-                                <div class="col-sm-10">
-                                    <input name="location" type="text" class="form-control" id="age" placeholder="Location">
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="exampleTextarea" class="col-sm-2 col-form-label">Address</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" name="address" id="address" placeholder="Address"
-                                    ></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Age</label>
-                                <div class="col-sm-10">
-                                    <input name="age" type="text" class="form-control" id="age" placeholder="Age">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Date of Joining</label>
-                                <div class="col-sm-10">
-                                    <input name="doj" type="text" class="form-control datepicker" id="followup" placeholder="Date of Joining">
-                                </div>
-                            </div>                            
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Driver Type</label>
-                                <div class="col-sm-10">
-
-                                    <label class="checkbox-inline">
-                                        <input name="drivertype[]" type="checkbox" value="1"> Full Time
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input name="drivertype[]" type="checkbox" value="2"> Part Time
-                                    </label>
-
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Expertise</label>
-                                <div class="col-sm-10">
-                                    <label class="checkbox-inline">
-                                        <input name="expertise[]" type="checkbox" value="1"> Manuel
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input name="expertise[]" type="checkbox" value="2"> Automatic
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input name="expertise[]" type="checkbox" value="3"> Premium
-                                    </label>
-                                </div>
-                            </div>
-
-
-                            <div class="form-group row">
-                                <label class="col-form-label col-sm-2 pt-0">PCC Submitted</label>
-                                <div class="col-sm-10">
-                                    <div class="radio">
-                                        <label class="col-form-label col-sm-2 pt-0">
-                                            <input type="radio" name="pcc" id="yes" value="1"
-                                                   checked>Yes
-                                        </label>
-                                        <label class="col-form-label col-sm-2 pt-0">
-                                            <input type="radio" name="pcc" id="no"
-                                                   value="0">No
-                                        </label>
+                                    <div class="alert alert-success" role="alert">
+                                        {{ flashMessage }}
                                     </div>
 
+                                {% endfor %}
 
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input name="name" type="text" class="form-control" id="name" placeholder="Name"
+                                               required>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input name="email" type="email" class="form-control" id="name" placeholder="Email"
+                                               >
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Phone</label>
+                                    <div class="col-sm-10" id="phone-wrapper">
+
+                                        <div class="input-group">
+                                            <input required name="phone[]" type="number" class="form-control" placeholder="Phone">
+                                            <div style="cursor: pointer;" id="add_phone" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Location</label>
+                                    <div class="col-sm-10">
+                                        <input name="location" type="text" class="form-control" id="age" placeholder="Location">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="form-inline">
+                                        <label class="col-sm-2 col-form-label">Address</label>
+
+                                        <div class="col-sm-10" id="address-wrapper">                                         
+
+                                            <div class="input-group">
+                                                <div class="form-group" style="width: 25%">
+                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;">
+                                                </div>
+                                                <div class="form-group" style="width: 25%">
+                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;">
+                                                </div>
+                                                <div class="form-group" style="width: 25%">
+                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;">
+                                                </div>
+                                                <div class="form-group" style="width: 24%">
+                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;">
+                                                </div>           
+
+                                                <p class="form-control-static">&nbsp;</p>
+                                                <div style="cursor: pointer; border-left: 1px solid #ccc;" id="add_address" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Age</label>
+                                    <div class="col-sm-10">
+                                        <input name="age" type="text" class="form-control" id="age" placeholder="Age">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Date of Joining</label>
+                                    <div class="col-sm-10">
+                                        <input name="doj" type="text" class="form-control datepicker" id="followup" placeholder="Date of Joining">
+                                    </div>
+                                </div>                            
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Driver Type</label>
+                                    <div class="col-sm-10">
+
+                                        <label class="checkbox-inline">
+                                            <input name="drivertype[]" type="checkbox" value="1"> Full Time
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input name="drivertype[]" type="checkbox" value="2"> Part Time
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Expertise</label>
+                                    <div class="col-sm-10">
+                                        <label class="checkbox-inline">
+                                            <input name="expertise[]" type="checkbox" value="1"> Manuel
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input name="expertise[]" type="checkbox" value="2"> Automatic
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input name="expertise[]" type="checkbox" value="3"> Premium
+                                        </label>
+                                    </div>
+                                </div>
 
 
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Document Type</label>
-                                <div class="col-sm-10">
-                                    <label class="checkbox-inline">
-                                        <input name="document[]" type="checkbox" value="1"> Driving Licence
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input name="document[]" type="checkbox" value="2"> Pan Card
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input name="document[]" type="checkbox" value="3"> Aadhar
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Document Number</label>
-                                <div class="col-sm-10">
-                                    <input name="docnumber" type="text" class="form-control" id="name"
-                                           placeholder="Document Number">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Driver Assignment</label>
-                                <div class="col-sm-10">
+                                <div class="form-group row">
+                                    <label class="col-form-label col-sm-2 pt-0">PCC Submitted</label>
+                                    <div class="col-sm-10">
+                                        <div class="radio">
+                                            <label class="col-form-label col-sm-2 pt-0">
+                                                <input type="radio" name="pcc" id="yes" value="1"
+                                                       checked>Yes
+                                            </label>
+                                            <label class="col-form-label col-sm-2 pt-0">
+                                                <input type="radio" name="pcc" id="no"
+                                                       value="0">No
+                                            </label>
+                                        </div>
 
-                                    <label class="checkbox-inline">
-                                        <input name="driverassignment[]" type="checkbox" value="1"> Monthly
-                                    </label>
-                                    <label class="checkbox-inline">
-                                        <input name="driverassignment[]" type="checkbox" value="2"> On Demand
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="exampleTextarea" class="col-sm-2 col-form-label">Note</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" name="note" id="note" placeholder="Note"></textarea>
-                                </div>
-                            </div>
 
-                            <div class="form-group row">
-                                <div class="col-sm-10">
-                                    <button name="submit" value="1" type="submit" class="btn btn-primary">Create
-                                    </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Document Type</label>
+                                    <div class="col-sm-10">
+                                        <label class="checkbox-inline">
+                                            <input name="document[]" type="checkbox" value="1"> Driving Licence
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input name="document[]" type="checkbox" value="2"> Pan Card
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input name="document[]" type="checkbox" value="3"> Aadhar
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Document Number</label>
+                                    <div class="col-sm-10">
+                                        <input name="docnumber" type="text" class="form-control" id="name"
+                                               placeholder="Document Number">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Driver Assignment</label>
+                                    <div class="col-sm-10">
+
+                                        <label class="checkbox-inline">
+                                            <input name="driverassignment[]" type="checkbox" value="1"> Monthly
+                                        </label>
+                                        <label class="checkbox-inline">
+                                            <input name="driverassignment[]" type="checkbox" value="2"> On Demand
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="exampleTextarea" class="col-sm-2 col-form-label">Note</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" name="note" id="note" placeholder="Note"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-10">
+                                        <button name="submit" value="1" type="submit" class="btn btn-primary">Create
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
 
 
                 {% endblock %}
+
+                {% block javascripts %}
+                    {{ parent() }}
+
+                    <script>
+
+                        $(document).ready(function () {
+
+                            addPhone();
+                            addAddress();
+
+                        });
+
+                        function addAddress() {
+                            //Address add/remove
+                            var wrapperAddress = $('#address-wrapper'); //Input field wrapper
+                            var fieldHTML = '<div class="input-group"><div class="form-group" style="width: 25%"><input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;"></div><div class="form-group" style="width: 25%"><input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;"></div><div class="form-group" style="width: 25%"><input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;"></div><div class="form-group" style="width: 24%"><input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;"></div><p class="form-control-static">&nbsp;</p><div style="cursor: pointer; border-left: 1px solid #ccc;" id="remove_address" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+
+                            //Once add button is clicked
+                            $($('#add_address')).click(function () {
+                                //Check maximum number of input fields
+                                $(wrapperAddress).append(fieldHTML); //Add field html
+                            });
+
+                            //Once remove button is clicked
+                            $(wrapperAddress).on('click', '#remove_address', function (e) {
+                                e.preventDefault();
+                                $(this).parent('.input-group').remove(); //Remove field html
+                            });
+                        }
+
+                        function addPhone() {
+                            var maxField = 20; //Input fields increment limitation
+                            var wrapper = $('#phone-wrapper'); //Input field wrapper
+                            var fieldHTML = '<div class="input-group"><input required name="phone[]" type="number" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+                            var x = 1; //Initial field counter is 1
+
+                            //Once add button is clicked
+                            $($('#add_phone')).click(function () {
+                                //Check maximum number of input fields
+                                if (x < maxField) {
+                                    x++; //Increment field counter
+                                    $(wrapper).append(fieldHTML); //Add field html
+                                }
+                            });
+
+                            //Once remove button is clicked
+                            $(wrapper).on('click', '#remove_phone', function (e) {
+                                e.preventDefault();
+                                $(this).parent('.input-group').remove(); //Remove field html
+                            });
+                        }
+
+
+                    </script>
+
+                {% endblock %}                

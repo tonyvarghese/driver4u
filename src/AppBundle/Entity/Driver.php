@@ -29,6 +29,12 @@ class Driver
     private $trips;
 
     /**
+     * @ORM\OneToMany(targetEntity="DriverAddress", mappedBy="userId", orphanRemoval=true)
+     */
+    private $addresses;
+
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -50,13 +56,6 @@ class Driver
      * @ORM\Column(name="email", type="string")
      */
     private $email;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=500)
-     */
-    private $address;
 
 
     /**
@@ -154,12 +153,25 @@ class Driver
     
     public function __construct() {
         $this->trips = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
     
     public function getTrips()
     {
         return $this->trips;
     } 
+    
+ 
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }   
+    
+    public function removeAddress(DriverAddress $address)
+    {
+        $address->setCustomer(null);
+        $this->addresses->removeElement($address);
+    }    
     
     /**
      * Get id
@@ -219,31 +231,6 @@ class Driver
         return $this->location;
     }
 
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return string
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
 
     /**
      * Set phone

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\Driver;
-use AppBundle\Entity\Address;
+use AppBundle\Entity\CustomerAddress;
 
 
 class CustomerController extends Controller
@@ -76,7 +76,7 @@ class CustomerController extends Controller
 
             $em = $this->getDoctrine()->getManager();
         
-            $q = $em->createQuery("delete from AppBundle\Entity\Address a where a.userId = $userId");
+            $q = $em->createQuery("delete from AppBundle\Entity\CustomerAddress a where a.userId = $userId");
             $numDeleted = $q->execute();
 
             $customer = $em->getRepository(Customer::class)->find($userId);
@@ -90,7 +90,7 @@ class CustomerController extends Controller
             $city = $request->request->get('city')[$i];
             $landmark = $request->request->get('landmark')[$i];
             
-            $address = new Address();
+            $address = new CustomerAddress();
             
             $address->setUserType(1);
             $address->setUserId($customer);

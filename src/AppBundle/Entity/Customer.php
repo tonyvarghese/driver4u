@@ -26,7 +26,7 @@ class Customer
     private $trips;
         
     /**
-     * @ORM\OneToMany(targetEntity="Address", mappedBy="userId", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="CustomerAddress", mappedBy="userId", orphanRemoval=true)
      */
     private $addresses;
     
@@ -123,7 +123,7 @@ class Customer
         return $this->addresses;
     }   
     
-    public function removeAddress(Address $address)
+    public function removeAddress(CustomerAddress $address)
     {
         $address->setCustomer(null);
         $this->addresses->removeElement($address);

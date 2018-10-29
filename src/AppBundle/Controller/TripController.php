@@ -118,6 +118,85 @@ class TripController extends Controller
         return $this->render('admin/pages/trip/new.html.twig', ['drivers' => $drivers, 'customers' => $customers]);
     }
     
+    
+
+ /**
+     * Displays a form to close an existing Trip entity.
+     *
+     * @Route("/admin/trip/close/{id}", requirements={"id": "\d+"}, name="trip_close")
+     * @Method({"GET", "POST"})
+     */
+    public function closeAction(Request $request, $id)
+    {
+        
+        if ($request->request->has('submit')) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $trip = $em->getRepository(Trip::class)->find($id);
+            if (!$trip) {
+                throw $this->createNotFoundException(
+                    'No record found for id '.$id
+                );
+            }
+            
+            $startTime = new \DateTime($request->request->get('stime'));
+            $endTime = new \DateTime($request->request->get('etime'));
+            
+            $trip->setStartedTime($startTime);
+            $trip->setEndedTime($endTime);
+            $trip->setAmountCollected($request->request->get('amount'));
+            $trip->setFeedback($request->request->get('feedback'));
+            $trip->setLocation($request->request->get('location'));
+            $trip->setDiscount($request->request->get('discount'));
+            $trip->setStatus(3);
+            $trip->setUpdatedAt(new \DateTime("now"));
+            
+            $em->flush();
+        
+            $this->addFlash('success', 'Trip closed successfully');
+
+            return $this->redirectToRoute('trip_close', ['id' => $id]);
+        }
+        
+//        $repository = $this->getDoctrine()->getRepository(Trip::class);
+//        $tripObj = $repository->find($id);
+//        $data['customer'] = $tripObj->getCustomer();
+//        $data['driver'] = $tripObj->getDriver();
+//        $data['scheduledTime'] = json_decode($tripObj->getAddress());
+//        $data['phone'] = json_decode($tripObj->getPhone());
+//        $data['usualTrip'] = $tripObj->getUsualTrip();
+//        $data['preferredDriver'] = $tripObj->getPreferredDriver();
+        
+        
+//        $em = $this->getDoctrine()->getManager();
+//        $qb = $em->createQueryBuilder();
+//
+//        // this returns an array
+//        $drivers = $qb->select(array('u.id', 'u.fullName'))
+//            ->from('AppBundle:DriverDetails', 'd')
+//            ->join('AppBundle:User', 'u')
+//            ->where('d.uid = u.id')
+//            //->andWhere('e.user = :userName')
+////            ->setParameter('userName', 'scott')
+//            ->andWhere('u.roles like :roles')
+//            ->setParameter('roles',  '%ROLE_DRIVER%')
+//            ->orderBy('u.id', 'ASC')
+//            ->getQuery()
+//            ->getResult();
+
+        
+        $repository = $this->getDoctrine()->getRepository(Trip::class);
+        $trip = $repository->find($id);        
+                
+        $em = $this->getDoctrine()->getManager();
+        $drivers = $em->getRepository(Driver::class)->findAll();
+        $customers = $em->getRepository(Customer::class)->findAll();
+
+
+        return $this->render('admin/pages/trip/close.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'status' => $this->statusCodes()]);
+        
+    }   
+    
  /**
      * Displays a form to edit an existing Trip entity.
      *

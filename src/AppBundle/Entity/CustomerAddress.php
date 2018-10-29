@@ -7,12 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Address
  *
- * @ORM\Table(name="address")
+ * @ORM\Table(name="customer_address")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AddressRepository")
  */
-class Address
+class CustomerAddress
 {
-        
+     
     /**
      * @var int
      *
@@ -22,12 +22,6 @@ class Address
      */
     private $id;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="user_type", type="smallint", options={"default" : 0, "comment":"1:Customer, 2:Driver"})
-     */
-    private $userType;
 
     /**
      * @var Customer

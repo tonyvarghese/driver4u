@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\Driver;
+use AppBundle\Entity\CustomerAddress;
 
 
 class CustomerController extends Controller
@@ -52,13 +53,11 @@ class CustomerController extends Controller
             $data[$key]['id'] = $value->getId();
             $data[$key]['fullName'] = $value->getFullName();
             $data[$key]['email'] = $value->getEmail();
-            $data[$key]['phone'] = json_decode($value->getPhone());
+            $data[$key]['phones'] = json_decode($value->getPhone());
             $data[$key]['location'] = $value->getLocation();
-            $data[$key]['address'] = json_decode($value->getAddress());
+            $data[$key]['addresses'] = $value->getAddresses();
             $data[$key]['usualTrip'] = $value->getUsualTrip();
-//            $data[$key]['customertype'] =json_decode($this->jsonToString($value->getCustomerType(), $this->customerType()));
-            $data[$key]['customertype'] =json_decode($value->getLocation());
-
+            $data[$key]['customertype'] = $this->jsonToString($value->getCustomerType(), $this->customerType());
 
         }
         
@@ -69,11 +68,41 @@ class CustomerController extends Controller
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/
         );
-        
-        
-        //print_r($data); die;
 
         return $this->render('admin/pages/customer/index.html.twig', ['customers' => $pagination]);
+    }
+    
+    public function addAddress($request, $userId) {
+
+            $em = $this->getDoctrine()->getManager();
+        
+            $q = $em->createQuery("delete from AppBundle\Entity\CustomerAddress a where a.userId = $userId");
+            $numDeleted = $q->execute();
+
+            $customer = $em->getRepository(Customer::class)->find($userId);
+        
+        
+        $count = count($request->request->get('street'));
+        
+        for($i = 0; $i < $count; $i++){
+            $house = $request->request->get('house-number')[$i];
+            $street = $request->request->get('street')[$i];
+            $city = $request->request->get('city')[$i];
+            $landmark = $request->request->get('landmark')[$i];
+            
+            $address = new CustomerAddress();
+            
+            $address->setUserType(1);
+            $address->setUserId($customer);
+            $address->setHouseNo($house);
+            $address->setStreet($street);
+            $address->setCity($city);
+            $address->setLandmark($landmark);
+            
+            $em->persist($address);
+            $em->flush();            
+        }
+        
     }
     
         /**
@@ -92,21 +121,26 @@ class CustomerController extends Controller
         
 
         if ($request->request->has('submit')) {
-
+            
+            $currentTime = new \DateTime("now"); //date("Y-m-d H:i:s", time());
+            
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
             $customer->setLocation($request->request->get('location'));
-            $customer->setAddress(json_encode($request->request->get('address')));
             $customer->setPhone(json_encode($request->request->get('phone')));
             $customer->setStatus(1);
             $customer->setUsualTrip($request->request->get('usualTrip'));
             $customer->setCustomerType(json_encode($request->request->get('customertype')));
             $customer->setPreferredDriver($request->request->get('driver'));
+            $customer->setCreatedAt($currentTime);
+            
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($customer);
             $em->flush();
         
+            $this->addAddress($request, $customer->getId());
+            
             // Flash messages are used to notify the user about the result of the
             // actions. They are deleted automatically from the session as soon
             // as they are accessed.
@@ -162,7 +196,6 @@ class CustomerController extends Controller
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
             $customer->setLocation($request->request->get('location'));
-            $customer->setAddress(json_encode($request->request->get('address')));
             $customer->setPhone(json_encode($request->request->get('phone')));
             $customer->setStatus(1);
             $customer->setUsualTrip($request->request->get('usualTrip'));
@@ -170,6 +203,8 @@ class CustomerController extends Controller
             $customer->setPreferredDriver($request->request->get('driver'));
             
             $entityManager->flush();
+                        
+            $this->addAddress($request, $id);
         
             $this->addFlash('success', 'Customer updated successfully');
 
@@ -181,7 +216,7 @@ class CustomerController extends Controller
         $data['fullName'] = $customerObj->getFullName();
         $data['email'] = $customerObj->getEmail();
         $data['location'] = $customerObj->getLocation();
-        $data['address'] = json_decode($customerObj->getAddress());
+        $data['addresses'] = $customerObj->getAddresses();
         $data['phone'] = json_decode($customerObj->getPhone());
         $data['usualTrip'] = $customerObj->getUsualTrip();
         $data['customertype'] = json_decode($customerObj->getCustomerType());
@@ -221,9 +256,13 @@ class CustomerController extends Controller
     public function deleteAction(Request $request, Customer $customer)
     {
 
+        $customer->getAddresses()->clear();
+        
         $em = $this->getDoctrine()->getManager();
         $em->remove($customer);
         $em->flush();
+        
+        
 
         $this->addFlash('success', 'Customer Deleted successfully');
 

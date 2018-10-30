@@ -2,122 +2,98 @@
 
 {% block main %}
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Driver</h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Trip</h1>
+        </div>
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.col-lg-12 -->
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Driver Details
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-6">
-
-
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.name }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Email</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.email }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Address</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{  driver.address|nl2br }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Phone</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.phone }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Age</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.age }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Driver Type</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.drivertype }}</p>
-                                </div>
-                            </div>
-
-
-
-                        </form>
-
-                    </div>
-                    <div class="col-lg-6">
-
-
-                        <form class="form-horizontal">
-
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Expertise</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.expertise }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">PCC</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.pcc }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Document</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.document }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Document No</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.docnumber }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Document Assignment</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.driverassignment }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Note</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ driver.note|nl2br }}</p>
-                                </div>
-                            </div>
-
-                        </form>
-
-                    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Trip Details
                 </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-lg-6 ">
+
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Customer</strong></td>
+                                        <td>{{ trip.customer.fullName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Driver</strong></td>
+                                        <td>{{ trip.driver.fullName }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Vehicle</strong></td>
+                                        <td></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Location</strong></td>
+                                        <td>{{ trip.location }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rate</strong></td>
+                                        <td>{{ trip.rate }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Discount</strong></td>
+                                        <td>{{ trip.discount }}</td>
+                                    </tr>                                
+
+                                </tbody>
+                            </table>
+
+
+
+
+                        </div>
+                        <div class="col-lg-6 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Scheduled Time</strong></td>
+                                        <td>{{ trip.scheduledTime|date('Y/m/d H:m') }}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Start Time</strong></td>
+                                        <td>{{ trip.startedTime }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>End Time</strong></td>
+                                        <td>{{ trip.endedTime }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Amount Collected</strong></td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Feedback</strong></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status</strong></td>
+                                        <td>{{ status[trip.status] }}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>                                                            
+
+                        </div>
+
+                        <p class="text-center">
+                            <a href="{{ path('trip_close', {id: trip.id}) }}" class="btn btn-success btn-lg">CLOSE</a>
+                            <button type="button" class="btn btn-danger btn-lg">CANCEL</button>
+                        </p>                                            
+
+                    </div>
 
 
                 {% endblock %}

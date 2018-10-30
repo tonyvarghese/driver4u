@@ -191,7 +191,7 @@ class Trip
 
 
     /**
-     * Set Location
+     * Set location
      *
      * @param string $location
      *
@@ -205,7 +205,7 @@ class Trip
     }
 
     /**
-     * Get rate
+     * Get location
      *
      * @return string
      */

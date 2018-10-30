@@ -112,8 +112,12 @@
 
                                             
                                             {% for key,value in status %}
+                                                
+                                                {% if key < 3 %}    
 
                                                 <option {% if key == trip.status %} selected {% endif %} value="{{ key }}">{{ value }}</option>
+                                                
+                                                {% endif %}    
 
                                             {% endfor %}
                                             

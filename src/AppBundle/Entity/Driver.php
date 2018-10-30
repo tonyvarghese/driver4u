@@ -29,6 +29,12 @@ class Driver
     private $trips;
 
     /**
+     * @ORM\OneToMany(targetEntity="DriverAddress", mappedBy="userId", orphanRemoval=true)
+     */
+    private $addresses;
+
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -51,13 +57,6 @@ class Driver
      */
     private $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string", length=500)
-     */
-    private $address;
-
 
     /**
      * @var string
@@ -78,10 +77,16 @@ class Driver
      *
      * @ORM\Column(name="age", type="integer", length=20, nullable=true)
      */
-
-
     private $age;
 
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="doj", type="datetime", options={"comment":"Date of Joining"})
+     */
+    private $doj;
+    
     /**
      * @var string
      *
@@ -136,18 +141,37 @@ class Driver
      *
      * @ORM\Column(type="smallint",options={"default" : 0, "comment":"0:Inactive, 1:Active"})
      */
-
     private $status;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime" )
+     */
+    private $createdAt;
+    
     
     public function __construct() {
         $this->trips = new ArrayCollection();
+        $this->addresses = new ArrayCollection();
     }
     
     public function getTrips()
     {
         return $this->trips;
     } 
+    
+ 
+    public function getAddresses()
+    {
+        return $this->addresses;
+    }   
+    
+    public function removeAddress(DriverAddress $address)
+    {
+        $address->setCustomer(null);
+        $this->addresses->removeElement($address);
+    }    
     
     /**
      * Get id
@@ -207,31 +231,6 @@ class Driver
         return $this->location;
     }
 
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return string
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
 
     /**
      * Set phone
@@ -464,5 +463,53 @@ class Driver
         return $this->note;
     }
 
-}
 
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Lead
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }    
+    
+
+    /**
+     * Set DOJ
+     *
+     * @param \DateTime $doj
+     *
+     * @return Driver
+     */
+    public function setDoj($doj)
+    {
+        $this->doj = $doj;
+
+        return $this;
+    }
+
+    /**
+     * Get doj
+     *
+     * @return \DateTime
+     */
+    public function getDoj()
+    {
+        return $this->doj;
+    }        
+}

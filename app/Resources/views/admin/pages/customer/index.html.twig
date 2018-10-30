@@ -46,9 +46,17 @@
                                         <tr>
                                             <td>{{ customer.fullName }}</td>
                                             <td>{{ customer.email }}</td>
-                                            <td>{{ customer.phone }}</td>
+                                            <td>
+                                                {% for phone in customer.phones %}
+                                                    <div>{{ phone }} <hr></div>
+                                                {% endfor %}                                            
+                                            </td>
                                             <td>{{ customer.location }}</td>
-                                            <td>{{ customer.address }}</td>
+                                            <td>
+                                                {% for address in customer.addresses %}
+                                                    <div>{{ address.houseNo }}, {{ address.street }}, {{ address.city }}, {{ address.landmark }} <hr></div>
+                                                {% endfor %}                                            
+                                            </td>
                                             <td>{{ customer.usualTrip }}</td>
                                             <td>{{ customer.customertype}}</td>
 

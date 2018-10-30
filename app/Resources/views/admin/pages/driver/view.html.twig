@@ -29,19 +29,41 @@
                                     <td>{{ driver.email }}</td>
                                 </tr>
                                 <tr>
-                                    <td><strong>Address</strong></td>
-                                    <td>{{  driver.address|nl2br }}</td>
+                                    <td><strong>Addresses</strong></td>
+                                    <td>
+                                        
+                                        {% for key, address in driver.addresses %}       
+                                        
+                                            {{address.HouseNo}}, {{address.street}}, {{address.city}}, {{address.landmark}}
+                                            
+                                            <hr>
+                                            
+                                        {% endfor %}    
+                                        
+                                    </td>
                                 </tr>
 
                                 <tr>
                                 </tr><tr>
                                     <td><strong>Phone</strong></td>
-                                    <td>{{ driver.phone }}</td>
+                                    <td>
+                                        
+                                        {% for key, phone in driver.phone %}       
+                                        
+                                            {{phone}}, 
+                                            
+                                        {% endfor %}                                            
+                                        
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Age</strong></td>
                                     <td>{{ driver.age }}</td>
                                 </tr>
+                                <tr>
+                                    <td><strong>Date of Joining</strong></td>
+                                    <td>{{ driver.doj|date('m/d/Y') }}</td>
+                                </tr>                                
                                 <tr>
                                     <td><strong>Driver Type</strong></td>
                                     <td>{{ driver.drivertype }}</td>

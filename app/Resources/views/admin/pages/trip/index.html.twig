@@ -54,14 +54,14 @@
 
                                             <td class="text-right">
                                                 <div class="item-actions">
-                                                    <a href="{{ path('driver_view', {id: trip.id}) }}" class="btn btn-primary btn-sm">
+                                                    <a href="{{ path('trip_view', {id: trip.id}) }}" class="btn btn-primary btn-sm">
                                                         <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </a>
                                                     <a href="{{ path('trip_edit', {id: trip.id}) }}" class="btn btn-sm btn-success">
                                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                                     </a>
 
-                                                    <button data-url="{{ path('customer_delete', {id: trip.id}) }}" id="delete-button" class="btn btn-sm btn-danger">
+                                                    <button data-url="{{ path('trip_delete', {id: trip.id}) }}" id="delete-button" class="btn btn-sm btn-danger">
                                                         <i class="fa fa-remove" aria-hidden="true"></i> Delete
                                                     </button>
                                                 </div>

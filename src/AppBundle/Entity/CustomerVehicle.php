@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * customerVehicles
+ * customerVehicle
  *
  * @ORM\Table(name="customer_vehicles",indexes={@ORM\Index(name="index_customer_id", columns={"customer_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerVehiclesRepository")
@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
  */
-class CustomerVehicles
+class CustomerVehicle
 {
     /**
      * @var int
@@ -25,17 +25,21 @@ class CustomerVehicles
      */
     private $id;
 
+    
     /**
-     * @var int
+     * @var Customer
      *
-     * @ORM\Column(name="customer_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="vehicles")
+     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     *
      */
     private $customerId;
+
 
     /**
      * @var int
      *
-     * @ORM\Column(name="reg_number", type="integer", nullable=true)
+     * @ORM\Column(name="reg_number", type="string", length=255, nullable=true)
      */
     private $regNumber;
 
@@ -47,9 +51,9 @@ class CustomerVehicles
     private $vehicleModel;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="vehicle_type", type="integer")
+     * @ORM\Column(name="vehicle_type", type="string", length=255, nullable=true)
      */
     private $vehicleType;
 

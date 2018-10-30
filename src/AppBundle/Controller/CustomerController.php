@@ -11,6 +11,7 @@ use AppBundle\Entity\User;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\Driver;
 use AppBundle\Entity\CustomerAddress;
+use AppBundle\Entity\CustomerVehicle;
 
 
 class CustomerController extends Controller
@@ -29,7 +30,7 @@ class CustomerController extends Controller
                 $data[] = $values[$item];
             }
 
-            return implode(',', $data);
+            return implode(', ', $data);
         }
 
         return "";
@@ -104,6 +105,38 @@ class CustomerController extends Controller
         }
         
     }
+
+    public function addVehicles($request, $userId) {
+
+            $em = $this->getDoctrine()->getManager();
+        
+            $q = $em->createQuery("delete from AppBundle\Entity\CustomerVehicle a where a.customerId = $userId");
+            $numDeleted = $q->execute();
+
+            $customer = $em->getRepository(Customer::class)->find($userId);
+        
+        
+        $count = count($request->request->get('model'));
+        
+        for($i = 0; $i < $count; $i++){
+            $regNumber = $request->request->get('reg-number')[$i];
+            $model = $request->request->get('model')[$i];
+            $type = $request->request->get('type')[$i];
+            
+            $vehicle = new CustomerVehicle();
+            
+            $vehicle->setCustomerId($customer);
+            $vehicle->setVehicleModel($model);
+            $vehicle->setRegNumber($regNumber);
+            $vehicle->setVehicleType($type);
+            $vehicle->setCreatedAt(new \DateTime("now"));
+            $vehicle->setUpdatedAt(new \DateTime("now"));
+            
+            $em->persist($vehicle);
+            $em->flush();            
+        }
+        
+    }
     
         /**
      * Creates a new Customer entity.
@@ -117,12 +150,14 @@ class CustomerController extends Controller
      */
     public function newAction(Request $request)
     {        
-        $customer = new Customer();
-        
+        $customer = new Customer();        
 
         if ($request->request->has('submit')) {
             
             $currentTime = new \DateTime("now"); //date("Y-m-d H:i:s", time());
+            
+            $em = $this->getDoctrine()->getManager();
+            $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
             
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
@@ -130,16 +165,18 @@ class CustomerController extends Controller
             $customer->setPhone(json_encode($request->request->get('phone')));
             $customer->setStatus(1);
             $customer->setUsualTrip($request->request->get('usualTrip'));
-            $customer->setCustomerType(json_encode($request->request->get('customertype')));
-            $customer->setPreferredDriver($request->request->get('driver'));
+            $customer->setCustomerType(json_encode($request->request->get('customertype')));                        
             $customer->setCreatedAt($currentTime);
             
+            if($driver)
+                $customer->setPreferredDriver($driver);            
             
             $em = $this->getDoctrine()->getManager();
             $em->persist($customer);
             $em->flush();
         
             $this->addAddress($request, $customer->getId());
+            $this->addVehicles($request, $customer->getId());
             
             // Flash messages are used to notify the user about the result of the
             // actions. They are deleted automatically from the session as soon
@@ -193,6 +230,8 @@ class CustomerController extends Controller
                 );
             }
             
+            $driver = $entityManager->getRepository(Driver::class)->find($request->request->get('driver'));
+            
             $customer->setFullName($request->request->get('fullname'));
             $customer->setEmail($request->request->get('email'));
             $customer->setLocation($request->request->get('location'));
@@ -200,11 +239,14 @@ class CustomerController extends Controller
             $customer->setStatus(1);
             $customer->setUsualTrip($request->request->get('usualTrip'));
             $customer->setCustomerType(json_encode($request->request->get('customertype')));
-            $customer->setPreferredDriver($request->request->get('driver'));
+            
+            if($driver)
+            $customer->setPreferredDriver($driver);
             
             $entityManager->flush();
                         
             $this->addAddress($request, $id);
+            $this->addVehicles($request, $id);
         
             $this->addFlash('success', 'Customer updated successfully');
 
@@ -217,6 +259,7 @@ class CustomerController extends Controller
         $data['email'] = $customerObj->getEmail();
         $data['location'] = $customerObj->getLocation();
         $data['addresses'] = $customerObj->getAddresses();
+        $data['vehicles'] = $customerObj->getVehicles();
         $data['phone'] = json_decode($customerObj->getPhone());
         $data['usualTrip'] = $customerObj->getUsualTrip();
         $data['customertype'] = json_decode($customerObj->getCustomerType());
@@ -246,6 +289,30 @@ class CustomerController extends Controller
         
     }   
     
+    /**
+     * @Route("admin/customer/view/{id}", name="customer_view")
+     * @Method({"GET", "POST"})
+     */
+    public function viewAction($id) {
+
+        $repository = $this->getDoctrine()->getRepository(Customer::class);
+        $customerObj = $repository->find($id);
+             
+        $data['name'] = $customerObj->getFullName();
+        $data['email'] = $customerObj->getEmail();
+        $data['location'] = $customerObj->getLocation();
+        $data['addresses'] = $customerObj->getAddresses();
+        $data['vehicles'] = $customerObj->getVehicles();
+        $data['phone'] = json_decode($customerObj->getPhone());
+        $data['usualTrip'] = $customerObj->getUsualTrip();
+        $data['customerType'] = $this->jsonToString($customerObj->getCustomerType(), $this->customerType());
+        $data['preferredDriver'] = $customerObj->getPreferredDriver() ? $customerObj->getPreferredDriver()->getFullName() : "";
+        
+
+        return $this->render("admin/pages/customer/view.html.twig", ['customer' => $data]);
+    }
+    
+    
  /**
      * Deletes a Customer entity.
      *
@@ -257,6 +324,7 @@ class CustomerController extends Controller
     {
 
         $customer->getAddresses()->clear();
+        $customer->getVehicles()->clear();
         
         $em = $this->getDoctrine()->getManager();
         $em->remove($customer);

@@ -90,6 +90,21 @@ class Trip
      * @ORM\Column(name="feedback", type="text", nullable=true)
      */
     private $feedback;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cancelled_by", type="string", nullable=true)
+     */
+    private $cancelledBy;
+    
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cancel_reason", type="text", nullable=true)
+     */
+    private $cancelReason;
     
     /**
      * @var \DateTime
@@ -455,5 +470,56 @@ class Trip
     {
         return $this->updatedAt;
     }
+    
+
+    /**
+     * Set cancelledBy
+     *
+     * @param int $cancelledBy
+     *
+     * @return Trip
+     */
+    public function setCancelledBy($cancelledBy)
+    {
+        $this->cancelledBy = $cancelledBy;
+
+        return $this;
+    }
+
+    /**
+     * Get cancelledBy
+     *
+     * @return int
+     */
+    public function getCancelledBy()
+    {
+        return $this->cancelledBy;
+    }    
+    
+
+    /**
+     * Set cancelReason
+     *
+     * @param string $cancelReason
+     *
+     * @return Trip
+     */
+    public function setCancelReason($cancelReason) {
+        $this->cancelReason = $cancelReason;
+
+        return $this;
+    }
+
+    /**
+     * Get cancelReason
+     *
+     * @return string
+     */
+    public function getCancelReason() {
+        return $this->cancelReason;
+    }
+
+
+    
 }
 

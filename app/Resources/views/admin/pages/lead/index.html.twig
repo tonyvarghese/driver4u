@@ -38,7 +38,7 @@
                                 <th scope="col">Address</th>
                                 <th scope="col">Phone</th>
                                 <th scope="col">Followup</th>
-                                <th scope="col">Action</th>
+                                <th scope="col"></th>
 
                             </tr>
                             </thead>
@@ -51,10 +51,10 @@
                                     <td>{{ lead.fullName }}</td>
                                     <td>{{ lead.email }}</td>
                                     <td>{{ lead.address|nl2br }}</td>
-                                    <td>{{ lead.phone }}</td>
+                                    <td>{{ lead.phone[0] }}</td>
                                     <td>{{ lead.followupDate|date('m/d/Y') }}</td>
 
-                                    <td><a href="{{ path('lead_view', {id: lead.id}) }}" class="btn btn-primary btn-sm">
+                                    <td class="text-right"><a href="{{ path('lead_view', {id: lead.id}) }}" class="btn btn-primary btn-sm">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View</a>
                                         <a href="{{ path('lead_edit', {id: lead.id}) }}" class="btn btn-success btn-sm">
                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit</a>

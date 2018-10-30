@@ -2,99 +2,86 @@
 
 {% block main %}
 
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">Lead</h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Lead Details</h1>
+        </div>
+        <!-- /.col-lg-12 -->
     </div>
-    <!-- /.col-lg-12 -->
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Lead Details
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-6">
-
-
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.name }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Email</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.email }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Address</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{  lead.address|nl2br }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Phone</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.phone }}</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Location</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.location }}</p>
-                                </div>
-                            </div>
-
-
-                        </form>
-
-                    </div>
-                    <div class="col-lg-6">
-
-
-                        <form class="form-horizontal">
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Status</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.status }}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Followup</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.followupDate|date('m/d/Y') }}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Feedback</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.feedback }}</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Created</label>
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">{{ lead.createdAt|date('m/d/Y') }}</p>
-                                </div>
-                            </div>
-
-
-
-                        </form>
-
-                    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Lead Details
                 </div>
+                <div class="panel-body">
+                    <div class="row">
 
+                        <div class="col-lg-6 ">
 
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Name</strong></td>
+                                        <td>{{ lead.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email</strong></td>
+                                        <td>{{ lead.email }}</td>
+                                    </tr>                                                                       
+                                    <tr>
+                                        <td><strong>Phone</strong></td>
+                                        <td>{{ lead.phone[0] }}</td>
+                                    </tr>                                    
 
-                {% endblock %}
+                                    <tr>
+                                    </tr><tr>
+                                        <td><strong>Location</strong></td>
+                                        <td>{{ lead.location }}</td>
+                                    </tr>
+                                      <tr>
+                                        <td><strong>Address</strong></td>
+                                        <td>{{  lead.address|nl2br }}</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="col-lg-6 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                  
+                                    <tr>
+                                        <td><strong>Status</strong></td>
+                                        <td>{{ lead.status }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Followup</strong></td>
+                                        <td>{{ lead.followupDate|date('m/d/Y') }}</td>
+                                    </tr>                                
+                                    <tr>
+                                        <td><strong>Feedback</strong></td>
+                                        <td>{{ lead.feedback }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Created At</strong></td>
+                                        <td>{{ lead.createdAt|date('m/d/Y') }} </td>
+                                    </tr>  
+                                </tbody>
+                            </table>
+
+                        </div>
+                                    
+                        
+                    </div>
+                                    
+                        <p class="text-center">
+                            <a href="{{ path('lead_convert', {id: lead.id}) }}" class="btn btn-success btn-lg">Convert To Customer</a>
+                        </p>                                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+                

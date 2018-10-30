@@ -71,29 +71,6 @@ class CustomerAddress
         return $this->id;
     }
 
-    /**
-     * Set userType
-     *
-     * @param integer $userType
-     *
-     * @return Address
-     */
-    public function setUserType($userType)
-    {
-        $this->userType = $userType;
-
-        return $this;
-    }
-
-    /**
-     * Get userType
-     *
-     * @return int
-     */
-    public function getUserType()
-    {
-        return $this->userType;
-    }
 
     /**
      * Set userId

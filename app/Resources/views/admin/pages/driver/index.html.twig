@@ -31,12 +31,13 @@
                                 <thead>
                                     <tr>
                                         {#<th scope="col">ID</th>#}
-                                        <th scope="col">Full Name</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
+                                        <th scope="col">Location</th>
                                         <th scope="col">Address</th>                                        
                                         <th scope="col">DOJ</th>
-                                        <th scope="col" style="width: 215px;">Action</th>
+                                        <th scope="col" style="width: 215px;"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,6 +53,7 @@
                                                     <div>{{ phone }} <hr></div>
                                                     {% endfor %}                                            
                                             </td>
+                                            <td>{{ driver.location }}</td>
                                             <td>
                                                 {% for address in driver.addresses %}
                                                     <div>{{ address.houseNo }}, {{ address.street }}, {{ address.city }}, {{ address.landmark }} <hr></div>
@@ -61,7 +63,8 @@
                                             <td>{{ driver.doj|date('m/d/Y') }}</td>
 
 
-                                            <td ><a href="{{ path('driver_view', {id: driver.id}) }}" class="btn btn-primary btn-sm">
+                                            <td>
+                                                <a href="{{ path('driver_view', {id: driver.id}) }}" class="btn btn-primary btn-sm">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View</a>
                                                 <a href="{{ path('driver_edit', {id: driver.id}) }}" class="btn btn-success btn-sm">
                                                     <i class="fa fa-edit" aria-hidden="true"></i> Edit</a>

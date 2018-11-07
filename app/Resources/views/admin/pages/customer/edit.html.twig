@@ -10,14 +10,14 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-10">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Edit Customer
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-10">
                             <form method="post">
 
                                 {% for flashMessage in app.session.flashbag.get('success') %}    
@@ -135,13 +135,13 @@
                                             
                                             <div class="input-group">
                                                 <div class="form-group" style="width: 33%">
-                                                    <input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;" value="{{data.vehicles[0].regNumber}}">
+                                                    <input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;" value="{% if data.vehicles|length > 0 %}  {{data.vehicles[0].regNumber}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 33%">
-                                                    <input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;" value="{{data.vehicles[0].vehicleModel}}">
+                                                    <input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleModel}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 33%">
-                                                    <input name="type[]" type="text" class="form-control" placeholder="Type" style="width: 100%;" value="{{data.vehicles[0].vehicleType}}">
+                                                    <input name="type[]" type="text" class="form-control" placeholder="Type" style="width: 100%;" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleType}} {% endif %}">
                                                 </div>
 
                                                 <p class="form-control-static">&nbsp;</p>

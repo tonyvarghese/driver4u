@@ -101,7 +101,7 @@ class DriverController extends Controller {
             
             $address = new DriverAddress();
             
-            $address->setUserType(1);
+            //$address->setUserType(1);
             $address->setUserId($driver);
             $address->setHouseNo($house);
             $address->setStreet($street);

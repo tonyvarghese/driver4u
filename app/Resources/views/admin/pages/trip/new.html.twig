@@ -10,14 +10,14 @@
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-10">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Add Trip
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-10">
                             <form method="post">
 
                                 {% for flashMessage in app.session.flashbag.get('success') %}    
@@ -31,7 +31,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Customer</label>
                                     <div class="col-sm-10">
-                                        <select name="customer" class="form-control">
+                                        <select required name="customer" class="form-control">
 
                                             <option value="">--Select--</option>
 
@@ -60,7 +60,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Driver</label>
                                     <div class="col-sm-10">
-                                        <select name="driver" class="form-control">
+                                        <select required name="driver" class="form-control">
 
                                             <option value="">--Select--</option>
 

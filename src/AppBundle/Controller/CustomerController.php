@@ -93,7 +93,7 @@ class CustomerController extends Controller
             
             $address = new CustomerAddress();
             
-            $address->setUserType(1);
+//            $address->setUserType(1);
             $address->setUserId($customer);
             $address->setHouseNo($house);
             $address->setStreet($street);

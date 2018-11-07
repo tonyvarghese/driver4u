@@ -64,19 +64,10 @@ class DriverController extends Controller {
             $data[$key]['id'] = $value->getId();
             $data[$key]['fullName'] = $value->getFullName();
             $data[$key]['email'] = $value->getEmail();
+            $data[$key]['location'] = $value->getLocation();
             $data[$key]['addresses'] = $value->getAddresses();
             $data[$key]['phones'] = json_decode($value->getPhone());
             $data[$key]['doj'] = ($value->getDoj());
-//            $data[$key]['age'] = $value->getAge();
-//            $data[$key]['drivertype'] = $this->driverType()[$value->getDriverType()];
-            //$data[$key]['expertise'] = $this->expertise()[$value->getExpertise()];
-//            $data[$key]['expertise'] = $value->getExpertise();
-//            $data[$key]['pcc'] = $this->pcc()[$value->getPccSubmitted()];
-//            $data[$key]['document'] = $this->document()[$value->getDocument()];
-//            $data[$key]['docnumber'] = $value->getDocNumber();
-//            $data[$key]['driverassignment'] = $this->drivingAssignment()[$value->getDriverAssignment()];
-//            $data[$key]['note'] = $value->getNote();
-//            $data[$key]['status'] = $value->getStatus();
         }
 
         $paginator = $this->get('knp_paginator');

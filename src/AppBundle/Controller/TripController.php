@@ -61,6 +61,26 @@ class TripController extends Controller
         return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
     }
     
+
+    /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/cancelled/trips", name="cancelled_trips")
+     * @Method("GET")
+     */
+    public function cancelledTripsAction()
+    {
+
+        $repository = $this->getDoctrine()->getRepository(Trip::class);
+
+        $trips = $repository->findBy(
+            array('status' => '4')
+        );        
+        
+        return $this->render('admin/pages/trip/cancelled_trips.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
+    }
+    
         /**
      * Creates a new Trip entity.
      *
@@ -118,7 +138,48 @@ class TripController extends Controller
         return $this->render('admin/pages/trip/new.html.twig', ['drivers' => $drivers, 'customers' => $customers]);
     }
     
-    
+
+ /**
+     * Displays a form to close an existing Trip entity.
+     *
+     * @Route("/admin/trip/close/{id}", requirements={"id": "\d+"}, name="trip_cancel")
+     * @Method({"GET", "POST"})
+     */
+    public function cancelAction(Request $request, $id)
+    {
+        
+        if ($request->request->has('submit')) {
+            
+            $em = $this->getDoctrine()->getManager();
+            $trip = $em->getRepository(Trip::class)->find($id);
+            if (!$trip) {
+                throw $this->createNotFoundException(
+                    'No record found for id '.$id
+                );
+            }
+            
+            $trip->setCancelledBy($request->request->get('cancel-by'));
+            $trip->setCancelReason($request->request->get('reason'));
+            $trip->setStatus(4);
+            $trip->setUpdatedAt(new \DateTime("now"));
+            
+            $em->flush();
+        
+            $this->addFlash('success', 'Trip cancelled!');
+
+            return $this->redirectToRoute('trip_cancel', ['id' => $id]);
+        }
+
+        
+        $repository = $this->getDoctrine()->getRepository(Trip::class);
+        $trip = $repository->find($id);        
+                
+        $em = $this->getDoctrine()->getManager();
+
+
+        return $this->render('admin/pages/trip/cancel.html.twig', ['trip' => $trip, 'status' => $this->statusCodes()]);
+        
+    }       
 
  /**
      * Displays a form to close an existing Trip entity.
@@ -146,8 +207,6 @@ class TripController extends Controller
             $trip->setEndedTime($endTime);
             $trip->setAmountCollected($request->request->get('amount'));
             $trip->setFeedback($request->request->get('feedback'));
-            $trip->setLocation($request->request->get('location'));
-            $trip->setDiscount($request->request->get('discount'));
             $trip->setStatus(3);
             $trip->setUpdatedAt(new \DateTime("now"));
             
@@ -158,42 +217,12 @@ class TripController extends Controller
             return $this->redirectToRoute('trip_close', ['id' => $id]);
         }
         
-//        $repository = $this->getDoctrine()->getRepository(Trip::class);
-//        $tripObj = $repository->find($id);
-//        $data['customer'] = $tripObj->getCustomer();
-//        $data['driver'] = $tripObj->getDriver();
-//        $data['scheduledTime'] = json_decode($tripObj->getAddress());
-//        $data['phone'] = json_decode($tripObj->getPhone());
-//        $data['usualTrip'] = $tripObj->getUsualTrip();
-//        $data['preferredDriver'] = $tripObj->getPreferredDriver();
-        
-        
-//        $em = $this->getDoctrine()->getManager();
-//        $qb = $em->createQueryBuilder();
-//
-//        // this returns an array
-//        $drivers = $qb->select(array('u.id', 'u.fullName'))
-//            ->from('AppBundle:DriverDetails', 'd')
-//            ->join('AppBundle:User', 'u')
-//            ->where('d.uid = u.id')
-//            //->andWhere('e.user = :userName')
-////            ->setParameter('userName', 'scott')
-//            ->andWhere('u.roles like :roles')
-//            ->setParameter('roles',  '%ROLE_DRIVER%')
-//            ->orderBy('u.id', 'ASC')
-//            ->getQuery()
-//            ->getResult();
-
-        
         $repository = $this->getDoctrine()->getRepository(Trip::class);
         $trip = $repository->find($id);        
                 
         $em = $this->getDoctrine()->getManager();
-        $drivers = $em->getRepository(Driver::class)->findAll();
-        $customers = $em->getRepository(Customer::class)->findAll();
 
-
-        return $this->render('admin/pages/trip/close.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'status' => $this->statusCodes()]);
+        return $this->render('admin/pages/trip/close.html.twig', ['trip' => $trip, 'status' => $this->statusCodes()]);
         
     }   
     

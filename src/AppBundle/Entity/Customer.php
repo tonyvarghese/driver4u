@@ -29,7 +29,13 @@ class Customer
      * @ORM\OneToMany(targetEntity="CustomerAddress", mappedBy="userId", orphanRemoval=true)
      */
     private $addresses;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="CustomerVehicle", mappedBy="customerId", orphanRemoval=true)
+     */
+    private $vehicles;
+
+        
     /**
      * @var int
      *
@@ -72,22 +78,22 @@ class Customer
     /**
      * @var string
      *
-     * @ORM\Column(name="usual_trip", type="string", length=500)
+     * @ORM\Column(name="usual_trip", type="string", length=500, nullable=true)
      */
     private $usualTrip;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="customer_type", type="string", options={"comment":"1:Monthly, 2:On Demand"})
+     * @ORM\Column(name="customer_type", type="string", nullable=true, options={"comment":"1:Monthly, 2:On Demand"})
      */
     private $customertype;
 
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="preferred_driver", type="string", length=255)
+     * @var Driver
+     * @ORM\OneToOne(targetEntity="Driver")
+     * @ORM\JoinColumn(name="preferred_driver", referencedColumnName="id", nullable=true)
      */
     private $preferredDriver;
 
@@ -110,24 +116,35 @@ class Customer
     public function __construct() {
         $this->trips = new ArrayCollection();
         $this->addresses = new ArrayCollection();
+        $this->vehicles = new ArrayCollection();
     }
     
     public function getTrips()
     {
         return $this->trips;
+    }     
+    
+    public function getVehicles()
+    {
+        return $this->vehicles;
+    }      
+    
+    public function removeVehicle(CustomerVehicle $vehicle)
+    {
+        $vehicle->setVehicle(null);
+        $this->vehicles->removeElement($vehicle);
     }    
-
     
     public function getAddresses()
     {
         return $this->addresses;
-    }   
+    }      
     
     public function removeAddress(CustomerAddress $address)
     {
         $address->setCustomer(null);
         $this->addresses->removeElement($address);
-    }    
+    }        
     
     /**
      * Get id
@@ -248,9 +265,9 @@ class Customer
      *
      * @param string $preferredDriver
      *
-     * @return customer
+     * @return driver
      */
-    public function setPreferredDriver($preferredDriver)
+    public function setPreferredDriver(Driver $preferredDriver)
     {
         $this->preferredDriver = $preferredDriver;
 
@@ -261,7 +278,7 @@ class Customer
     /**
      * Get preferredDriver
      *
-     * @return string
+     * @return Driver
      */
     public function getPreferredDriver()
     {

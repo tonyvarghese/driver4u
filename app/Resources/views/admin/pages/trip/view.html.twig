@@ -64,19 +64,19 @@
 
                                     <tr>
                                         <td><strong>Start Time</strong></td>
-                                        <td>{{ trip.startedTime }}</td>
+                                        <td>{{ trip.startedTime|date('Y/m/d H:m') }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>End Time</strong></td>
-                                        <td>{{ trip.endedTime }}</td>
+                                        <td>{{ trip.endedTime|date('Y/m/d H:m') }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Amount Collected</strong></td>
-                                        <td>0</td>
+                                        <td>{{ trip.amountCollected }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Feedback</strong></td>
-                                        <td></td>
+                                        <td>{{ trip.feedback }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Status</strong></td>
@@ -88,10 +88,13 @@
 
                         </div>
 
+
+                        {% if trip.status == 1 or trip.status == 2 %}    
                         <p class="text-center">
                             <a href="{{ path('trip_close', {id: trip.id}) }}" class="btn btn-success btn-lg">CLOSE</a>
-                            <button type="button" class="btn btn-danger btn-lg">CANCEL</button>
-                        </p>                                            
+                            <a href="{{ path('trip_cancel', {id: trip.id}) }}" class="btn btn-danger btn-lg">CANCEL</a>
+                        </p>                
+                        {% endif %}    
 
                     </div>
 

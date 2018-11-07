@@ -1,0 +1,109 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Customer Details</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Customer Details
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-lg-6 ">
+
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Name</strong></td>
+                                        <td>{{ customer.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email</strong></td>
+                                        <td>{{ customer.email }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Location</strong></td>
+                                        <td>{{ customer.location }}</td>
+                                    </tr>                                    
+
+                                    <tr>
+                                    </tr><tr>
+                                        <td><strong>Phone</strong></td>
+                                        <td>
+
+                                            {% for key, phone in customer.phone %}       
+
+                                                {{phone}}, 
+
+                                            {% endfor %}                                            
+
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>Addresses</strong></td>
+                                        <td>
+
+                                            {% for key, address in customer.addresses %}       
+
+                                                {{address.HouseNo}}, {{address.street}}, {{address.city}}, {{address.landmark}}
+
+                                                <hr>
+
+                                            {% endfor %}    
+
+                                        </td>
+                                    </tr>     
+                                    
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="col-lg-6 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                  
+                                    <tr>
+                                        <td><strong>Usual Trip</strong></td>
+                                        <td>{{ customer.usualTrip }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Preferred Driver</strong></td>
+                                        <td>{{ customer.preferredDriver }}</td>
+                                    </tr>                                
+                                    <tr>
+                                        <td><strong>Customer Type</strong></td>
+                                        <td>{{ customer.customerType }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Vehicles</strong></td>
+                                        <td>
+
+                                            {% for key, vehicle in customer.vehicles %}       
+
+                                                {{vehicle.regNumber}}, {{vehicle.vehicleModel}}, {{vehicle.vehicleType}}
+
+                                                <hr>
+
+                                            {% endfor %}    
+
+                                        </td>
+                                    </tr>  
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Lead;
+use AppBundle\Entity\Customer;
+use AppBundle\Entity\CustomerAddress;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +77,7 @@ class LeadController extends Controller
             $lead->setFullName($request->request->get('name'));
             $lead->setEmail($request->request->get('email'));
             $lead->setAddress(json_encode($request->request->get('address')));
-            $lead->setPhone(json_encode($request->request->get('phone')));
+            $lead->setPhone(json_encode([$request->request->get('phone')]));
             $lead->setLocation($request->request->get('location'));
             $lead->setFeedback($request->request->get('feedback'));
             $lead->setStatus($request->request->get('status'));
@@ -128,7 +130,7 @@ class LeadController extends Controller
             $lead->setFullName($request->request->get('name'));
             $lead->setEmail($request->request->get('email'));
             $lead->setAddress(json_encode($request->request->get('address')));
-            $lead->setPhone(json_encode($request->request->get('phone')));
+            $lead->setPhone(json_encode([$request->request->get('phone')]));
             $lead->setLocation($request->request->get('location'));
             $lead->setFeedback($request->request->get('feedback'));
             $lead->setStatus($request->request->get('status'));
@@ -172,6 +174,7 @@ class LeadController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Lead::class);
         $leadObj = $repository->find($id);
+        $data['id'] = $leadObj->getId();
         $data['name'] = $leadObj->getFullName();
         $data['email'] = $leadObj->getEmail();
         $data['address'] = json_decode($leadObj->getAddress());
@@ -196,7 +199,78 @@ class LeadController extends Controller
         $em->remove($leads);
         $em->flush();
         //display the message
-        $this->addFlash('success', 'Post Deleted Successfully');
+        $this->addFlash('success', 'Lead Deleted Successfully');
         return $this->redirectToRoute('lead_index');
+    }
+    
+
+    /**
+     * @Route("admin/lead/convert/{id}", name="lead_convert")
+     * @Method({"GET", "POST"})
+     */
+    public function convertAction(Request $request, Lead $lead)
+    {        
+        $this->addCustomer($lead);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($lead);
+        $em->flush();
+        //display the message
+        $this->addFlash('success', 'Lead converted to customer!');
+        return $this->redirectToRoute('lead_index');
+    }    
+    
+    public function addCustomer($leadId) {
+                
+            $em = $this->getDoctrine()->getManager();
+            $lead = $em->getRepository(Lead::class)->find($leadId);
+                       
+        
+            $customer = new Customer();        
+            
+            $currentTime = new \DateTime("now"); //date("Y-m-d H:i:s", time());            
+            
+            
+            $customer->setFullName($lead->getFullName());
+            $customer->setEmail($lead->getEmail());
+            $customer->setLocation($lead->getLocation());
+            $customer->setPhone($lead->getPhone());
+            $customer->setStatus(1);
+            $customer->setCreatedAt($currentTime);
+            
+            $em->persist($customer);
+            $em->flush();
+       
+            $this->addCustomerAddress($lead, $customer);
+        
+    }
+    
+    public function addCustomerAddress($lead, $customer) {
+ 
+            $em = $this->getDoctrine()->getManager();
+            
+            $address = new CustomerAddress();
+            
+            $address1 = json_decode($lead->getAddress());
+            $addressArr = explode(',', $address1);
+            
+            
+            $address->setUserId($customer);
+            
+            if(isset($addressArr[0]))
+            $address->setHouseNo($addressArr[0]);
+
+            if(isset($addressArr[1]))
+            $address->setStreet($addressArr[1]);
+
+            if(isset($addressArr[2]))
+            $address->setCity($addressArr[2]);
+
+            if(isset($addressArr[3]))
+            $address->setLandmark($addressArr[3]);
+
+            
+            $em->persist($address);
+            $em->flush();        
     }
 }

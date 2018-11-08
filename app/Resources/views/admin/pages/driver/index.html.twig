@@ -31,7 +31,7 @@
                                 <thead>
                                     <tr>
                                         {#<th scope="col">ID</th>#}
-                                        <th scope="col">Name</th>
+                                        <th scope="col" style="width: 50px;">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Location</th>
@@ -47,7 +47,7 @@
                                             {#<th scope="row">{{ driver.id }}</th>#}
 
                                             <td>{{ driver.fullName }}</td>
-                                            <td>{{ driver.email }}</td>
+                                            <td style="word-break: break-all;">{{ driver.email }}</td>
                                             <td>
                                                 {% for phone in driver.phones %}
                                                     <div>{{ phone }} <hr></div>

@@ -227,7 +227,7 @@ class DriverController extends Controller {
         $data['driverassignment'] = json_decode($driverObj->getDriverAssignment());
         $data['note'] = $driverObj->getNote();
         $data['status'] = $driverObj->getStatus();
-
+        
         return $this->render('admin/pages/driver/edit.html.twig', ['data' => $data]);
     }
 

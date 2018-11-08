@@ -74,10 +74,20 @@
                                         <td><strong>Amount Collected</strong></td>
                                         <td>{{ trip.amountCollected }}</td>
                                     </tr>
-                                    <tr>
+                                    {% if (trip.status == 4)%}
+                                    <tr>                                    
+                                        <td><strong>Reason</strong></td>
+                                        <td>{{ trip.cancelReason }}</td>
+                                      
+                                    </tr>
+                                      {% endif %}  
+                                       {% if (trip.status == 3)%}
+                                    <tr>                                    
                                         <td><strong>Feedback</strong></td>
                                         <td>{{ trip.feedback }}</td>
+                                      
                                     </tr>
+                                      {% endif %}  
                                     <tr>
                                         <td><strong>Status</strong></td>
                                         <td>{{ status[trip.status] }}</td>

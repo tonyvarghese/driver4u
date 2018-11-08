@@ -78,16 +78,16 @@
                                             
                                             <div class="input-group">
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{{data.addresses[0].houseNo}}">
+                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].houseNo}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{{data.addresses[0].street}}">
+                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{% if data.addresses|length > 0 %}{{data.addresses[0].street}}  {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{{data.addresses[0].city}}">
+                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].city}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 24%">
-                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{{data.addresses[0].landmark}}">
+                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].landmark}} {% endif %}">
                                                 </div>           
 
                                                 <p class="form-control-static">&nbsp;</p>
@@ -137,16 +137,17 @@
                                 <div class="col-sm-10">
                                     <input name="doj" type="text" class="form-control datepicker" id="followup" placeholder="Date of Joining" value="{{ data.doj|date('m/d/Y') }}">
                                 </div>
-                            </div>                                       
-
+                            </div>  
+                               
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Driver Type</label>
                                 <div class="col-sm-10">
                                     <label class="checkbox-inline">
-                                        <input name="drivertype[]" checked type="checkbox" value="1"> Full Time
+                                        <input {% if 1 in data.drivertype %} checked {% endif %} name="drivertype[]" type="checkbox" value="1"> Full Time
                                     </label>
+                                   
                                     <label class="checkbox-inline">
-                                        <input name="drivertype[]" type="checkbox" value="2"> Part Time
+                                        <input {% if 2 in data.drivertype %} checked {% endif %} name="drivertype[]" type="checkbox" value="2"> Part Time
                                     </label>
                                 </div>
                             </div>
@@ -155,13 +156,13 @@
                                 <label class="col-sm-2 col-form-label">Expertise</label>
                                 <div class="col-sm-10">
                                     <label class="checkbox-inline">
-                                        <input name="expertise[]" type="checkbox" value="1"> Manuel
+                                        <input {% if 1 in data.expertise %} checked {% endif %} name="expertise[]" type="checkbox" value="1"> Manuel
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input name="expertise[]" type="checkbox" value="2"> Automatic
+                                        <input <input {% if 2 in data.expertise %} checked {% endif %}name="expertise[]" type="checkbox" value="2"> Automatic
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input name="expertise[]" type="checkbox" value="3"> Premium
+                                        <input <input {% if 3 in data.expertise %} checked {% endif %}name="expertise[]" type="checkbox" value="3"> Premium
                                     </label>
                                 </div>
                             </div>
@@ -171,11 +172,10 @@
                                 <div class="col-sm-10">
                                     <div class="radio">
                                         <label class="col-form-label col-sm-2 pt-0">
-                                            <input type="radio" name="pcc" id="yes" value="1"
-                                                   checked>Yes
+                                            <input  {% if data.pcc == 1 %} checked {% endif %} type="radio" name="pcc" id="yes" value="1">Yes
                                         </label>
                                         <label class="col-form-label col-sm-2 pt-0">
-                                            <input type="radio" name="pcc" id="no"
+                                            <input {% if  data.pcc == 0 %} checked {% endif %} type="radio" name="pcc" id="no"
                                                    value="0">No
                                         </label>
                                     </div>
@@ -186,13 +186,13 @@
                                 <label class="col-sm-2 col-form-label">Document Type</label>
                                 <div class="col-sm-10">
                                     <label class="checkbox-inline">
-                                        <input name="document[]" type="checkbox" value="1"> Driving Licence
+                                        <input {% if 1 in data.document %} checked {% endif %} name="document[]" type="checkbox" value="1"> Driving Licence
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input name="document[]" type="checkbox" value="2"> Pan Card
+                                        <input {% if 2 in data.document %} checked {% endif %} name="document[]" type="checkbox" value="2"> Pan Card
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input name="document[]" type="checkbox" value="3"> Aadhar
+                                        <input {% if 3 in data.document %} checked {% endif %} name="document[]" type="checkbox" value="3"> Aadhar
                                     </label>>
                                 </div>
                             </div>
@@ -208,10 +208,10 @@
                                 <label class="col-sm-2 col-form-label">Driver Assignment</label>
                                 <div class="col-sm-10">
                                     <label class="checkbox-inline">
-                                        <input name="driverassignment[]" type="checkbox" value="1"> Monthly
+                                        <input {% if 1 in data.driverassignment %} checked {% endif %} name="driverassignment[]" type="checkbox" value="1"> Monthly
                                     </label>
                                     <label class="checkbox-inline">
-                                        <input name="driverassignment[]" type="checkbox" value="2"> On Demand
+                                        <input {% if 2 in data.driverassignment %} checked {% endif %} name="driverassignment[]" type="checkbox" value="2"> On Demand
                                     </label>
                                 </div>
                             </div>

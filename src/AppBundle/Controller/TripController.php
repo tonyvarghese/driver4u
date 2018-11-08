@@ -36,7 +36,10 @@ class TripController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+       
+         
         $trips = $em->getRepository(Trip::class)->findAll();
+        
         
 //        $customer = $em->getRepository(Customer::class)->find($value->getCustomer());
 //        if (!$customer) {
@@ -77,6 +80,7 @@ class TripController extends Controller
 
         $trips = $repository->findBy(
             array('status' => '4')
+                
         );        
         
         return $this->render('admin/pages/trip/cancelled_trips.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
@@ -143,7 +147,7 @@ class TripController extends Controller
  /**
      * Displays a form to close an existing Trip entity.
      *
-     * @Route("/admin/trip/close/{id}", requirements={"id": "\d+"}, name="trip_cancel")
+     * @Route("/admin/trip/cancel/{id}", requirements={"id": "\d+"}, name="trip_cancel")
      * @Method({"GET", "POST"})
      */
     public function cancelAction(Request $request, $id)

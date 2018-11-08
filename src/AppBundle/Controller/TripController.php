@@ -6,11 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use AppBundle\Entity\Trip;
 use AppBundle\Entity\Customer;
+use AppBundle\Entity\CustomerVehicle;
 use AppBundle\Entity\Driver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class TripController extends Controller
@@ -303,9 +304,10 @@ class TripController extends Controller
         $em = $this->getDoctrine()->getManager();
         $drivers = $em->getRepository(Driver::class)->findAll();
         $customers = $em->getRepository(Customer::class)->findAll();
+        
+        $vehicles = $em->getRepository(CustomerVehicle::class)->findBy(array('customerId' => $trip->getCustomer()));                   
 
-
-        return $this->render('admin/pages/trip/edit.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'status' => $this->statusCodes()]);
+        return $this->render('admin/pages/trip/edit.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'vehicles' => $vehicles, 'status' => $this->statusCodes()]);
         
     }   
 
@@ -357,4 +359,25 @@ class TripController extends Controller
 
         return $this->render("admin/pages/trip/view.html.twig",['trip'=>$trip, 'status' => $this->statusCodes()]);
     }        
+
+    /**
+     * @Route("admin/trip/customer/vehicles", name="get_vehicles")
+     * @Method({"GET", "POST"})
+     */    
+    public function getVehicles(Request $request) {
+        
+        $id = $request->request->get('id');
+                
+        $em = $this->getDoctrine()->getManager();
+        $customer = $em->getRepository(Customer::class)->find($id);
+        $vehiclesObj = $customer->getVehicles();
+        //echo count($vehicles); die;
+        
+        $vehicles = [];
+        foreach ($vehiclesObj as $key => $value) {
+            $vehicles[$key] = [$value->getId(), $value->getVehicleModel() . '-' . $value->getVehicleType()];
+        }
+        
+        return new JsonResponse($vehicles);
+    }
 }

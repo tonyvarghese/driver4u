@@ -31,7 +31,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Customer</label>
                                     <div class="col-sm-10">
-                                        <select required name="customer" class="form-control">
+                                        <select required id="customer" name="customer" class="form-control">
 
                                             <option value="">--Select--</option>
 
@@ -49,7 +49,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Vehicle</label>
                                     <div class="col-sm-10">
-                                        <select name="vehicle" class="form-control">
+                                        <select disabled id="vehicle" name="vehicle" class="form-control">
 
                                             <option value="">--Select--</option>
                                             
@@ -121,5 +121,45 @@
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('#customer').on('change', function() {
+              // var url = $(this).data('url');
+              var url = "{{ path('get_vehicles') }}";
+        
+                $.ajax({
+                    type: 'post',
+                    url: url,
+                    data: { id: this.value} ,
+                    dataType: 'json',
+                    beforeSend: function () {
+//                        $('#themediv').append('<div id="loading" style=" float: left; display: block;"><img src=""/></div>');
+                    },
+                    success: function (json) {
+
+                        console.log(json);
+                        $.each(json, function (index, value) {
+
+                            //console.log(value);
+                            $('#vehicle').append('<option value="' + value[0]+ '">' + value[1] + '</option>').attr('disabled', false);
+                        });
+                    }
+                });
+                
+            });
+
+        });
+
+
+    </script>
 
 {% endblock %}

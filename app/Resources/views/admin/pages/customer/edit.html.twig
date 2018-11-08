@@ -203,14 +203,9 @@
 
                                             {% for driver in drivers %}
 
-                                                <option {% if driver.id == data.preferredDriver.id %} selected {% endif %} value="{{ driver.id }}">{{ driver.fullName }}</option>
+                                                <option {% if data.preferredDriver and driver.id == data.preferredDriver.id %} selected {% endif %} value="{{ driver.id }}">{{ driver.fullName }}</option>
 
                                             {% endfor %}
-                                            
-                                            
-                                            
-                                            
-                                            
                                             
 
                                         </select>

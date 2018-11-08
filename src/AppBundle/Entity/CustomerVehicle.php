@@ -3,9 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * customerVehicle
+ * CustomerVehicle
  *
  * @ORM\Table(name="customer_vehicles",indexes={@ORM\Index(name="index_customer_id", columns={"customer_id"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CustomerVehiclesRepository")
@@ -15,15 +16,26 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CustomerVehicle
 {
+    
+    /**
+     * @var Trip[]|ArrayCollection
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Trip",
+     *      mappedBy="vehicle",
+     *      orphanRemoval=true)
+     */
+    private $trips;
+    
+    
     /**
      * @var int
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\ManyToOne(targetEntity="CustomerDetails", inversedBy="CustomerVehicles")
-     * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
      */
-    private $id;
+    private $id;    
 
     
     /**
@@ -34,6 +46,7 @@ class CustomerVehicle
      *
      */
     private $customerId;
+    
 
 
     /**
@@ -71,7 +84,11 @@ class CustomerVehicle
      */
     private $updatedAt;
 
-
+    public function __construct() {
+        $this->trips = new ArrayCollection();
+    }
+     
+    
     /**
      * Get id
      *
@@ -87,7 +104,7 @@ class CustomerVehicle
      *
      * @param integer $customerId
      *
-     * @return CustomerVehicles
+     * @return CustomerVehicle
      */
     public function setCustomerId($customerId)
     {
@@ -111,7 +128,7 @@ class CustomerVehicle
      *
      * @param integer $regNumber
      *
-     * @return CustomerVehicles
+     * @return CustomerVehicle
      */
     public function setRegNumber($regNumber)
     {
@@ -135,7 +152,7 @@ class CustomerVehicle
      *
      * @param string $vehicleModel
      *
-     * @return CustomerVehicles
+     * @return CustomerVehicle
      */
     public function setVehicleModel($vehicleModel)
     {
@@ -159,7 +176,7 @@ class CustomerVehicle
      *
      * @param integer $vehicleType
      *
-     * @return CustomerVehicles
+     * @return CustomerVehicle
      */
     public function setVehicleType($vehicleType)
     {
@@ -183,7 +200,7 @@ class CustomerVehicle
      *
      * @param \DateTime $createdAt
      *
-     * @return CustomerVehicles
+     * @return CustomerVehicle
      */
     public function setCreatedAt($createdAt)
     {
@@ -207,7 +224,7 @@ class CustomerVehicle
      *
      * @param \DateTime $updatedAt
      *
-     * @return CustomerVehicles
+     * @return CustomerVehicle
      */
     public function setUpdatedAt($updatedAt)
     {

@@ -39,14 +39,15 @@ class Trip
      */
     private $driver;    
     
-
+    
     /**
-     * @var int
+     * @var CustomerVehicle
      *
-     * @ORM\Column(name="vehicle_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="CustomerVehicle", inversedBy="trips")
+     * @ORM\JoinColumn(nullable=true)
      */
-    private $vehicleId;
-
+    private $vehicle;   
+    
     
     /**
      * @var \DateTime
@@ -277,28 +278,14 @@ class Trip
         return $this->discount;
     }
 
-    /**
-     * Set vehicleId
-     *
-     * @param integer $vehicleId
-     *
-     * @return Trip
-     */
-    public function setVehicleId($vehicleId)
+    public function getVehicle()
     {
-        $this->vehicleId = $vehicleId;
-
-        return $this;
+        return $this->vehicle;
     }
 
-    /**
-     * Get vehicleId
-     *
-     * @return int
-     */
-    public function getVehicleId()
+    public function setVehicle(CustomerVehicle $vehicle)
     {
-        return $this->vehicleId;
+        $this->vehicle = $vehicle;
     }
 
     /**

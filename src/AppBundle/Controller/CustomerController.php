@@ -323,9 +323,10 @@ class CustomerController extends Controller
     public function deleteAction(Request $request, Customer $customer)
     {
 
+        
         $customer->getAddresses()->clear();
         $customer->getVehicles()->clear();
-        
+
         $em = $this->getDoctrine()->getManager();
         $em->remove($customer);
         $em->flush();

@@ -54,7 +54,7 @@
                                             <option value="">--Select--</option>
                                             {% for vehicle in vehicles %}
 
-                                                <option {% if vehicle.id == trip.vehicleId %} selected {% endif %} value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
+                                                <option {% if vehicle.id == trip.vehicle.id %} selected {% endif %} value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
 
                                             {% endfor %}                                            
                                         </select>

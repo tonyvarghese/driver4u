@@ -89,10 +89,9 @@ class Customer
      */
     private $customertype;
 
-
     /**
      * @var Driver
-     * @ORM\OneToOne(targetEntity="Driver")
+     * @ORM\ManyToOne(targetEntity="Driver")
      * @ORM\JoinColumn(name="preferred_driver", referencedColumnName="id", nullable=true)
      */
     private $preferredDriver;
@@ -131,7 +130,7 @@ class Customer
     
     public function removeVehicle(CustomerVehicle $vehicle)
     {
-        $vehicle->setVehicle(null);
+        $vehicle->setCustomer(null);
         $this->vehicles->removeElement($vehicle);
     }    
     

@@ -107,11 +107,13 @@ class TripController extends Controller
             $em = $this->getDoctrine()->getManager();
             $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
             $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
+            $vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
             
 
             $trip->setCustomer($customer);
             $trip->setDriver($driver);
-            $trip->setVehicleId($request->request->get('vehicle'));
+            if($vehicle)
+            $trip->setVehicle($vehicle);
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus(1);
             $trip->setRate($request->request->get('rate'));
@@ -253,11 +255,12 @@ class TripController extends Controller
             
             $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
             $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
+            $vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
             $scheduledTime = new \DateTime($request->request->get('stime'));
             
             $trip->setCustomer($customer);
             $trip->setDriver($driver);
-            $trip->setVehicleId($request->request->get('vehicle'));
+            $trip->setVehicle($vehicle);
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus($request->request->get('status'));
             $trip->setRate($request->request->get('rate'));

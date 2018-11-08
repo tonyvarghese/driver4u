@@ -30,7 +30,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Vehicle</strong></td>
-                                        <td></td>
+                                        <td>{{trip.vehicle.vehicleModel}} - {{trip.vehicle.vehicleType}}</td>
                                     </tr>
 
                                     <tr>
@@ -75,19 +75,19 @@
                                         <td>{{ trip.amountCollected }}</td>
                                     </tr>
                                     {% if (trip.status == 4)%}
-                                    <tr>                                    
-                                        <td><strong>Reason</strong></td>
-                                        <td>{{ trip.cancelReason }}</td>
-                                      
-                                    </tr>
-                                      {% endif %}  
-                                       {% if (trip.status == 3)%}
-                                    <tr>                                    
-                                        <td><strong>Feedback</strong></td>
-                                        <td>{{ trip.feedback }}</td>
-                                      
-                                    </tr>
-                                      {% endif %}  
+                                        <tr>                                    
+                                            <td><strong>Reason</strong></td>
+                                            <td>{{ trip.cancelReason }}</td>
+
+                                        </tr>
+                                    {% endif %}  
+                                    {% if (trip.status == 3)%}
+                                        <tr>                                    
+                                            <td><strong>Feedback</strong></td>
+                                            <td>{{ trip.feedback }}</td>
+
+                                        </tr>
+                                    {% endif %}  
                                     <tr>
                                         <td><strong>Status</strong></td>
                                         <td>{{ status[trip.status] }}</td>
@@ -98,13 +98,15 @@
 
                         </div>
 
+                        <div class="col-lg-12">
+                            {% if trip.status == 1 or trip.status == 2 %}    
+                                <p class="text-center">
+                                    <a href="{{ path('trip_close', {id: trip.id}) }}" class="btn btn-success btn-lg">CLOSE</a>
+                                    <a href="{{ path('trip_cancel', {id: trip.id}) }}" class="btn btn-danger btn-lg">CANCEL</a>
+                                </p>                
+                            {% endif %}  
+                        </div>
 
-                        {% if trip.status == 1 or trip.status == 2 %}    
-                        <p class="text-center">
-                            <a href="{{ path('trip_close', {id: trip.id}) }}" class="btn btn-success btn-lg">CLOSE</a>
-                            <a href="{{ path('trip_cancel', {id: trip.id}) }}" class="btn btn-danger btn-lg">CANCEL</a>
-                        </p>                
-                        {% endif %}    
 
                     </div>
 

@@ -1,0 +1,117 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+
+{% block main %}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Top Customers</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Top Customers
+                </div>
+                <div class="panel-body">
+
+
+                    {% for flashMessage in app.session.flashbag.get('success') %}    
+
+                        <div class="alert alert-success" role="alert">
+                            {{ flashMessage }}
+                        </div>    
+
+                    {% endfor %}
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Customer</th>
+                                        <th scope="col"> Driver</th>
+                                        <th scope="col" class=""> Scheduled Time</th>
+                                        <th scope="col" class=""> Location</th>
+                                        <th scope="col" class=""> Rate</th>
+                                        <th scope="col" class=""> Discount</th>
+                                        <th scope="col" class=""> Status</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for trip in trips %}
+                                        <tr>
+                                            <td>{{ trip.customer.fullName }}</td>
+                                            <td>{{ trip.driver.fullName }}</td>
+                                            <td>{{ trip.scheduledTime|date('d/m/Y h:m A') }}</td>
+                                            <td>{{ trip.location }}</td>
+                                            <td>{{ trip.rate }}</td>
+                                            <td>{{ trip.discount }}</td>
+                                            <td>{{ status[trip.status] }}</td>
+
+                                            <td class="text-right">
+                                                <div class="item-actions">
+                                                    <a href="{{ path('trip_view', {id: trip.id}) }}" class="btn btn-primary btn-sm">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i> View
+                                                    </a>
+                                                    <a href="{{ path('trip_edit', {id: trip.id}) }}" class="btn btn-sm btn-success">
+                                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                                    </a>
+
+                                                    <button data-url="{{ path('trip_delete', {id: trip.id}) }}" id="delete-button" class="btn btn-sm btn-danger">
+                                                        <i class="fa fa-remove" aria-hidden="true"></i> Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="6" align="center">No Customers Found</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("body").on('click', '#delete-button', function () {
+                if (confirm("Are you sure you want to delete this?")) {
+
+                    var url = $(this).data('url');
+
+                    location.href = url;
+                    // window.location = "www.example.com/index.php?id=" + this.id;
+                }
+                else {
+                    return false;
+                }
+            });
+
+        });
+
+
+    </script>
+
+{% endblock %}

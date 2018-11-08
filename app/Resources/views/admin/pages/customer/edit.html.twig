@@ -80,16 +80,16 @@
                                             
                                             <div class="input-group">
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{{data.addresses[0].houseNo}}">
+                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].houseNo}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{{data.addresses[0].street}}">
+                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].street}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{{data.addresses[0].city}}">
+                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].city}} {% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 24%">
-                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{{data.addresses[0].landmark}}">
+                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].landmark}} {% endif %}">
                                                 </div>           
 
                                                 <p class="form-control-static">&nbsp;</p>
@@ -185,10 +185,10 @@
                                     <div class="col-sm-10">
 
                                         <label class="checkbox-inline">
-                                            <input name="customertype[]" type="checkbox" value="1"> Monthly
+                                            <input {% if 1 in data.customertype %} checked {% endif %}name="customertype[]" type="checkbox" value="1"> Monthly
                                         </label>
                                         <label class="checkbox-inline">
-                                            <input name="customertype[]" type="checkbox" value="2"> On Demand
+                                            <input  {% if 2 in data.customertype %} checked {% endif %}name="customertype[]" type="checkbox" value="2"> On Demand
                                         </label>
                                     </div>
                                 </div>
@@ -203,9 +203,15 @@
 
                                             {% for driver in drivers %}
 
-                                                <option value="{{ driver.id }}">{{ driver.fullName }}</option>
+                                                <option {% if driver.id == data.preferredDriver.id %} selected {% endif %} value="{{ driver.id }}">{{ driver.fullName }}</option>
 
                                             {% endfor %}
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
 
                                         </select>
                                     </div>

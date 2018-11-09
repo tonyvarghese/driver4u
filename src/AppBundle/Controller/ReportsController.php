@@ -62,5 +62,29 @@ class ReportsController extends Controller
         $data = $query->getResult();        
 
         return $this->render('admin/pages/report/top_drivers.html.twig', ['data' => $data]);
-    }       
+    }   
+
+    /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/reports/feedback", name="feeback_driver")
+     * @Method("GET")
+     */
+    public function feedback()
+    {
+        $em = $this->getDoctrine()->getManager();
+         $qb = $em->createQueryBuilder();
+        $query = $qb->select('f as feedback', 'd as driver id')
+                ->from('AppBundle:Trip','d','f')
+                ->getQuery();
+        var_dump($query->getDQL());die;
+                
+        $data = $query->getResult();        
+        
+        
+        
+         return $this->render('admin/pages/report/feedback_driver.html.twig',['data' => $data]);
+    }
+    
 }

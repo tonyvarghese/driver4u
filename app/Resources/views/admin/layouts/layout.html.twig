@@ -107,7 +107,7 @@
 
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
+                        <ul class="nav" id="side-menu" style="overflow-y: scroll; height: 600px;">
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <input type="text" class="form-control" placeholder="Search...">
@@ -147,7 +147,7 @@
                                     <li><a href="test.html">Drivers Drives Taken</a></li>
                                     <li><a href="test.html">Revenue - Customer</a></li>
                                     <li><a href="test.html">Revenue - Driver</a></li>
-                                    <li><a href="test.html">Top Drivers</a></li>
+                                    <li><a href="{{ path('top_drivers_index')}}">Top Drivers</a></li>
                                     <li><a href="{{ path('top_customers_index')}}">Top Customers</a></li>
                                     <li><a href="test.html">Preferred Drivers</a></li>
                                     <li><a href="test.html">Lead Conversions</a></li>

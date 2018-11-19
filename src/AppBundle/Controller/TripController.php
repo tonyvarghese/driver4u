@@ -80,6 +80,7 @@ class TripController extends Controller
 
         $trips = $repository->findBy(
             array('status' => '4')
+               
                 
         );        
         

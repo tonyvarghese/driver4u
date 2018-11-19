@@ -26,7 +26,7 @@ class ReportsController extends Controller
         $em = $this->getDoctrine()->getManager();
        
          //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
-
+ 
         $qb = $em->createQueryBuilder();
         $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
            ->from('AppBundle:Trip', 't')
@@ -100,6 +100,31 @@ class ReportsController extends Controller
         
          return $this->render('admin/pages/report/feedback_driver.html.twig',['data' => $data]);
     }
+ 
+
+  /**
+     *
+     *
+     * @Route("/admin/reports/lead-conversion", name="lead_conversion_report")
+     * @Method("GET")
+     */
+    public function leadConversion()
+    {
+        $em = $this->getDoctrine()->getManager();
+       
+         //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
+
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+           ->from('AppBundle:Trip', 't')
+           ->groupby('t.driver')
+           ->orderBy('total', 'DESC')
+           ->getQuery();
+
+        $data = $query->getResult();        
+
+        return $this->render('admin/pages/report/lead_conversion.html.twig', ['data' => $data]);
+    } 
     
      /**
      * Lists all Trip entities.

@@ -1,0 +1,64 @@
+{% extends 'admin/layouts/layout.html.twig' %}
+
+{% block main %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Lead Conversion</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Lead Conversion
+                </div>
+                <div class="panel-body">
+                    
+                                    
+                    <form>
+                        <div class="row" style="margin-bottom: 50px;">
+                            <div class="col-lg-3">
+                                <input required name="date" type="text" class="datepickeronly form-control" placeholder="Select Date">
+                            </div>                                                        
+                            <div class="col-lg-2">                            
+                                <button class="btn btn-primary">GO</button>
+                            </div>
+                        </div>    
+                    </form>
+                        
+                    <div class="row">
+
+                        <div class="col-lg-6 ">
+
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Total Leads</strong></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total Converted</strong></td>
+                                        <td></td>
+                                    </tr>                                                                       
+                                    <tr>
+                                        <td><strong>Conversion Rate</strong></td>
+                                        <td></td>
+                                    </tr>                                    
+                                    
+                                </tbody>
+                            </table>
+
+                        </div>
+                  
+                                    
+                        
+                    </div>
+                                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+                

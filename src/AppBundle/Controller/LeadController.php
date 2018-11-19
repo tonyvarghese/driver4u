@@ -20,7 +20,7 @@ class LeadController extends Controller
 
     public function statusValues()
     {
-        return [0 => "", 1 => "Interested", 2 => "Not Interested", 3 => "Cancelled"];
+        return [0 => "", 1 => "Interested", 2 => "Not Interested", 3 => "Cancelled", 4 => "Converted"];
     }
 
     /**
@@ -30,7 +30,10 @@ class LeadController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $leads = $em->getRepository(Lead::class)->findAll();
+        //$leads = $em->getRepository(Lead::class)->findBy(['status' => '4']);
+        
+        $query = $em->createQuery('SELECT l FROM AppBundle\Entity\Lead l WHERE l.status <> 4');
+        $leads = $query->getResult();        
 
         $data = [];
         foreach ($leads as $key => $value) {
@@ -208,17 +211,29 @@ class LeadController extends Controller
      * @Route("admin/lead/convert/{id}", name="lead_convert")
      * @Method({"GET", "POST"})
      */
-    public function convertAction(Request $request, Lead $lead)
+    public function convertAction(Request $request, Lead $leadId)
     {        
-        $this->addCustomer($lead);
+        $this->addCustomer($leadId);
         
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($lead);
-        $em->flush();
+//        $em = $this->getDoctrine()->getManager();
+//        $em->remove($lead);
+//        $em->flush();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $lead = $entityManager->getRepository(Lead::class)->find($leadId);
+            if (!$lead) {
+                throw $this->createNotFoundException(
+                    'No customer found for id ' . $id
+                );
+            }
+
+            $lead->setStatus(4);
+            $entityManager->flush();
+            
         //display the message
         $this->addFlash('success', 'Lead converted to customer!');
         return $this->redirectToRoute('lead_index');
-    }    
+    }
     
     public function addCustomer($leadId) {
                 

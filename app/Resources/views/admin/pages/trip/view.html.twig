@@ -30,7 +30,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Vehicle</strong></td>
-                                        <td>{{trip.vehicle.vehicleModel}} - {{trip.vehicle.vehicleType}}</td>
+                                        <td> {% if trip.vehicle|length > 0 %} {{trip.vehicle.vehicleModel}} - {{trip.vehicle.vehicleType}} {% endif %} </td>
                                     </tr>
 
                                     <tr>

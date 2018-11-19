@@ -28,7 +28,7 @@ class ReportsController extends Controller
          //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
 
         $qb = $em->createQueryBuilder();
-        $query = $qb->select('t as trip', 'SUM(t.rate) as total')
+        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
            ->from('AppBundle:Trip', 't')
            ->groupby('t.customer')
            ->orderBy('total', 'DESC')
@@ -53,7 +53,7 @@ class ReportsController extends Controller
          //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
 
         $qb = $em->createQueryBuilder();
-        $query = $qb->select('t as trip', 'SUM(t.rate) as total')
+        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
            ->from('AppBundle:Trip', 't')
            ->groupby('t.driver')
            ->orderBy('total', 'DESC')

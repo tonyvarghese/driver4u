@@ -137,9 +137,47 @@ class ReportsController extends Controller
 //        echo "</pre>";
 //        die;
 //      
-        
-
         return $this->render('admin/pages/report/cancellation_reports.html.twig',['data' => $data]);
+    }
+    
+     /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/reports/drivers_drives_taken", name="drivers_drives_taken")
+     * @Method("GET")
+     */
+    public function driversdrivesTaken()
+    {
+        $em = $this->getDoctrine()->getManager();
+//       
+//        $repository = $this->getDoctrine()->getRepository(Trip::class);
+////        $trips = $repository->findBy(
+////            array('status' => '4'));
+//        $query = $em->createQuery(
+//    'SELECT t
+//    FROM AppBundle:Trip t
+//    WHERE t.createdAt BETWEEN 01/01/2018 and 01/31/2018
+//    ORDER BY t.driver ASC');
+//
+//           $trips = $query->getResult(); 
+           
+            $qb = $em->createQueryBuilder();
+            $qb->select('t')
+            ->from('AppBundle:Trip', 't')
+            ->where('t.scheduledTime > :start')
+            ->andWhere('t.scheduledTime < :end')
+            ->andWhere('t.status = 3')
+            ->setParameter('start', new \DateTime('1/1/2018'), \Doctrine\DBAL\Types\Type::DATETIME)
+            ->setParameter('end', new \DateTime('2/2/2018'), \Doctrine\DBAL\Types\Type::DATETIME);
+            $trips = $qb->getQuery()->getResult();           
+           
+           var_dump(count($trips)); die();
+          
+
+        
+        
+        return $this->render('admin/pages/report/drivers_drives_taken.html.twig');
     }
     
 }

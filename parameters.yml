@@ -1,0 +1,7 @@
+# This file is auto-generated during the composer install
+parameters:
+    locale: en
+    env(SYMFONY_SECRET): dsaf456dsafdasf
+    env(LOG_URL): '%kernel.logs_dir%/%kernel.environment%.log'
+    env(DATABASE_URL): 'mysql://root:123@127.0.0.1:3306/driver4u'
+    env(MAILER_URL): 'smtp://localhost:25?encryption=&auth_mode='

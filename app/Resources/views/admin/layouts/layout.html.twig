@@ -9,24 +9,24 @@
 
         <title>Driver4u</title>
 
-        
+
         {% block stylesheets %}
 
-        <!-- Bootstrap Core CSS -->
-        <link href="{{ asset('build/css/bootstrap.min.css') }}" rel="stylesheet">
+            <!-- Bootstrap Core CSS -->
+            <link href="{{ asset('build/css/bootstrap.min.css') }}" rel="stylesheet">
 
-        <!-- MetisMenu CSS -->
-        <link href="{{ asset('build/css/metisMenu.min.css') }}" rel="stylesheet">
+            <!-- MetisMenu CSS -->
+            <link href="{{ asset('build/css/metisMenu.min.css') }}" rel="stylesheet">
 
-        <!-- Custom CSS -->
-        <link href="{{ asset('build/css/startmin.css') }}" rel="stylesheet">
+            <!-- Custom CSS -->
+            <link href="{{ asset('build/css/startmin.css') }}" rel="stylesheet">
 
             <link href="{{ asset('build/css/jquery-ui.css') }}" rel="stylesheet">
 
-        <!-- Custom Fonts -->
-        <link href="{{ asset('build/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-        
-        <link href="{{ asset('build/css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
+            <!-- Custom Fonts -->
+            <link href="{{ asset('build/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+
+            <link href="{{ asset('build/css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
 
         {% endblock %}        
 
@@ -61,43 +61,43 @@
                     <span class="icon-bar"></span>
                 </button>
 
-          {#      <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
-                </ul>#}
+                {#      <ul class="nav navbar-nav navbar-left navbar-top-links">
+                          <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
+                      </ul>#}
 
                 <ul class="nav navbar-right navbar-top-links">
-                  {#  <li class="dropdown navbar-inverse">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comment
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>                                              
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>#}
+                    {#  <li class="dropdown navbar-inverse">
+                          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                              <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
+                          </a>
+                          <ul class="dropdown-menu dropdown-alerts">
+                              <li>
+                                  <a href="#">
+                                      <div>
+                                          <i class="fa fa-comment fa-fw"></i> New Comment
+                                          <span class="pull-right text-muted small">4 minutes ago</span>
+                                      </div>
+                                  </a>
+                              </li>                                              
+                              <li class="divider"></li>
+                              <li>
+                                  <a class="text-center" href="#">
+                                      <strong>See All Alerts</strong>
+                                      <i class="fa fa-angle-right"></i>
+                                  </a>
+                              </li>
+                          </ul>
+                      </li>#}
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             <i class="fa fa-user fa-fw"></i> Admin <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                          {#  <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>#}
-{#                            <li class="divider"></li>#}
+                            {#  <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                              </li>#}
+                            {#                            <li class="divider"></li>#}
                             <li><a href="{{ path('security_logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
@@ -115,7 +115,7 @@
                                         <button class="btn btn-primary" type="button">
                                             <i class="fa fa-search"></i>
                                         </button>
-                                </span>
+                                    </span>
                                 </div>
                                 <!-- /input-group -->
                             </li>
@@ -131,16 +131,16 @@
                             <li>
                                 <a href="{{ path('trip_index')}}"><i class="fa fa-car"></i> Trips</a>
                             </li>
-                            
+
                             <li>
                                 <a href="{{ path('cancelled_trips')}}"><i class="fa fa-car"></i> Cancelled Trips</a>
                             </li>
-                            
+
                             <li>
                                 <a href="{{ path('lead_index')}}"><i class="fa fa-book"></i> Leads</a>
                             </li>                                               
-                            
-                          <li>
+
+                            <li>
                                 <a href="#"><i class="fa fa-files-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level collapse">
                                     <li><a href="test.html">Customer Service Frequency</a></li>
@@ -150,7 +150,7 @@
                                     <li><a href="{{ path('top_drivers_index')}}">Top Drivers</a></li>
                                     <li><a href="{{ path('top_customers_index')}}">Top Customers</a></li>
                                     <li><a href="test.html">Preferred Drivers</a></li>
-                                    <li><a href="test.html">Lead Conversions</a></li>
+                                    <li><a href="{{ path('lead_conversion_report')}}">Lead Conversions</a></li>
                                     <li><a href="test.html">Cancellation Reports</a></li>
                                     <li><a href="{{ path('feedback_drivers')}}">Feedback Reports</a></li>
                                 </ul>
@@ -158,23 +158,23 @@
                             </li>
                         </ul>
                     </div>
-                            
-           
-                        
-                            
+
+
+
+
                 </div>
             </nav>
 
             <div id="page-wrapper">
-          {% block main %}{% endblock %}
-            </div>
-            <!-- /#page-wrapper -->
-
+            {% block main %}{% endblock %}
         </div>
-        <!-- /#wrapper -->
+        <!-- /#page-wrapper -->
 
-        
-        {% block javascripts %}
+    </div>
+    <!-- /#wrapper -->
+
+
+    {% block javascripts %}
 
         <!-- jQuery -->
         <script src="{{ asset('build/js/jquery.min.js') }}"></script>
@@ -188,24 +188,30 @@
         <!-- Custom Theme JavaScript -->
         <script src="{{ asset('build/js/startmin.js') }}"></script>
 
-            <script src="{{ asset('build/js/jquery-ui.js') }}"></script>
-            
-            <script src="{{ asset('build/js/jquery.datetimepicker.js') }}"></script>
+        <script src="{{ asset('build/js/jquery-ui.js') }}"></script>
 
-            <script>
-                $( function() {
-                    $( ".datepicker" ).datepicker();
-                } );
-            </script>
-            
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $('.datetimepicker').datetimepicker();
+        <script src="{{ asset('build/js/jquery.datetimepicker.js') }}"></script>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                
+                $(".datepicker").datepicker();
+                
+                $('.datetimepicker').datetimepicker({
+                    format:'d/m/Y H:i'
                 });
-            </script>            
+                                
+                $(".datepickeronly").datetimepicker({
+                    timepicker:false,
+                    format:'d/m/Y'
+                });
 
-        {% endblock %}        
-        
+            });
+        </script>            
 
-    </body>
+    {% endblock %}        
+
+
+</body>
 </html>

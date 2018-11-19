@@ -58,7 +58,7 @@ class Lead
     /**
      * @var int
      *
-     * @ORM\Column(name="status", type="smallint",options={"comment":"1:Interested, 2:Not interested, 3:Cancelled"})
+     * @ORM\Column(name="status", type="smallint",options={"comment":"1:Interested, 2:Not interested, 3:Cancelled, 4:Coverted"})
      */
     private $status;
 

@@ -35,10 +35,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     {% for item in data %}
                                         <tr>
-                                            <td>{{ item.trip.driver.fullname }}</td>
-                                            <td>{{ item.trip.feedback }}</td>
+                                           
+                                            <td>{{ item[0]['name'] }}</td>
+                                            <td>
+                                                {% for row in item %}
+                                                    {{row['feedback']}} <hr>
+                                                {% endfor %}
+                                            </td>
                                             
                                         </tr>
                                     {% else %}

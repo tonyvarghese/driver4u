@@ -68,21 +68,34 @@ class ReportsController extends Controller
      * Lists all Trip entities.
      *
      *
-     * @Route("/admin/reports/feedback", name="feeback_driver")
+     * @Route("/admin/reports/feedback", name="feedback_drivers")
      * @Method("GET")
      */
     public function feedback()
     {
         $em = $this->getDoctrine()->getManager();
-         $qb = $em->createQueryBuilder();
-        $query = $qb->select('f as feedback', 'd as driver id')
-                ->from('AppBundle:Trip','d','f')
-                ->getQuery();
-        var_dump($query->getDQL());die;
+//         $qb = $em->createQueryBuilder();
+//        $query = $qb->select('t as trip')
+//                ->from('AppBundle:Trip','t')
+//                ->orderby('t.driver')
+//                ->getQuery();
+//        var_dump($query->getDQL());die;
                 
-        $data = $query->getResult();        
+        //$result = $query->getResult();      
+         
+         $trips = $em->getRepository(Trip::class)->findAll();
         
+        $data = [];
+        foreach ($trips as $key => $value) {
+            $driverId = $value->getDriver()->getId();
+            $driverName = $value->getDriver()->getFullName();
+            $data[$driverId][] = ['name' => $driverName, 'feedback' => $value->getFeedback()];
+        }
         
+//        echo "<pre>";
+//        var_dump($data); 
+//        echo "</pre>";
+//        die;
         
          return $this->render('admin/pages/report/feedback_driver.html.twig',['data' => $data]);
     }

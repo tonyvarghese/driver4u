@@ -106,24 +106,55 @@ class ReportsController extends Controller
      *
      *
      * @Route("/admin/reports/lead-conversion", name="lead_conversion_report")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function leadConversion()
+    public function leadConversion(Request $request)
     {
+        
+        $startDate = strtotime($request->request->get('start-date'));
+        echo $startDate = date("Y-m-d", $startDate);
+
+        $endDate = strtotime($request->request->get('end-date'));
+        $endDate = date("Y-m-d", $endDate);
+
+        
         $em = $this->getDoctrine()->getManager();
        
          //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
 
         $qb = $em->createQueryBuilder();
-        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
-           ->from('AppBundle:Trip', 't')
-           ->groupby('t.driver')
-           ->orderBy('total', 'DESC')
+        $query = $qb->select('l.status')
+           ->from('AppBundle:Lead', 'l')
+            ->where('l.createdAt >= :start')
+            ->andWhere('l.createdAt <= :end')
+            ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
+            ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME)                
            ->getQuery();
 
-        $data = $query->getResult();        
-
-        return $this->render('admin/pages/report/lead_conversion.html.twig', ['data' => $data]);
+        $data = $query->getResult();   
+        
+        echo count($data);
+        
+        $total = 0;
+        $converted = 0;
+        $conversionRate = 0;
+        foreach ($data as $key => $value) {
+            $status = $value['status'];
+            
+            if($status == 4)
+                $converted ++;
+            
+            $total++;            
+        }
+        $conversionRate = round(($converted/$total) * 100);
+        
+        return $this->render('admin/pages/report/lead_conversion.html.twig', [
+            'total' => $total, 
+            'converted' => $converted, 
+            'conversionRate' => $conversionRate,
+            'startDate' => $request->request->get('start-date'),
+            'endDate' => $request->request->get('end-date')
+        ]);
     } 
     
      /**

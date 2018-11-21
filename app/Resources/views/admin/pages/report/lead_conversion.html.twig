@@ -16,12 +16,15 @@
                 <div class="panel-body">
                     
                                     
-                    <form>
+                    <form method='post'>
                         <div class="row" style="margin-bottom: 50px;">
-                            <div class="col-lg-3">
-                                <input required name="date" type="text" class="datepickeronly form-control" placeholder="Select Date">
+                            <div class="col-lg-2">
+                                <input value="{{startDate}}" required name="start-date" type="text" class="datepickeronly form-control" placeholder="From Date">
                             </div>                                                        
-                            <div class="col-lg-2">                            
+                            <div class="col-lg-2">
+                                <input value="{{endDate}}" required name="end-date" type="text" class="datepickeronly form-control" placeholder="To Date">
+                            </div>                                                                                    
+                            <div class="col-lg-1">                            
                                 <button class="btn btn-primary">GO</button>
                             </div>
                         </div>    
@@ -29,21 +32,21 @@
                         
                     <div class="row">
 
-                        <div class="col-lg-6 ">
+                        <div class="col-lg-4 ">
 
                             <table class="table table-user-information">
                                 <tbody>
                                     <tr>
                                         <td><strong>Total Leads</strong></td>
-                                        <td></td>
+                                        <td>{{total}}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Total Converted</strong></td>
-                                        <td></td>
+                                        <td>{{converted}}</td>
                                     </tr>                                                                       
                                     <tr>
                                         <td><strong>Conversion Rate</strong></td>
-                                        <td></td>
+                                        <td>{{conversionRate}}</td>
                                     </tr>                                    
                                     
                                 </tbody>

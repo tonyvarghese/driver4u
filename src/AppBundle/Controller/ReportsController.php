@@ -170,9 +170,9 @@ class ReportsController extends Controller
      *
      *
      * @Route("/admin/reports/drivers_drives_taken", name="drivers_drives_taken")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
-    public function driversdrivesTaken()
+    public function driversdrivesTaken(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 //       
@@ -187,22 +187,31 @@ class ReportsController extends Controller
 //
 //           $trips = $query->getResult(); 
            
+        
+        $startDate = strtotime($request->request->get('start'));
+        $startDate = date("Y-m-d", $startDate);
+
+        $endDate = strtotime($request->request->get('end'));
+        $endDate = date("Y-m-d", $endDate);
+
+        
+        // 21/11/2018
+        // '2008-01-02'
+        
             $qb = $em->createQueryBuilder();
-            $qb->select('t')
+            $qb->select('t as trip','COUNT(t) as total')
             ->from('AppBundle:Trip', 't')
             ->where('t.scheduledTime > :start')
             ->andWhere('t.scheduledTime < :end')
             ->andWhere('t.status = 3')
-            ->setParameter('start', new \DateTime('1/1/2018'), \Doctrine\DBAL\Types\Type::DATETIME)
-            ->setParameter('end', new \DateTime('2/2/2018'), \Doctrine\DBAL\Types\Type::DATETIME);
+            ->groupBy('t.driver')
+            ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
+            ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
             $trips = $qb->getQuery()->getResult();           
-           
-           var_dump(count($trips)); die();
           
-
+            //var_dump(count($trips)); die;
         
-        
-        return $this->render('admin/pages/report/drivers_drives_taken.html.twig');
+        return $this->render('admin/pages/report/drivers_drives_taken.html.twig',['trips' => $trips, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
     }
     
 }

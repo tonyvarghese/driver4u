@@ -57,7 +57,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Followup</strong></td>
-                                        <td>{{ lead.followupDate|date('m/d/Y') }}</td>
+                                        <td>{{ lead.followupDate|date('d-m-Y') }}</td>
                                     </tr>                                
                                     <tr>
                                         <td><strong>Feedback</strong></td>
@@ -65,7 +65,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Created At</strong></td>
-                                        <td>{{ lead.createdAt|date('m/d/Y') }} </td>
+                                        <td>{{ lead.createdAt|date('d-m-Y') }} </td>
                                     </tr>  
                                 </tbody>
                             </table>

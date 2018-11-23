@@ -31,11 +31,11 @@
                                 <thead>
                                     <tr>
                                         {#<th scope="col">ID</th>#}
-                                        <th scope="col" style="width: 50px;">Name</th>
+                                        <th scope="col">Name</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Phone</th>
                                         <th scope="col">Location</th>
-                                        <th scope="col">Address</th>                                        
+{#                                        <th scope="col">Address</th>                                        #}
                                         <th scope="col">DOJ</th>
                                         <th scope="col" style="width: 215px;"></th>
                                     </tr>
@@ -54,11 +54,11 @@
                                                     {% endfor %}                                            
                                             </td>
                                             <td>{{ driver.location }}</td>
-                                            <td>
+                                          {#  <td>
                                                 {% for address in driver.addresses %}
                                                     <div>{{ address.houseNo }}, {{ address.street }}, {{ address.city }}, {{ address.landmark }} <hr></div>
                                                     {% endfor %}                                            
-                                            </td>
+                                            </td>#}
 
                                             <td>{{ driver.doj|date('m/d/Y') }}</td>
 

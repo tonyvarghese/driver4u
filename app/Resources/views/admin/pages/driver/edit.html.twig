@@ -28,7 +28,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Name</label>
                                 <div class="col-sm-10">
-                                    <input name="name" type="text" class="form-control" id="name" placeholder="Name"
+                                    <input required name="name" type="text" class="form-control" id="name" placeholder="Name"
                                            value="{{ data.name }}">
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Date of Joining</label>
                                 <div class="col-sm-10">
-                                    <input name="doj" type="text" class="form-control datepicker" id="followup" placeholder="Date of Joining" value="{{ data.doj|date('m/d/Y') }}">
+                                    <input name="doj" type="text" class="form-control datepickeronly" id="followup" placeholder="Date of Joining" value="{{ data.doj|date('d-m-Y') }}">
                                 </div>
                             </div>  
                                
@@ -175,8 +175,7 @@
                                             <input  {% if data.pcc == 1 %} checked {% endif %} type="radio" name="pcc" id="yes" value="1">Yes
                                         </label>
                                         <label class="col-form-label col-sm-2 pt-0">
-                                            <input {% if  data.pcc == 0 %} checked {% endif %} type="radio" name="pcc" id="no"
-                                                   value="0">No
+                                            <input {% if  data.pcc == 0 %} checked {% endif %} type="radio" name="pcc" id="no" value="0">No
                                         </label>
                                     </div>
                                 </div>
@@ -300,3 +299,13 @@
 
 {% endblock %}
                 
+{% block stylesheets %}
+    {{ parent() }}
+    
+    <style>
+    #address-wrapper .input-group{
+        width: 100%;
+    }
+    </style>
+    
+{% endblock %}

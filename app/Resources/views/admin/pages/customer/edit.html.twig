@@ -71,13 +71,13 @@
                                         <input name="location" type="text" class="form-control" id="age" placeholder="Location" value="{{data.location}}">
                                     </div>
                                 </div>
-          
+
                                 <div class="form-group row">
                                     <div class="form-inline">
                                         <label class="col-sm-2 col-form-label">Address</label>
 
                                         <div class="col-sm-10" id="address-wrapper">   
-                                            
+
                                             <div class="input-group">
                                                 <div class="form-group" style="width: 25%">
                                                     <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].houseNo}} {% endif %}">
@@ -119,61 +119,83 @@
 
                                                 {% endif %}                                            
                                             {% endfor %}    
-                                        
+
 
                                         </div>
 
                                     </div>
                                 </div>
-          
+
                                 <div class="form-group row">
                                     <div class="form-inline">
                                         <label class="col-sm-2 col-form-label">Vehicles</label>
 
                                         <div class="col-sm-10" id="vehicles-wrapper">   
-                                            
-                                            
-                                            <div class="input-group">
-                                                <div class="form-group" style="width: 33%">
-                                                    <input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;" value="{% if data.vehicles|length > 0 %}  {{data.vehicles[0].regNumber}} {% endif %}">
-                                                </div>
-                                                <div class="form-group" style="width: 33%">
-                                                    <input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleModel}} {% endif %}">
-                                                </div>
-                                                <div class="form-group" style="width: 33%">
-                                                    <input name="type[]" type="text" class="form-control" placeholder="Type" style="width: 100%;" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleType}} {% endif %}">
-                                                </div>
 
-                                                <p class="form-control-static">&nbsp;</p>
-                                                <div style="cursor: pointer; border-left: 1px solid #ccc;" id="add_vehicle" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                            <div class="vehicles-content">
+                                                <div class="input-group">
+                                                    <div class="form-group" style="width: 50%">
+                                                        <input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;" value="{% if data.vehicles|length > 0 %}  {{data.vehicles[0].regNumber}} {% endif %}">
+                                                    </div>
+                                                    <div class="form-group" style="width: 50%">
+                                                        <input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleModel}} {% endif %}">
+                                                    </div>
+
+                                                    <div style="cursor: pointer; border-left: 1px solid #ccc; width: 40px;" id="add_vehicle" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                                                </div>
+                                                <div class="input-group">
+                                                    <input type="hidden" class="vehicle-type" name="type[]" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleTypesJson}} {% endif %}">
+                                                    <label class="checkbox-inline">
+                                                        <input {% if data.vehicles|length > 0 %} {% if 'Manual' in data.vehicles[0].vehicleTypes %} checked {% endif %} {% endif %}  class="vehicle-type-check" type="checkbox" value="Manual"> Manual
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input {% if data.vehicles|length > 0 %} {% if 'Automatic' in data.vehicles[0].vehicleTypes %} checked {% endif %} {% endif %} class="vehicle-type-check" type="checkbox" value="Automatic"> Automatic
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input {% if data.vehicles|length > 0 %} {% if 'Premium' in data.vehicles[0].vehicleTypes %} checked {% endif %} {% endif %} class="vehicle-type-check" type="checkbox" value="Premium"> Premium
+                                                    </label>
+                                                </div>
                                             </div>
-                                                
+
+
                                             {% for key, vehicle in data.vehicles %}                                            
-                                                {% if key > 0 %}                                            
+                                                {% if key > 0 %}    
 
-                                            <div class="input-group">
-                                                <div class="form-group" style="width: 33%">
-                                                    <input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;" value="{{vehicle.regNumber}}">
-                                                </div>
-                                                <div class="form-group" style="width: 33%">
-                                                    <input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;" value="{{vehicle.vehicleModel}}">
-                                                </div>
-                                                <div class="form-group" style="width: 33%">
-                                                    <input name="type[]" type="text" class="form-control" placeholder="Type" style="width: 100%;" value="{{vehicle.vehicleType}}">
-                                                </div>
 
-                                                <p class="form-control-static">&nbsp;</p>
-                                                <div style="cursor: pointer; border-left: 1px solid #ccc;" id="remove_vehicle" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div>
-                                            </div>
-                                                
+                                                    <div class="vehicles-content">
+                                                        <div class="input-group">
+                                                            <div class="form-group" style="width: 50%">
+                                                                <input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;" value="{{vehicle.regNumber}}">
+                                                            </div>
+                                                            <div class="form-group" style="width: 50%">
+                                                                <input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;" value="{{vehicle.vehicleModel}}">
+                                                            </div>
+
+                                                            <div style="cursor: pointer; border-left: 1px solid #ccc; width: 40px;" id="remove_vehicle" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <input type="hidden" class="vehicle-type" name="type[]" value="{{vehicle.vehicleTypesJson}}">
+                                                            <label class="checkbox-inline">
+                                                                <input {% if 'Manual' in vehicle.vehicleTypes %} checked {% endif %} class="vehicle-type-check" type="checkbox" value="Manual"> Manual
+                                                            </label>
+                                                            <label class="checkbox-inline">
+                                                                <input {% if 'Automatic' in vehicle.vehicleTypes %} checked {% endif %} class="vehicle-type-check" type="checkbox" value="Automatic"> Automatic
+                                                            </label>
+                                                            <label class="checkbox-inline">
+                                                                <input {% if 'Premium' in vehicle.vehicleTypes %} checked {% endif %} class="vehicle-type-check" type="checkbox" value="Premium"> Premium
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+
                                                 {% endif %}                                            
-                                            {% endfor %}                                                    
+                                            {% endfor %}                                           
 
                                         </div>
 
                                     </div>
                                 </div>
-                                            
+
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Usual Trip</label>
                                     <div class="col-sm-10">
@@ -185,10 +207,10 @@
                                     <div class="col-sm-10">
 
                                         <label class="checkbox-inline">
-                                            <input {% if 1 in data.customertype %} checked {% endif %}name="customertype[]" type="checkbox" value="1"> Monthly
+                                            <input {% if 1 in data.customertype %} checked {% endif %} name="customertype[]" type="checkbox" value="1"> Monthly
                                         </label>
                                         <label class="checkbox-inline">
-                                            <input  {% if 2 in data.customertype %} checked {% endif %}name="customertype[]" type="checkbox" value="2"> On Demand
+                                            <input  {% if 2 in data.customertype %} checked {% endif %} name="customertype[]" type="checkbox" value="2"> On Demand
                                         </label>
                                     </div>
                                 </div>
@@ -206,7 +228,7 @@
                                                 <option {% if data.preferredDriver and driver.id == data.preferredDriver.id %} selected {% endif %} value="{{ driver.id }}">{{ driver.fullName }}</option>
 
                                             {% endfor %}
-                                            
+
 
                                         </select>
                                     </div>
@@ -243,19 +265,24 @@
 
         $(document).ready(function () {
 
-             addPhone();
-             addAddress();
-             addVehicle();
+            addPhone();
+            addAddress();
+            addVehicle();
 
         });
-        
-        function addVehicle(){
-            var wrapperVehicle= $('#vehicles-wrapper'); //Input field wrapper
-            var fieldHTML = '<div class="input-group">\n\
-    <div class="form-group" style="width: 33%"><input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;"></div>\n\
-    <div class="form-group" style="width: 33%"><input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;"></div>\n\
-    <div class="form-group" style="width: 33%"><input name="type[]" type="text" class="form-control" placeholder="Type" style="width: 100%;"></div>\n\
-    <p class="form-control-static">&nbsp;</p><div style="cursor: pointer; border-left: 1px solid #ccc;" id="remove_vehicle" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+
+        function addVehicle() {
+            var wrapperVehicle = $('#vehicles-wrapper'); //Input field wrapper
+            var fieldHTML = '<div class="vehicles-content"><div class="input-group">\n\
+    <div class="form-group" style="width: 50%"><input name="reg-number[]" type="text" class="form-control" placeholder="Registration Number" style="width: 100%;"></div>\n\
+    <div class="form-group" style="width: 50%"><input name="model[]" type="text" class="form-control" placeholder="Model" style="width: 100%;"></div>\n\
+    <div style="cursor: pointer; border-left: 1px solid #ccc; width:40px;" id="remove_vehicle" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>\n\
+    <div class="input-group">\n\
+    <input type="hidden" class="vehicle-type" name="type[]" value="[]">\n\
+    <label class="checkbox-inline"><input class="vehicle-type-check" type="checkbox" value="Manual"> Manual</label>\n\
+    <label class="checkbox-inline"><input class="vehicle-type-check" type="checkbox" value="Automatic"> Automatic</label>\n\
+    <label class="checkbox-inline"><input class="vehicle-type-check" type="checkbox" value="Premium"> Premium</label>\n\
+    </div></div>';
 
             //Once add button is clicked
             $($('#add_vehicle')).click(function () {
@@ -266,11 +293,27 @@
             //Once remove button is clicked
             $(wrapperVehicle).on('click', '#remove_vehicle', function (e) {
                 e.preventDefault();
-                $(this).parent('.input-group').remove(); //Remove field html
-            });            
-        }        
-        
-        function addAddress(){
+                $(this).parent().parent('.vehicles-content').remove(); //Remove field html
+            });
+
+            $(document).on("click", ".vehicle-type-check", function (e) {
+
+                var vehicleType = $(this).parent().parent().find('.vehicle-type');
+
+                var obj = JSON.parse(vehicleType.val());
+
+                if ($(this).prop("checked") == true) {
+                    obj.push($(this).val());
+                }
+                else if ($(this).prop("checked") == false) {
+                    obj.splice($.inArray($(this).val(), obj), 1);
+                }
+
+                vehicleType.val(JSON.stringify(obj));
+            });
+        }
+
+        function addAddress() {
             //Address add/remove
             var wrapperAddress = $('#address-wrapper'); //Input field wrapper
             var fieldHTML = '<div class="input-group"><div class="form-group" style="width: 25%"><input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;"></div><div class="form-group" style="width: 25%"><input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;"></div><div class="form-group" style="width: 25%"><input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;"></div><div class="form-group" style="width: 24%"><input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;"></div><p class="form-control-static">&nbsp;</p><div style="cursor: pointer; border-left: 1px solid #ccc;" id="remove_address" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
@@ -285,10 +328,10 @@
             $(wrapperAddress).on('click', '#remove_address', function (e) {
                 e.preventDefault();
                 $(this).parent('.input-group').remove(); //Remove field html
-            });            
+            });
         }
-        
-        function addPhone(){
+
+        function addPhone() {
             var maxField = 20; //Input fields increment limitation
             var wrapper = $('#phone-wrapper'); //Input field wrapper
             var fieldHTML = '<div class="input-group"><input required name="phone[]" type="number" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
@@ -307,7 +350,7 @@
             $(wrapper).on('click', '#remove_phone', function (e) {
                 e.preventDefault();
                 $(this).parent('.input-group').remove(); //Remove field html
-            });            
+            });
         }
 
 
@@ -317,11 +360,14 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    
+
     <style>
-    #vehicles-wrapper .input-group{
-        width: 100%;
-    }
+        #vehicles-wrapper .input-group, #address-wrapper .input-group{
+            width: 100%;
+        }
+        .vehicles-content{
+            margin-bottom: 8px;
+        }    
     </style>
-    
+
 {% endblock %}

@@ -32,12 +32,38 @@ class ReportsController extends Controller
            ->from('AppBundle:Trip', 't')
            ->groupby('t.customer')
            ->orderBy('total', 'DESC')
+           ->setMaxResults(5)
            ->getQuery();
 
         $data = $query->getResult();        
 
         return $this->render('admin/pages/report/top_customers.html.twig', ['data' => $data]);
     }    
+    
+   /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/reports/customers-revenue", name="customers_revenue_index")
+     * @Method("GET")
+     */
+    public function customersRevenue()
+    {
+        $em = $this->getDoctrine()->getManager();
+       
+         //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
+ 
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+           ->from('AppBundle:Trip', 't')
+           ->groupby('t.customer')
+           ->orderBy('total', 'DESC')
+           ->getQuery();
+
+        $data = $query->getResult();        
+
+        return $this->render('admin/pages/report/customers_revenue.html.twig', ['data' => $data]);
+    }     
 
   /**
      * Lists all Trip entities.
@@ -57,6 +83,7 @@ class ReportsController extends Controller
            ->from('AppBundle:Trip', 't')
            ->groupby('t.driver')
            ->orderBy('total', 'DESC')
+           ->setMaxResults(5)
            ->getQuery();
 
         $data = $query->getResult();        
@@ -64,6 +91,32 @@ class ReportsController extends Controller
         return $this->render('admin/pages/report/top_drivers.html.twig', ['data' => $data]);
     }   
 
+    
+   /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/reports/drivers-revenue", name="drivers_revenue_index")
+     * @Method("GET")
+     */
+    public function driversRevenue()
+    {
+        $em = $this->getDoctrine()->getManager();
+       
+         //https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/query-builder.html
+ 
+        $qb = $em->createQueryBuilder();
+        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+           ->from('AppBundle:Trip', 't')
+           ->groupby('t.driver')
+           ->orderBy('total', 'DESC')
+           ->getQuery();
+
+        $data = $query->getResult();        
+
+        return $this->render('admin/pages/report/drivers_revenue.html.twig', ['data' => $data]);
+    }     
+    
     /**
      * Lists all Trip entities.
      *
@@ -112,7 +165,7 @@ class ReportsController extends Controller
     {
         
         $startDate = strtotime($request->request->get('start-date'));
-        echo $startDate = date("Y-m-d", $startDate);
+        $startDate = date("Y-m-d", $startDate);
 
         $endDate = strtotime($request->request->get('end-date'));
         $endDate = date("Y-m-d", $endDate);
@@ -132,8 +185,6 @@ class ReportsController extends Controller
            ->getQuery();
 
         $data = $query->getResult();   
-        
-        echo count($data);
         
         $total = 0;
         $converted = 0;
@@ -232,8 +283,8 @@ class ReportsController extends Controller
             $qb = $em->createQueryBuilder();
             $qb->select('t as trip','COUNT(t) as total')
             ->from('AppBundle:Trip', 't')
-            ->where('t.scheduledTime > :start')
-            ->andWhere('t.scheduledTime < :end')
+            ->where('t.startedTime >= :start')
+            ->andWhere('t.startedTime <= :end')
             ->andWhere('t.status = 3')
             ->groupBy('t.driver')
             ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
@@ -243,6 +294,39 @@ class ReportsController extends Controller
             //var_dump(count($trips)); die;
         
         return $this->render('admin/pages/report/drivers_drives_taken.html.twig',['trips' => $trips, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
+    }
+    
+    
+     /**
+     * Lists all Trip entities.
+     *
+     *
+     * @Route("/admin/reports/customer-service-request-frequency", name="customers_service_frequency")
+     * @Method({"GET", "POST"})
+     */
+    public function customersServiceFrequency(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+           
+        
+        $startDate = strtotime($request->request->get('start'));
+        $startDate = date("Y-m-d", $startDate);
+
+        $endDate = strtotime($request->request->get('end'));
+        $endDate = date("Y-m-d", $endDate);
+
+        $qb = $em->createQueryBuilder();
+        $qb->select('t as trip','COUNT(t) as total')
+        ->from('AppBundle:Trip', 't')
+        ->where('t.startedTime >= :start')
+        ->andWhere('t.startedTime <= :end')
+        ->andWhere('t.status = 3')
+        ->groupBy('t.customer')
+        ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
+        ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
+        $trips = $qb->getQuery()->getResult();           
+        
+        return $this->render('admin/pages/report/customer_service_frequency.html.twig',['trips' => $trips, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
     }
     
 }

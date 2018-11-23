@@ -108,13 +108,16 @@ class TripController extends Controller
             $em = $this->getDoctrine()->getManager();
             $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
             $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
-            $vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
+            
+            if($request->request->has('vehicle')){
+                $vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
+                if($vehicle)
+                    $trip->setVehicle($vehicle);
+            }
             
 
             $trip->setCustomer($customer);
-            $trip->setDriver($driver);
-            if($vehicle)
-            $trip->setVehicle($vehicle);
+            $trip->setDriver($driver);            
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus(1);
             $trip->setRate($request->request->get('rate'));

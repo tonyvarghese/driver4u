@@ -20,6 +20,10 @@ class CustomerController extends Controller
     {
         return [0=>"", 1 => "Monthly", 2=> "On Demand"];
     }
+    
+//    public function vehileTypes() {
+//        return [0 => "", 1 => "Manual", 2 => "Automatic", 3 => "Premium"];
+//    }    
 
     public function jsonToString($json, $values){
         $data  = [];
@@ -259,7 +263,7 @@ class CustomerController extends Controller
         $data['email'] = $customerObj->getEmail();
         $data['location'] = $customerObj->getLocation();
         $data['addresses'] = $customerObj->getAddresses();
-        $data['vehicles'] = $customerObj->getVehicles();
+        $data['vehicles'] = $this->vehiclesParse($customerObj->getVehicles());
         $data['phone'] = json_decode($customerObj->getPhone());
         $data['usualTrip'] = $customerObj->getUsualTrip();
         $data['customertype'] = json_decode($customerObj->getCustomerType());
@@ -302,7 +306,7 @@ class CustomerController extends Controller
         $data['email'] = $customerObj->getEmail();
         $data['location'] = $customerObj->getLocation();
         $data['addresses'] = $customerObj->getAddresses();
-        $data['vehicles'] = $customerObj->getVehicles();
+        $data['vehicles'] = $this->vehiclesParse($customerObj->getVehicles());
         $data['phone'] = json_decode($customerObj->getPhone());
         $data['usualTrip'] = $customerObj->getUsualTrip();
         $data['customerType'] = $this->jsonToString($customerObj->getCustomerType(), $this->customerType());
@@ -312,8 +316,21 @@ class CustomerController extends Controller
         return $this->render("admin/pages/customer/view.html.twig", ['customer' => $data]);
     }
     
+    public function vehiclesParse($vehicles){
+        $data = [];
+        
+        foreach ($vehicles as $key => $value) {
+            $data[$key]['regNumber'] = $value->getRegNumber();
+            $data[$key]['vehicleModel'] = $value->getVehicleModel();
+            $data[$key]['vehicleTypes'] = json_decode($value->getVehicleType());
+            $data[$key]['vehicleTypesJson'] = $value->getVehicleType();            
+        }
+        return $data;
+    }
+
     
- /**
+
+    /**
      * Deletes a Customer entity.
      *
      * @Route("/admin/customer/delete/{id}", name="customer_delete")

@@ -183,6 +183,7 @@ class DriverController extends Controller {
             $driver->setLocation($request->request->get('location'));
             $driver->setPhone(json_encode($request->request->get('phone')));
             $driver->setAge($request->request->get('age'));
+            $driver->setDoj(new \DateTime($request->request->get('doj')));
             $driver->setDriverType(json_encode($request->request->get('drivertype')));
             $driver->setExpertise(json_encode($request->request->get('expertise')));
             $driver->setPccSubmitted($request->request->get('pcc'));

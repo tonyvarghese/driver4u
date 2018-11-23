@@ -62,7 +62,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Date of Joining</strong></td>
-                                        <td>{{ driver.doj|date('m/d/Y') }}</td>
+                                        <td>{{ driver.doj|date('d-m-Y') }}</td>
                                     </tr>                                
                                     <tr>
                                         <td><strong>Driver Type</strong></td>
@@ -85,7 +85,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>PCC</strong></td>
-                                        <td>{{ driver.pcc }}</td>
+                                        <td> {% if driver.pcc %} Yes {% else %} No {% endif %}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Document</strong></td>

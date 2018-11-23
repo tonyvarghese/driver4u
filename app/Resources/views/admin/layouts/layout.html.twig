@@ -107,7 +107,7 @@
 
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu" style="overflow-y: scroll; height: 600px;">
+                        <ul class="nav" id="side-menu" style="overflow-y: scroll; height: 800px;">
                             <li class="sidebar-search">
                                 <div class="input-group custom-search-form">
                                     <input type="text" class="form-control" placeholder="Search...">
@@ -143,13 +143,12 @@
                             <li>
                                 <a href="#"><i class="fa fa-files-o fa-fw"></i> Reports<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level collapse">
-                                    <li><a href="test.html">Customer Service Frequency</a></li>
+                                    <li><a href="{{ path('customers_service_frequency')}}">Customer Service Frequency</a></li>
                                     <li><a href="{{ path('drivers_drives_taken')}}">Drivers Drives Taken</a></li>
-                                    <li><a href="test.html">Revenue - Customer</a></li>
-                                    <li><a href="test.html">Revenue - Driver</a></li>
+                                    <li><a href="{{ path('customers_revenue_index')}}">Revenue - Customer</a></li>
+                                    <li><a href="{{ path('drivers_revenue_index')}}">Revenue - Driver</a></li>
                                     <li><a href="{{ path('top_drivers_index')}}">Top Drivers</a></li>
                                     <li><a href="{{ path('top_customers_index')}}">Top Customers</a></li>
-                                    <li><a href="test.html">Preferred Drivers</a></li>
                                     <li><a href="{{ path('lead_conversion_report')}}">Lead Conversions</a></li>
                                     <li><a href="{{ path('cancellation_reports')}}">Cancellation Reports</a></li>
                                     <li><a href="{{ path('feedback_drivers')}}">Feedback Reports</a></li>
@@ -158,9 +157,6 @@
                             </li>
                         </ul>
                     </div>
-
-
-
 
                 </div>
             </nav>

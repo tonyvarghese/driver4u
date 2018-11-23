@@ -51,29 +51,31 @@
                             </table>
 
 
-
-
                         </div>
                         <div class="col-lg-6 ">
                             <table class="table table-user-information">
                                 <tbody>
                                     <tr>
                                         <td><strong>Scheduled Time</strong></td>
-                                        <td>{{ trip.scheduledTime|date('Y/m/d H:m') }}</td>
+                                        <td>{{ trip.scheduledTime|date('d-m-Y h:i') }}</td>
                                     </tr>
 
+                                    {% if (trip.status == 3)%}
                                     <tr>
                                         <td><strong>Start Time</strong></td>
-                                        <td>{{ trip.startedTime|date('Y/m/d H:m') }}</td>
+                                        <td>{{ trip.startedTime|date('d-m-Y h:i') }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>End Time</strong></td>
-                                        <td>{{ trip.endedTime|date('Y/m/d H:m') }}</td>
+                                        <td>{{ trip.endedTime|date('d-m-Y h:i') }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Amount Collected</strong></td>
                                         <td>{{ trip.amountCollected }}</td>
                                     </tr>
+                                    {% endif %}  
+                                    
+                                    
                                     {% if (trip.status == 4)%}
                                         <tr>                                    
                                             <td><strong>Reason</strong></td>
@@ -81,6 +83,7 @@
 
                                         </tr>
                                     {% endif %}  
+                                    
                                     {% if (trip.status == 3)%}
                                         <tr>                                    
                                             <td><strong>Feedback</strong></td>

@@ -127,9 +127,9 @@ class CustomerController extends Controller
         $count = count($request->request->get('model'));
         
         for($i = 0; $i < $count; $i++){
-            $regNumber = $request->request->get('reg-number')[$i];
-            $model = $request->request->get('model')[$i];
-            $type = $request->request->get('type')[$i];
+            $regNumber = trim($request->request->get('reg-number')[$i]);
+            $model = trim($request->request->get('model')[$i]);
+            $type = trim($request->request->get('type')[$i]);
             
             $vehicle = new CustomerVehicle();
             

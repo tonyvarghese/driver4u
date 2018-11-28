@@ -38,7 +38,7 @@
                                 <tbody>
                                     {% for item in data %}
                                         <tr>
-                                            <td>{{ item.trip.driver.fullName }}</td>
+                                            <td>{{ item.driver.fullName }}</td>
                                             <td>{{ item.total }}</td>
                                             <td></td>
                                         </tr>
@@ -49,6 +49,9 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                                 <div class="navigation">
+                                {{ knp_pagination_render(data) }}
+                            </div>
                         </div>
 
                     </div>

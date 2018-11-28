@@ -35,9 +35,14 @@ class ReportsController extends Controller
            ->setMaxResults(5)
            ->getQuery();
 
-        $data = $query->getResult();        
+        $data = $query->getResult();     
+        
+        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
 
-        return $this->render('admin/pages/report/top_customers.html.twig', ['data' => $data]);
+        return $this->render('admin/pages/report/top_customers.html.twig', ['data' => $pagination]);
     }    
     
    /**
@@ -60,9 +65,13 @@ class ReportsController extends Controller
            ->orderBy('total', 'DESC')
            ->getQuery();
 
-        $data = $query->getResult();        
+        $data = $query->getResult();   
+        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
 
-        return $this->render('admin/pages/report/customers_revenue.html.twig', ['data' => $data]);
+        return $this->render('admin/pages/report/customers_revenue.html.twig', ['data' => $pagination]);
     }     
 
   /**
@@ -86,9 +95,13 @@ class ReportsController extends Controller
            ->setMaxResults(5)
            ->getQuery();
 
-        $data = $query->getResult();        
+        $data = $query->getResult(); 
+        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
 
-        return $this->render('admin/pages/report/top_drivers.html.twig', ['data' => $data]);
+        return $this->render('admin/pages/report/top_drivers.html.twig', ['data' => $pagination]);
     }   
 
     
@@ -112,9 +125,14 @@ class ReportsController extends Controller
            ->orderBy('total', 'DESC')
            ->getQuery();
 
-        $data = $query->getResult();        
+        $data = $query->getResult();      
+        
+        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
 
-        return $this->render('admin/pages/report/drivers_revenue.html.twig', ['data' => $data]);
+        return $this->render('admin/pages/report/drivers_revenue.html.twig', ['data' => $pagination]);
     }     
     
     /**
@@ -167,8 +185,12 @@ class ReportsController extends Controller
 //        var_dump($data); 
 //        echo "</pre>";
 //        die;
+            $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
         
-         return $this->render('admin/pages/report/feedback_driver.html.twig',['data' => $data]);
+         return $this->render('admin/pages/report/feedback_driver.html.twig',['data' => $pagination]);
     }
  
 
@@ -262,8 +284,12 @@ class ReportsController extends Controller
 //            var_dump($data); 
 //        echo "</pre>";
 //        die;
+//        $pagination = $paginator->paginate(
+            $data, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
 //      
-        return $this->render('admin/pages/report/cancellation_reports.html.twig',['data' => $data]);
+        return $this->render('admin/pages/report/cancellation_reports.html.twig',['data' => $pagination]);
     }
     
      /**
@@ -311,8 +337,15 @@ class ReportsController extends Controller
             $trips = $qb->getQuery()->getResult();           
           
             //var_dump(count($trips)); die;
+            
+            $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $trips, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
         
-        return $this->render('admin/pages/report/drivers_drives_taken.html.twig',['trips' => $trips, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
+        return $this->render('admin/pages/report/drivers_drives_taken.html.twig',['trips' => $pagination, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
     }
     
     

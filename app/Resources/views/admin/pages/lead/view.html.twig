@@ -41,7 +41,7 @@
                                       <tr>
                                         <td><strong>Address</strong></td>
                                         <td>
-                                        {% for key, address in customer.addresses %}       
+                                        {% for key, address in lead.addresses %}       
 
                                                 {% if lead.address.HouseNo != '' %} {{lead.address.HouseNo}} {% endif %}
                                                  {% if lead.address.street != '' %} ,{{lead.address.street}} {% endif %}

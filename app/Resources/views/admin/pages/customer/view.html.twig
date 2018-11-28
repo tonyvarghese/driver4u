@@ -47,9 +47,13 @@
 
                                             {% for key, address in customer.addresses %}       
 
-                                                {{address.HouseNo}}, {{address.street}}, {{address.city}}, {{address.landmark}}
+                                                {% if address.HouseNo != '' %} {{address.HouseNo}} {% endif %}
+                                                 {% if address.street != '' %} ,{{address.street}} {% endif %}
+                                                 {% if address.city != '' %} ,{{address.city}} {% endif %}
+                                                {% if address.landmark != '' %} ,{{address.landmark}} {% endif %}
+                                                
 
-                                                <hr>
+                                         
 
                                             {% endfor %}    
 
@@ -84,7 +88,7 @@
 
                                                 {{vehicle.regNumber}}, {{vehicle.vehicleModel}}, {{ vehicle.vehicleTypes|join(', ') }}
 
-                                                <hr>
+                                        
 
                                             {% endfor %}    
 

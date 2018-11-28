@@ -36,14 +36,8 @@
                                     <tr>
                                     </tr><tr>
                                         <td><strong>Phone</strong></td>
-                                        <td>
-
-                                            {% for key, phone in customer.phone %}       
-
-                                                {{phone}}, 
-
-                                            {% endfor %}                                            
-
+                                        <td>                                            
+                                            {{customer.phone|join(', ')}}
                                         </td>
                                     </tr>
 

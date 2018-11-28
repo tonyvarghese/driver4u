@@ -21,7 +21,7 @@ class ReportsController extends Controller
      * @Route("/admin/reports/top-customers", name="top_customers_index")
      * @Method("GET")
      */
-    public function topCustomers()
+    public function topCustomers(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
        
@@ -52,7 +52,7 @@ class ReportsController extends Controller
      * @Route("/admin/reports/customers-revenue", name="customers_revenue_index")
      * @Method("GET")
      */
-    public function customersRevenue()
+    public function customersRevenue(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
        
@@ -82,7 +82,7 @@ class ReportsController extends Controller
      * @Route("/admin/reports/top-drivers", name="top_drivers_index")
      * @Method("GET")
      */
-    public function topDrivers()
+    public function topDrivers(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
        
@@ -114,7 +114,7 @@ class ReportsController extends Controller
      * @Route("/admin/reports/drivers-revenue", name="drivers_revenue_index")
      * @Method("GET")
      */
-    public function driversRevenue()
+    public function driversRevenue(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
        
@@ -146,7 +146,7 @@ class ReportsController extends Controller
      * @Route("/admin/reports/feedback", name="feedback_drivers")
      * @Method("GET")
      */
-    public function feedback()
+    public function feedback(Request $request)
     {
 //        $em = $this->getDoctrine()->getManager();
 //         $qb = $em->createQueryBuilder();
@@ -263,7 +263,7 @@ class ReportsController extends Controller
      * @Route("/admin/reports/cancellation", name="cancellation_reports")
      * @Method("GET")
      */
-    public function cancellationReport()
+    public function cancellationReport(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
        

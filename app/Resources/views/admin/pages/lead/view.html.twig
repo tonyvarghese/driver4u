@@ -40,7 +40,17 @@
                                     </tr>
                                       <tr>
                                         <td><strong>Address</strong></td>
-                                        <td>{{ lead.address|join(', ') }}</td>
+                                        <td>
+                                        {% for key, address in customer.addresses %}       
+
+                                                {% if lead.address.HouseNo != '' %} {{lead.address.HouseNo}} {% endif %}
+                                                 {% if lead.address.street != '' %} ,{{lead.address.street}} {% endif %}
+                                                 {% if lead.address.city != '' %} ,{{lead.address.city}} {% endif %}
+                                                {% if lead.address.landmark != '' %} ,{{lead.address.landmark}} {% endif %}
+                                      
+                                            {% endfor %}    
+                                            </td>
+                                        
                                     </tr>
                                     
                                 </tbody>

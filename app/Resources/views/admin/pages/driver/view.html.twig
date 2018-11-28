@@ -48,11 +48,7 @@
                                         <td><strong>Phone</strong></td>
                                         <td>
 
-                                            {% for key, phone in driver.phone %}       
-
-                                                {{phone}}, 
-
-                                            {% endfor %}                                            
+                                            {{driver.phone|join(', ')}}                                         
 
                                         </td>
                                     </tr>

@@ -345,7 +345,15 @@ class ReportsController extends Controller
         ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
         $trips = $qb->getQuery()->getResult();           
         
-        return $this->render('admin/pages/report/customer_service_frequency.html.twig',['trips' => $trips, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
+         $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $trips, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/);
+  
+        
+        return $this->render('admin/pages/report/customer_service_frequency.html.twig',['trips' => $pagination, 'start' => $request->request->get('start'),'end' => $request->request->get('end')]);
     }
     
 }

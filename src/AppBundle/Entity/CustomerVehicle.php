@@ -15,18 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\HasLifecycleCallbacks
  */
 class CustomerVehicle
-{
-    
-    /**
-     * @var Trip[]|ArrayCollection
-     *
-     * @ORM\OneToMany(
-     *      targetEntity="Trip",
-     *      mappedBy="vehicle",
-     *      orphanRemoval=true)
-     */
-    private $trips;
-    
+{   
     
     /**
      * @var int

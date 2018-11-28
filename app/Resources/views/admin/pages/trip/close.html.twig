@@ -77,7 +77,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Driver</strong></td>
-                                        <td>{{ trip.driver.fullName }}</td>
+                                        <td>{% if trip.driver|length > 0 %} {{trip.driver.fullName}} {% endif %}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Scheduled Time</strong></td>

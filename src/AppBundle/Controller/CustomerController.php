@@ -95,6 +95,10 @@ class CustomerController extends Controller
             $city = $request->request->get('city')[$i];
             $landmark = $request->request->get('landmark')[$i];
             
+            if($house == '' && $street == '' && $city == '' && $landmark == '' )
+                continue;
+            
+            
             $address = new CustomerAddress();
             
 //            $address->setUserType(1);
@@ -323,7 +327,7 @@ class CustomerController extends Controller
             $data[$key]['regNumber'] = $value->getRegNumber();
             $data[$key]['vehicleModel'] = $value->getVehicleModel();
             $data[$key]['vehicleTypes'] = json_decode($value->getVehicleType());
-            $data[$key]['vehicleTypesJson'] = $value->getVehicleType();            
+            $data[$key]['vehicleTypesJson'] = ($value->getVehicleType() != '') ? $value->getVehicleType() : '[]';            
         }
         return $data;
     }

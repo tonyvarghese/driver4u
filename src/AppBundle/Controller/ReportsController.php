@@ -126,7 +126,7 @@ class ReportsController extends Controller
      */
     public function feedback()
     {
-        $em = $this->getDoctrine()->getManager();
+//        $em = $this->getDoctrine()->getManager();
 //         $qb = $em->createQueryBuilder();
 //        $query = $qb->select('t as trip')
 //                ->from('AppBundle:Trip','t')
@@ -136,14 +136,31 @@ class ReportsController extends Controller
                 
         //$result = $query->getResult();      
          
-         $trips = $em->getRepository(Trip::class)->findAll();
+//         $trips = $em->getRepository(Trip::class)->findAll();
+             
+        
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+
+        $expr = $qb->expr();
+
+        $query = $qb
+            ->select('t')
+            ->from('AppBundle:Trip','t')
+//            ->where($expr->neq('t.driver', null))
+            ->where($expr->isNotNull('t.driver'))               
+            ->getQuery();     
+        $trips = $query->getResult();
         
         $data = [];
         foreach ($trips as $key => $value) 
             {
-            $driverId = $value->getDriver()->getId();
-            $driverName = $value->getDriver()->getFullName();
-            $data[$driverId][] = ['name' => $driverName, 'feedback' => $value->getFeedback()];
+                if($value->getFeedback() == '')
+                    continue;
+                
+                $driverId = $value->getDriver()->getId();
+                $driverName = $value->getDriver()->getFullName();
+                $data[$driverId][] = ['name' => $driverName, 'feedback' => $value->getFeedback()];
             }
         
 //        echo "<pre>";
@@ -197,6 +214,8 @@ class ReportsController extends Controller
             
             $total++;            
         }
+        
+        if($total>0)
         $conversionRate = round(($converted/$total) * 100);
         
         return $this->render('admin/pages/report/lead_conversion.html.twig', [

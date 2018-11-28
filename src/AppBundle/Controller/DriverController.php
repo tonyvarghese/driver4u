@@ -99,6 +99,9 @@ class DriverController extends Controller {
             $city = $request->request->get('city')[$i];
             $landmark = $request->request->get('landmark')[$i];
             
+            if($house == '' && $street == '' && $city == '' && $landmark == '' )
+                continue;
+            
             $address = new DriverAddress();
             
             //$address->setUserType(1);
@@ -188,7 +191,8 @@ class DriverController extends Controller {
             $driver->setExpertise(json_encode($request->request->get('expertise')));
             $driver->setPccSubmitted($request->request->get('pcc'));
             $driver->setDocument(json_encode($request->request->get('document')));
-            $driver->setDocNumber($request->request->get('docnumber'));
+            if ($request->request->get('docnumber') != '')
+                $driver->setDocNumber($request->request->get('docnumber'));
             $driver->setDriverAssignment(json_encode($request->request->get('driverassignment')));
             $driver->setNote($request->request->get('note'));
             $driver->setStatus(1);

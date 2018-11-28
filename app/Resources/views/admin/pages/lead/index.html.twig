@@ -34,9 +34,10 @@
                             <tr>
                                 {#<th scope="col">ID</th>#}
                                 <th scope="col">Full Name</th>
+                                <th scope="col">Phone</th>                                
                                 <th scope="col">Email</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Phone</th>
+                                <th scope="col">Location</th>
+                                <th scope="col">Address</th>                                
                                 <th scope="col">Followup</th>
                                 <th scope="col"></th>
 
@@ -49,9 +50,11 @@
                                     {#<th scope="row">{{ driver.id }}</th>#}
 
                                     <td>{{ lead.fullName }}</td>
-                                    <td>{{ lead.email }}</td>
-                                    <td>{{ lead.address|nl2br }}</td>
                                     <td>{{ lead.phone[0] }}</td>
+                                    <td>{{ lead.email }}</td>
+                                    <td>{{ lead.location }}</td>
+                                    <td>{{ lead.address|join(', ') }} </td>
+                                    
                                     <td>{{ lead.followupDate|date('m/d/Y') }}</td>
 
                                     <td class="text-right"><a href="{{ path('lead_view', {id: lead.id}) }}" class="btn btn-primary btn-sm">

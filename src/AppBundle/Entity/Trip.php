@@ -35,7 +35,7 @@ class Trip
      * @var Driver
      *
      * @ORM\ManyToOne(targetEntity="Driver", inversedBy="trips")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $driver;    
     
@@ -43,8 +43,7 @@ class Trip
     /**
      * @var CustomerVehicle
      *
-     * @ORM\ManyToOne(targetEntity="CustomerVehicle", inversedBy="trips")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="vehicle_id", type="integer", nullable=true)
      */
     private $vehicle;   
     
@@ -283,7 +282,7 @@ class Trip
         return $this->vehicle;
     }
 
-    public function setVehicle(CustomerVehicle $vehicle)
+    public function setVehicle($vehicle)
     {
         $this->vehicle = $vehicle;
     }

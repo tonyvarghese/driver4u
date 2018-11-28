@@ -38,9 +38,8 @@
                                 <tbody>
                                     {% for item in data %}
                                         <tr>
-                                            <td>{{ item.driver.fullName }}</td>
+                                            <td>{{ item.trip.driver.fullName }}</td>
                                             <td>{{ item.total }}</td>
-                                            <td></td>
                                         </tr>
                                     {% else %}
                                         <tr>

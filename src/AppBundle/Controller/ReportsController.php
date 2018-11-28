@@ -36,7 +36,7 @@ class ReportsController extends Controller
            ->getQuery();
 
         $data = $query->getResult();     
-        
+        $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -66,6 +66,7 @@ class ReportsController extends Controller
            ->getQuery();
 
         $data = $query->getResult();   
+        $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -96,6 +97,7 @@ class ReportsController extends Controller
            ->getQuery();
 
         $data = $query->getResult(); 
+        $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -126,6 +128,8 @@ class ReportsController extends Controller
            ->getQuery();
 
         $data = $query->getResult();      
+        
+         $paginator  = $this->get('knp_paginator');
         
         $pagination = $paginator->paginate(
             $data, /* query NOT result */
@@ -185,6 +189,9 @@ class ReportsController extends Controller
 //        var_dump($data); 
 //        echo "</pre>";
 //        die;
+             
+            $paginator  = $this->get('knp_paginator');
+             
             $pagination = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
@@ -284,10 +291,14 @@ class ReportsController extends Controller
 //            var_dump($data); 
 //        echo "</pre>";
 //        die;
-//        $pagination = $paginator->paginate(
+
+          $paginator  = $this->get('knp_paginator');
+        
+        $pagination = $paginator->paginate(
             $data, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/);
+        
 //      
         return $this->render('admin/pages/report/cancellation_reports.html.twig',['data' => $pagination]);
     }

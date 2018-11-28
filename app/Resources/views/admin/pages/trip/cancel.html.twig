@@ -57,7 +57,6 @@
                                 </div>
                             </form>
 
-
                         </div>
                         <div class="col-lg-6 ">
                             <table class="table table-user-information">
@@ -69,11 +68,11 @@
 
                                     <tr>
                                         <td><strong>Driver</strong></td>
-                                        <td>{{ trip.driver.fullName }}</td>
+                                        <td>{% if trip.driver|length > 0 %} {{trip.driver.fullName}} {% endif %}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Scheduled Time</strong></td>
-                                        <td>{{ trip.scheduledTime|date('Y/m/d H:m') }}</td>
+                                        <td>{{ trip.scheduledTime|date('d-m-Y H:i') }}</td>
                                     </tr>                                    
                                     <tr>
                                         <td><strong>Location</strong></td>

@@ -26,11 +26,11 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Driver</strong></td>
-                                        <td>{{ trip.driver.fullName }}</td>
+                                        <td>{% if trip.driver|length > 0 %} {{trip.driver.fullName}} {% endif %}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Vehicle</strong></td>
-                                        <td> {% if trip.vehicle|length > 0 %} {{trip.vehicle.vehicleModel}} - {{trip.vehicle.vehicleType}} {% endif %} </td>
+                                        <td> {% if vehicle|length > 0 %} {{vehicle.vehicleModel}} - {{vehicle.vehicleType}} {% endif %} </td>
                                     </tr>
 
                                     <tr>
@@ -57,17 +57,17 @@
                                 <tbody>
                                     <tr>
                                         <td><strong>Scheduled Time</strong></td>
-                                        <td>{{ trip.scheduledTime|date('d-m-Y h:i') }}</td>
+                                        <td>{{ trip.scheduledTime|date('d-m-Y H:i') }}</td>
                                     </tr>
 
                                     {% if (trip.status == 3)%}
                                     <tr>
                                         <td><strong>Start Time</strong></td>
-                                        <td>{{ trip.startedTime|date('d-m-Y h:i') }}</td>
+                                        <td>{{ trip.startedTime|date('d-m-Y H:i') }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>End Time</strong></td>
-                                        <td>{{ trip.endedTime|date('d-m-Y h:i') }}</td>
+                                        <td>{{ trip.endedTime|date('d-m-Y H:i') }}</td>
                                     </tr>
                                     <tr>
                                         <td><strong>Amount Collected</strong></td>
@@ -75,13 +75,20 @@
                                     </tr>
                                     {% endif %}  
                                     
+                                    <tr>
+                                        <td><strong>Status</strong></td>
+                                        <td>{{ status[trip.status] }}</td>
+                                    </tr>
                                     
                                     {% if (trip.status == 4)%}
                                         <tr>                                    
+                                            <td><strong>Cancelled Bt</strong></td>
+                                            <td>{{ trip.cancelledBy }}</td>
+                                        </tr>                 
+                                        <tr>                                    
                                             <td><strong>Reason</strong></td>
                                             <td>{{ trip.cancelReason }}</td>
-
-                                        </tr>
+                                        </tr>                                        
                                     {% endif %}  
                                     
                                     {% if (trip.status == 3)%}
@@ -91,10 +98,7 @@
 
                                         </tr>
                                     {% endif %}  
-                                    <tr>
-                                        <td><strong>Status</strong></td>
-                                        <td>{{ status[trip.status] }}</td>
-                                    </tr>
+
 
                                 </tbody>
                             </table>                                                            

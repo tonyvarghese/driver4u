@@ -45,8 +45,8 @@
                                     {% for trip in trips %}
                                         <tr>
                                             <td>{{ trip.customer.fullName }}</td>
-                                            <td>{{ trip.driver.fullName }}</td>
-                                            <td>{{ trip.scheduledTime|date('d-m-Y h:i') }}</td>
+                                            <td>{% if trip.driver|length > 0 %} {{trip.driver.fullName}} {% endif %}</td>
+                                            <td>{{ trip.scheduledTime|date('d-m-Y H:i') }}</td>
                                             <td>{{ trip.location }}</td>
                                             <td>{{ trip.rate }}</td>
                                             <td>{{ trip.discount }}</td>
@@ -74,6 +74,12 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                                
+                        {# display navigation #}
+                        <div class="navigation">
+                            {{ knp_pagination_render(trips) }}
+                        </div>
+                        
                         </div>
 
                     </div>

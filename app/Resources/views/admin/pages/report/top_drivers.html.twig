@@ -37,11 +37,13 @@
                                 </thead>
                                 <tbody>
                                     {% for item in data %}
+                                        {% if item.trip.driver|length > 0 %}
                                         <tr>
                                             <td>{{ item.trip.driver.fullName }}</td>
                                             <td>{{ item.total }}</td>
                                             <td></td>
                                         </tr>
+                                        {% endif %}
                                     {% else %}
                                         <tr>
                                             <td colspan="6" align="center">No Items Found</td>

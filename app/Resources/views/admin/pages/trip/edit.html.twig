@@ -31,10 +31,9 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Customer</label>
                                     <div class="col-sm-10">
-                                        <select id="customer" name="customer" class="form-control">
+                                        <select required id="customer" name="customer" class="form-control">
 
                                             <option value="">--Select--</option>
-
                                             
                                             {% for customer in customers %}
 
@@ -54,8 +53,8 @@
                                             <option value="">--Select--</option>
                                             {% for vehicle in vehicles %}
 
-                                                {% if trip.vehicle|length > 0 %}
-                                                    <option {% if vehicle.id == trip.vehicle.id %} selected {% endif %} value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
+                                                {% if trip.vehicle is not null %}
+                                                    <option {% if vehicle.id == trip.vehicle %} selected {% endif %} value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
                                                 {% else %}
                                                     <option value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
                                                 {% endif %} 
@@ -75,7 +74,7 @@
                                             
                                             {% for driver in drivers %}
 
-                                                <option {% if driver.id == trip.driver.id %} selected {% endif %} value="{{ driver.id }}">{{ driver.fullName }}</option>
+                                                <option {% if trip.driver|length > 0 %} {% if driver.id == trip.driver.id %} selected {% endif %} {% endif %} value="{{ driver.id }}">{{ driver.fullName }}</option>
 
                                             {% endfor %}
                                             
@@ -86,7 +85,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Scheduled Time</label>
                                     <div class="col-sm-10">
-                                        <input value="{{ trip.scheduledTime|date('d-m-Y h:i') }}" name="stime" type="text" class=" datetimepicker form-control" placeholder="Select Time">
+                                        <input required value="{{ trip.scheduledTime|date('d-m-Y H:i') }}" name="stime" type="text" class=" datetimepicker form-control" placeholder="Select Time">
                                     </div>
                                 </div>
 
@@ -165,6 +164,8 @@
             $('#customer').on('change', function() {
               // var url = $(this).data('url');
               var url = "{{ path('get_vehicles') }}";
+              
+              $('#vehicle').html('<option value="">--Select--</option>');
         
                 $.ajax({
                     type: 'post',

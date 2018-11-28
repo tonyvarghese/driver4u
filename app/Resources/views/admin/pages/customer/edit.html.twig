@@ -31,7 +31,7 @@
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-sm-2 col-form-label">Full Name</label>
                                     <div class="col-sm-10">
-                                        <input name="fullname" type="text" class="form-control" id="inputEmail3" placeholder="Full Name" value="{{data.fullName}}">
+                                        <input required pattern="[A-Za-z ‘-]{2,}" name="fullname" type="text" class="form-control" id="inputEmail3" placeholder="Full Name" value="{{data.fullName}}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -46,7 +46,7 @@
                                     <div class="col-sm-10" id="phone-wrapper">
 
                                         <div class="input-group">
-                                            <input required name="phone[]" type="number" class="form-control" placeholder="Phone" value="{{data.phone[0]}}">
+                                            <input pattern="[0-9]{10}" required title="10 digit phone number required" name="phone[]" type="text" class="form-control" placeholder="Phone" value="{{data.phone[0]}}">
                                             <div style="cursor: pointer;" id="add_phone" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
                                         </div>
 
@@ -68,7 +68,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Location</label>
                                     <div class="col-sm-10">
-                                        <input name="location" type="text" class="form-control" id="age" placeholder="Location" value="{{data.location}}">
+                                        <input required pattern="[A-Za-z0-9 ‘-]{2,}" name="location" type="text" class="form-control" id="age" placeholder="Location" value="{{data.location}}">
                                     </div>
                                 </div>
 
@@ -144,7 +144,7 @@
                                                     <div style="cursor: pointer; border-left: 1px solid #ccc; width: 40px;" id="add_vehicle" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
                                                 </div>
                                                 <div class="input-group">
-                                                    <input type="hidden" class="vehicle-type" name="type[]" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleTypesJson}} {% endif %}">
+                                                    <input type="hidden" class="vehicle-type" name="type[]" value="{% if data.vehicles|length > 0 %} {{data.vehicles[0].vehicleTypesJson}} {% else %}[]{% endif %}">
                                                     <label class="checkbox-inline">
                                                         <input {% if data.vehicles|length > 0 %} {% if 'Manual' in data.vehicles[0].vehicleTypes %} checked {% endif %} {% endif %}  class="vehicle-type-check" type="checkbox" value="Manual"> Manual
                                                     </label>
@@ -334,7 +334,7 @@
         function addPhone() {
             var maxField = 20; //Input fields increment limitation
             var wrapper = $('#phone-wrapper'); //Input field wrapper
-            var fieldHTML = '<div class="input-group"><input required name="phone[]" type="number" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+            var fieldHTML = '<div class="input-group"><input pattern="[0-9]{10}" required title="10 digit phone number required" name="phone[]" type="text" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
             var x = 1; //Initial field counter is 1
 
             //Once add button is clicked

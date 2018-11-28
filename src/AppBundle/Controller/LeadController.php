@@ -76,10 +76,17 @@ class LeadController extends Controller
             $currentTime = new \DateTime("now"); //date("Y-m-d H:i:s", time());
 
             $followupDate = new \DateTime($request->request->get('followup'));
+            
+            $address = [
+                $request->request->get('house-number'),
+                $request->request->get('street'),
+                $request->request->get('city'),
+                $request->request->get('landmark')
+            ];
 
             $lead->setFullName($request->request->get('name'));
             $lead->setEmail($request->request->get('email'));
-            $lead->setAddress(json_encode($request->request->get('address')));
+            $lead->setAddress(json_encode($address));
             $lead->setPhone(json_encode([$request->request->get('phone')]));
             $lead->setLocation($request->request->get('location'));
             $lead->setFeedback($request->request->get('feedback'));
@@ -129,10 +136,17 @@ class LeadController extends Controller
                     'No customer found for id ' . $id
                 );
             }
+            
+            $address = [
+                $request->request->get('house-number'),
+                $request->request->get('street'),
+                $request->request->get('city'),
+                $request->request->get('landmark')
+            ];            
 
             $lead->setFullName($request->request->get('name'));
             $lead->setEmail($request->request->get('email'));
-            $lead->setAddress(json_encode($request->request->get('address')));
+            $lead->setAddress(json_encode($address));
             $lead->setPhone(json_encode([$request->request->get('phone')]));
             $lead->setLocation($request->request->get('location'));
             $lead->setFeedback($request->request->get('feedback'));
@@ -266,23 +280,30 @@ class LeadController extends Controller
             
             $address = new CustomerAddress();
             
-            $address1 = json_decode($lead->getAddress());
-            $addressArr = explode(',', $address1);
-            
+            $addressArr = json_decode($lead->getAddress());
             
             $address->setUserId($customer);
             
-            if(isset($addressArr[0]))
             $address->setHouseNo($addressArr[0]);
-
-            if(isset($addressArr[1]))
             $address->setStreet($addressArr[1]);
-
-            if(isset($addressArr[2]))
             $address->setCity($addressArr[2]);
-
-            if(isset($addressArr[3]))
-            $address->setLandmark($addressArr[3]);
+            $address->setLandmark($addressArr[3]);  
+            
+//            $addressArr = explode(',', $address1);            
+//            
+//            $address->setUserId($customer);
+//            
+//            if(isset($addressArr[0]))
+//            $address->setHouseNo($addressArr[0]);
+//
+//            if(isset($addressArr[1]))
+//            $address->setStreet($addressArr[1]);
+//
+//            if(isset($addressArr[2]))
+//            $address->setCity($addressArr[2]);
+//
+//            if(isset($addressArr[3]))
+//            $address->setLandmark($addressArr[3]);
 
             
             $em->persist($address);

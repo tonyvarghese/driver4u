@@ -34,6 +34,7 @@
                                     <tr>
                                         <th scope="col">Customer</th>
                                         <th scope="col"> Driver</th>
+                                        <th scope="col"> Cancelled By</th>
                                         <th scope="col" class=""> Scheduled Time</th>
                                         <th scope="col" class=""> Location</th>
                                         <th scope="col" class=""> Rate</th>
@@ -47,7 +48,8 @@
                                         <tr>
                                             <td>{{ trip.customer.fullName }}</td>
                                             <td>{{ trip.driver.fullName }}</td>
-                                            <td>{{ trip.scheduledTime|date('d/m/Y h:m A') }}</td>
+                                            <td>{{ trip.cancelledBy }}</td>
+                                            <td>{{ trip.scheduledTime|date('d-m-Y H:i') }}</td>
                                             <td>{{ trip.location }}</td>
                                             <td>{{ trip.rate }}</td>
                                             <td>{{ trip.discount }}</td>

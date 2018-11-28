@@ -33,7 +33,7 @@ class TripController extends Controller
      * @Route("/admin/trips", name="trip_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
        
@@ -62,7 +62,15 @@ class TripController extends Controller
 //        
 //       print_r($data); die;
 
-        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
+        $paginator  = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $trips, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        
+        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $pagination, 'status' => $this->statusCodes()]);
     }
     
 
@@ -110,14 +118,18 @@ class TripController extends Controller
             $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
             
             if($request->request->has('vehicle')){
-                $vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
-                if($vehicle)
+                //$vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
+                $vehicle = $request->request->get('vehicle');
+                if($vehicle != '')
                     $trip->setVehicle($vehicle);
             }
             
 
             $trip->setCustomer($customer);
-            $trip->setDriver($driver);            
+            
+            if($driver)
+                $trip->setDriver($driver);            
+            
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus(1);
             $trip->setRate($request->request->get('rate'));
@@ -259,12 +271,21 @@ class TripController extends Controller
             
             $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
             $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
-            $vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
             $scheduledTime = new \DateTime($request->request->get('stime'));
             
+            
+            if($request->request->has('vehicle')){
+                //$vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
+                $vehicle = $request->request->get('vehicle');
+                if($vehicle != '')
+                    $trip->setVehicle($vehicle);
+            }            
+            
             $trip->setCustomer($customer);
-            $trip->setDriver($driver);
-            $trip->setVehicle($vehicle);
+            
+            if($driver)
+                $trip->setDriver($driver);
+            
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus($request->request->get('status'));
             $trip->setRate($request->request->get('rate'));
@@ -366,9 +387,16 @@ class TripController extends Controller
 //        $data['driverassignment'] = ($this->jsonToString($driverObj->getDriverAssignment(), $this->driverAssignment()));
 //        $data['note'] = $driverObj->getNote();
 //        $data['status'] = $driverObj->getStatus();
+        
+        $vehicleId = $trip->getVehicle();
+        
+        if($vehicleId != null)  
+            $vehicle  = $this->getDoctrine()->getRepository(CustomerVehicle::class)->find($trip->getVehicle());
+        else
+            $vehicle  = [];
 
 
-        return $this->render("admin/pages/trip/view.html.twig",['trip'=>$trip, 'status' => $this->statusCodes()]);
+        return $this->render("admin/pages/trip/view.html.twig",['trip'=>$trip, 'status' => $this->statusCodes(), 'vehicle' => $vehicle]);
     }        
 
     /**

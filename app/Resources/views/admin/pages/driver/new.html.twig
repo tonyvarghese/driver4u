@@ -30,15 +30,13 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Name</label>
                                     <div class="col-sm-10">
-                                        <input name="name" type="text" class="form-control" id="name" placeholder="Name"
-                                               required>
+                                        <input required pattern="[A-Za-z ‘-]{2,}" name="name" type="text" class="form-control" id="name" placeholder="Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Email</label>
                                     <div class="col-sm-10">
-                                        <input name="email" type="email" class="form-control" id="name" placeholder="Email"
-                                               >
+                                        <input name="email" type="email" class="form-control" id="name" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -46,7 +44,7 @@
                                     <div class="col-sm-10" id="phone-wrapper">
 
                                         <div class="input-group">
-                                            <input required name="phone[]" type="number" class="form-control" placeholder="Phone">
+                                            <input pattern="[0-9]{10}" required title="10 digit phone number required" name="phone[]" type="text" class="form-control" placeholder="Phone">
                                             <div style="cursor: pointer;" id="add_phone" class="input-group-addon"><i class="fa fa-plus" aria-hidden="true"></i></div>
                                         </div>
 
@@ -56,7 +54,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Location</label>
                                     <div class="col-sm-10">
-                                        <input name="location" type="text" class="form-control" id="age" placeholder="Location">
+                                        <input required pattern="[A-Za-z0-9 ‘-]{2,}" name="location" type="text" class="form-control" id="age" placeholder="Location">
                                     </div>
                                 </div>
 
@@ -243,7 +241,7 @@
         function addPhone() {
             var maxField = 20; //Input fields increment limitation
             var wrapper = $('#phone-wrapper'); //Input field wrapper
-            var fieldHTML = '<div class="input-group"><input required name="phone[]" type="number" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
+            var fieldHTML = '<div class="input-group"><input pattern="[0-9]{10}" required title="10 digit phone number required" name="phone[]" type="text" class="form-control" placeholder="Phone"><div style="cursor: pointer;" id="remove_phone" class="input-group-addon"><i class="fa fa-minus" aria-hidden="true"></i></div></div>';
             var x = 1; //Initial field counter is 1
 
             //Once add button is clicked

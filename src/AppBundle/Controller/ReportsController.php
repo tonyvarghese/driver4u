@@ -342,7 +342,7 @@ class ReportsController extends Controller
             ->where('t.startedTime >= :start')
             ->andWhere('t.startedTime <= :end')
             ->andWhere('t.status = 3')
-            ->andWhere('t.driver.fullName != \'\'')        
+            ->andWhere('t.driver != \'\'')        
             ->groupBy('t.driver')
             ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
             ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);

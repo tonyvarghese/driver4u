@@ -414,7 +414,12 @@ class TripController extends Controller
         
         $vehicles = [];
         foreach ($vehiclesObj as $key => $value) {
-            $vehicles[$key] = [$value->getId(), $value->getVehicleModel() . '-' . $value->getVehicleType()];
+            
+            $vehicleTypesArr = json_decode($value->getVehicleType());
+            
+            $vehicleTypes = implode(', ', $vehicleTypesArr);
+            
+            $vehicles[$key] = [$value->getId(), $value->getVehicleModel() . ' - ' . $vehicleTypes];
         }
         
         return new JsonResponse($vehicles);

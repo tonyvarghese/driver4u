@@ -152,6 +152,10 @@
                         $.each(json, function (index, value) {
 
                             //console.log(value);
+                            {#
+                            var obj = JSON.parse(value[1]);
+                            console.log(obj);
+                            #}
                             $('#vehicle').append('<option value="' + value[0]+ '">' + value[1] + '</option>').attr('disabled', false);
                         });
                     }

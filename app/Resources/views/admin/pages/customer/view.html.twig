@@ -86,9 +86,11 @@
 
                                             {% for key, vehicle in customer.vehicles %}  
                                                 
-                                                 {% if vehicle.regNumber != '' %} {{vehicle.regNumber}} {% endif %}
-                                                 {% if vehicle.vehicleModel != '' %} {{vehicle.vehicleModel}} {% endif %}
-                                                 {% if vehicle.vehicleTypes != '' %} {{vehicle.vehicleTypes}} {% endif %}
+                                                 {% if vehicle.regNumber != '' %}{{vehicle.regNumber}}{% endif %}
+                                                 {% if vehicle.vehicleModel != '' %}, {{vehicle.vehicleModel}}{% endif %}
+                                                 {% if vehicle.vehicleTypes|length > 0 %} - {{ vehicle.vehicleTypes|join(', ') }}{% endif %}
+                                                 
+                                                 <br>
 
                                             {% endfor %}    
 

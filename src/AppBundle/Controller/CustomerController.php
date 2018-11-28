@@ -292,6 +292,7 @@ class CustomerController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $drivers = $em->getRepository(Driver::class)->findAll();
+        
 
         return $this->render('admin/pages/customer/edit.html.twig', ['drivers' => $drivers, 'data' => $data]);
         

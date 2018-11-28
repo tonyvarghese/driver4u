@@ -76,16 +76,16 @@
                                             
                                             <div class="input-group">
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].houseNo}} {% endif %}">
+                                                    <input name="house-number[]" type="text" class="form-control" placeholder="House Number" style="width: 100%;" value="{% if data.addresses|length > 0 %}{{data.addresses[0].houseNo}}{% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{% if data.addresses|length > 0 %}{{data.addresses[0].street}}  {% endif %}">
+                                                    <input name="street[]" type="text" class="form-control" placeholder="Street" style="width: 100%;" value="{% if data.addresses|length > 0 %}{{data.addresses[0].street}}{% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 25%">
-                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].city}} {% endif %}">
+                                                    <input name="city[]" type="text" class="form-control" placeholder="City" style="width: 100%;" value="{% if data.addresses|length > 0 %}{{data.addresses[0].city}}{% endif %}">
                                                 </div>
                                                 <div class="form-group" style="width: 24%">
-                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{% if data.addresses|length > 0 %} {{data.addresses[0].landmark}} {% endif %}">
+                                                    <input name="landmark[]" type="text" class="form-control" placeholder="Landmark" style="width: 100%;" value="{% if data.addresses|length > 0 %}{{data.addresses[0].landmark}}{% endif %}">
                                                 </div>           
 
                                                 <p class="form-control-static">&nbsp;</p>

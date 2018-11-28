@@ -94,10 +94,10 @@ class DriverController extends Controller {
         $count = count($request->request->get('street'));
         
         for($i = 0; $i < $count; $i++){
-            $house = $request->request->get('house-number')[$i];
-            $street = $request->request->get('street')[$i];
-            $city = $request->request->get('city')[$i];
-            $landmark = $request->request->get('landmark')[$i];
+            $house = trim($request->request->get('house-number')[$i]);
+            $street = trim($request->request->get('street')[$i]);
+            $city = trim($request->request->get('city')[$i]);
+            $landmark = trim($request->request->get('landmark')[$i]);
             
             if($house == '' && $street == '' && $city == '' && $landmark == '' )
                 continue;

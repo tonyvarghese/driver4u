@@ -137,12 +137,12 @@ class LeadController extends Controller
                 );
             }
             
-            $address = [
-                $request->request->get('house-number'),
-                $request->request->get('street'),
-                $request->request->get('city'),
-                $request->request->get('landmark')
-            ];            
+            $houserNo = trim($request->request->get('house-number'));
+            $street = trim($request->request->get('street'));
+            $city = trim($request->request->get('city'));
+            $landmark = trim($request->request->get('landmark'));
+            
+            $address = [$houserNo,$street,$city,$landmark];            
 
             $lead->setFullName($request->request->get('name'));
             $lead->setEmail($request->request->get('email'));

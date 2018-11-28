@@ -53,7 +53,7 @@
                                     {% for item in trips %}
                                         <tr>
                                            
-                                            <td>{% if item.trip.driver.fullName|length > 0 %} {{item.trip.driver.fullName}} {% endif %}</td>
+                                            <td>{% if item.trip.driver|length > 0 %} {{item.trip.driver.fullName}} {% endif %}</td>
                                             <td>{{ item.total}} </td>
                                             
                                         </tr>

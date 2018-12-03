@@ -12,6 +12,7 @@ use AppBundle\Entity\Customer;
 use AppBundle\Entity\Driver;
 use AppBundle\Entity\CustomerAddress;
 use AppBundle\Entity\CustomerVehicle;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 
 class CustomerController extends Controller
@@ -66,15 +67,15 @@ class CustomerController extends Controller
 
         }
         
-        $paginator  = $this->get('knp_paginator');
+//        $paginator  = $this->get('knp_paginator');
+//
+//        $pagination = $paginator->paginate(
+//            $data, /* query NOT result */
+//            $request->query->getInt('page', 1)/*page number*/,
+//            10/*limit per page*/
+//        );
 
-        $pagination = $paginator->paginate(
-            $data, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
-
-        return $this->render('admin/pages/customer/index.html.twig', ['customers' => $pagination]);
+        return $this->render('admin/pages/customer/index.html.twig', ['customers' => $data]);
     }
     
     public function addAddress($request, $userId) {
@@ -190,7 +191,7 @@ class CustomerController extends Controller
             // actions. They are deleted automatically from the session as soon
             // as they are accessed.
             // See https://symfony.com/doc/current/book/controller.html#flash-messages
-            $this->addFlash('success', 'Customer created_successfully');
+            $this->addFlash('success', 'Customer Created Successfully');
 
             return $this->redirectToRoute('customer_new');
         }
@@ -249,12 +250,17 @@ class CustomerController extends Controller
             $customer->setCustomerType(json_encode($request->request->get('customertype')));
             
             if($driver)
-            $customer->setPreferredDriver($driver);
+                $customer->setPreferredDriver($driver);
             
             $entityManager->flush();
                         
             $this->addAddress($request, $id);
             $this->addVehicles($request, $id);
+            
+            if(!$driver){
+                $query = $entityManager->createQuery("UPDATE AppBundle:Customer c SET c.preferredDriver is NULL WHERE c.id = $id");
+                $query->getResult();                
+            }
         
             $this->addFlash('success', 'Customer updated successfully');
 

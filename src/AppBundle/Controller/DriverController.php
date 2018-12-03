@@ -70,15 +70,15 @@ class DriverController extends Controller {
             $data[$key]['doj'] = ($value->getDoj());
         }
 
-        $paginator = $this->get('knp_paginator');
+//        $paginator = $this->get('knp_paginator');
+//
+//        $pagination = $paginator->paginate(
+//                $data, /* query NOT result */ $request->query->getInt('page', 1)/* page number */, 10/* limit per page */
+//        );
 
-        $pagination = $paginator->paginate(
-                $data, /* query NOT result */ $request->query->getInt('page', 1)/* page number */, 10/* limit per page */
-        );
 
 
-
-        return $this->render('admin/pages/driver/index.html.twig', ['drivers' => $pagination]);
+        return $this->render('admin/pages/driver/index.html.twig', ['drivers' => $data]);
     }
 
     public function addAddress($request, $userId) {

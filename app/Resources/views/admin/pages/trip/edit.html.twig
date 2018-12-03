@@ -54,9 +54,10 @@
                                             {% for vehicle in vehicles %}
 
                                                 {% if trip.vehicle is not null %}
-                                                    <option {% if vehicle.id == trip.vehicle %} selected {% endif %} value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
+                                                    <option {% if vehicle.id == trip.vehicle %} selected {% endif %} 
+                                                           value="{{ vehicle.id }}"> {%if vehicle.vehicleModel != ""%} {{ vehicle.vehicleModel }} {% endif%} {{ vehicletypes| join(',' )}} </option>
                                                 {% else %}
-                                                    <option value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicle.vehicleType }}</option>
+                                                    <option value="{{ vehicle.id }}">{{ vehicle.vehicleModel }}-{{ vehicletypes| join(',' ) }}</option>
                                                 {% endif %} 
 
                                             {% endfor %}                                            
@@ -184,6 +185,8 @@
                             $('#vehicle').append('<option value="' + value[0]+ '">' + value[1] + '</option>').attr('disabled', false);
                         });
                     }
+           
+                         
                 });
                 
             });
@@ -192,5 +195,21 @@
 
 
     </script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.datetimepicker').datetimepicker({
+                format:'d-m-Y H:i',
+                minDate:'-0',
+            });
+
+            $(".datepickeronly").datetimepicker({   
+                timepicker:false,
+                format:'d-m-Y'
+            });
+
+        });
+    </script>  
 
 {% endblock %}

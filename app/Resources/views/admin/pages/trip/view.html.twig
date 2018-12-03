@@ -30,7 +30,14 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Vehicle</strong></td>
-                                        <td> {% if vehicle|length > 0 %} {{vehicle.vehicleModel}} - {{vehicle.vehicleType}} {% endif %} </td>
+                                        <td> {% if vehicle|length > 0 %}
+                                            {%if vehicle.regNumber!=""%}{{vehicle.regNumber}}{%endif%}
+                                            {%if vehicle.vehicleModel!=""%} - {{vehicle.vehicleModel}}{%endif%}
+                                            {%if vehicletypes!=""%} - {{vehicletypes|join(', ')}}{%endif%}
+                                         
+                                        
+                                            {% endif %} </td>
+                                      
                                     </tr>
 
                                     <tr>

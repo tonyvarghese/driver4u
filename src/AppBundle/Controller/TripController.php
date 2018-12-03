@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class TripController extends Controller
 {
     
+   
+    
     public function statusCodes(){
         return [
             1 => 'Scheduled',
@@ -62,15 +64,15 @@ class TripController extends Controller
 //        
 //       print_r($data); die;
 
-        $paginator  = $this->get('knp_paginator');
-
-        $pagination = $paginator->paginate(
-            $trips, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
+//        $paginator  = $this->get('knp_paginator');
+//
+//        $pagination = $paginator->paginate(
+//            $trips, /* query NOT result */
+//            $request->query->getInt('page', 1)/*page number*/,
+//            10/*limit per page*/
+//        );
         
-        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $pagination, 'status' => $this->statusCodes()]);
+        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
     }
     
 
@@ -99,6 +101,7 @@ class TripController extends Controller
      * Creates a new Trip entity.
      *
      * @Route("admin/trip/new", name="trip_new")
+     * @Route("home", name="home")
      * @Method({"GET", "POST"})
      *
      * NOTE: the Method annotation is optional, but it's a recommended practice
@@ -279,7 +282,10 @@ class TripController extends Controller
                 $vehicle = $request->request->get('vehicle');
                 if($vehicle != '')
                     $trip->setVehicle($vehicle);
-            }            
+            }  
+            
+            
+            
             
             $trip->setCustomer($customer);
             
@@ -337,9 +343,27 @@ class TripController extends Controller
         $drivers = $em->getRepository(Driver::class)->findAll();
         $customers = $em->getRepository(Customer::class)->findAll();
         
-        $vehicles = $em->getRepository(CustomerVehicle::class)->findBy(array('customerId' => $trip->getCustomer()));                   
+        $vehicles = $em->getRepository(CustomerVehicle::class)->findBy(array('customerId' => $trip->getCustomer()));           
+        
+        
+        $vehicleId = $trip->getVehicle();
+        
+        if($vehicleId != NULL)  {
+            $vehicle  = $this->getDoctrine()->getRepository(CustomerVehicle::class)->find($vehicleId);  
+            if($vehicle) {
+            $vehicletypes = json_decode($vehicle->getVehicleType());
+            }
+             else{
+                 $vehicletypes = [];
+        }
+             }
+            
+        else{
+            $vehicle  = [];
+            $vehicletypes = [];
+        }
 
-        return $this->render('admin/pages/trip/edit.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'vehicles' => $vehicles, 'status' => $this->statusCodes()]);
+        return $this->render('admin/pages/trip/edit.html.twig', ['customers' => $customers, 'drivers' => $drivers, 'trip' => $trip, 'vehicles' => $vehicles, 'status' => $this->statusCodes(),'vehicletypes' => $vehicletypes]);
         
     }   
 
@@ -390,13 +414,22 @@ class TripController extends Controller
         
         $vehicleId = $trip->getVehicle();
         
-        if($vehicleId != null)  
-            $vehicle  = $this->getDoctrine()->getRepository(CustomerVehicle::class)->find($trip->getVehicle());
-        else
+        if($vehicleId != NULL)  {
+            $vehicle  = $this->getDoctrine()->getRepository(CustomerVehicle::class)->find($vehicleId);  
+            if($vehicle) {
+            $vehicletypes = json_decode($vehicle->getVehicleType());
+            }
+             else{
+                 $vehicletypes = [];
+        }
+             }
+            
+        else{
             $vehicle  = [];
+            $vehicletypes = [];
+        }
 
-
-        return $this->render("admin/pages/trip/view.html.twig",['trip'=>$trip, 'status' => $this->statusCodes(), 'vehicle' => $vehicle]);
+        return $this->render("admin/pages/trip/view.html.twig",['trip'=>$trip, 'status' => $this->statusCodes(), 'vehicle' => $vehicle, 'vehicletypes'=> $vehicletypes]);
     }        
 
     /**
@@ -425,3 +458,4 @@ class TripController extends Controller
         return new JsonResponse($vehicles);
     }
 }
+ 

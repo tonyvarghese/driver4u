@@ -127,7 +127,27 @@
         </div>
     </div>
 </div>
+  
+   {% endblock %}
+ {% block javascripts %}
+    {{parent()}}
+<script type="text/javascript">
+            $(document).ready(function () {
+                
+                $('.datetimepicker').datetimepicker({
+                    format:'d-m-Y H:i'
+                    
+                });
+                                
+                $(".datepickeronly").datetimepicker({
+                    timepicker:false,
+                    format:'d-m-Y',
+                    minDate:'-0',
+                });
 
-
-
+            });
+        </script>   
+        
+       
                 {% endblock %}
+

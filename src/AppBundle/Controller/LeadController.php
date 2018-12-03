@@ -49,17 +49,17 @@ class LeadController extends Controller
         }
 //pagination
 
-        $paginator  = $this->get('knp_paginator');
+//        $paginator  = $this->get('knp_paginator');
+//
+//        $pagination = $paginator->paginate(
+//            $data, /* query NOT result */
+//            $request->query->getInt('page', 1)/*page number*/,
+//            10/*limit per page*/
+//        );
+//
 
-        $pagination = $paginator->paginate(
-            $data, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
 
-
-
-        return $this->render('admin/pages/lead/index.html.twig', ['leads' => $pagination]);
+        return $this->render('admin/pages/lead/index.html.twig', ['leads' => $data]);
     }
 
     /**

@@ -27,7 +27,9 @@
             <link href="{{ asset('build/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
 
             <link href="{{ asset('build/css/jquery.datetimepicker.min.css') }}" rel="stylesheet">
-
+            
+            <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  
         {% endblock %}        
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -51,7 +53,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="{{ path('dashboard') }}">Driver4u</a>
+                    <a class="navbar-brand" href="{{ path('home') }}">Driver4u</a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -120,7 +122,7 @@
                                 <!-- /input-group -->
                             </li>
                             <li>
-                                <a href="{{ path('dashboard') }}" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                                <a href="{{ path('home') }}" class="active"><i class="fa fa-dashboard fa-fw"></i> Home</a>
                             </li>       
                             <li>
                                 <a href="{{ path('customer_index')}}"><i class="fa fa-users fa-fw"></i> Customers </a>
@@ -188,23 +190,10 @@
 
         <script src="{{ asset('build/js/jquery.datetimepicker.js') }}"></script>
 
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>            
+        
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                
-                $(".datepicker").datepicker();
-                
-                $('.datetimepicker').datetimepicker({
-                    format:'d-m-Y H:i'
-                });
-                                
-                $(".datepickeronly").datetimepicker({
-                    timepicker:false,
-                    format:'d-m-Y'
-                });
-
-            });
-        </script>            
+                 
 
     {% endblock %}        
 

@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Customer;
 use AppBundle\Entity\Driver;
+use AppBundle\Entity\Trip;
 use AppBundle\Entity\CustomerAddress;
 use AppBundle\Entity\CustomerVehicle;
 use Doctrine\ORM\Query\ResultSetMapping;
@@ -317,7 +318,7 @@ class CustomerController extends Controller
         $data['email'] = $customerObj->getEmail();
         $data['location'] = $customerObj->getLocation();
         $data['addresses'] = $customerObj->getAddresses();
-        $data['vehicles'] = $this->vehiclesParse($customerObj->getVehicles());
+        $data['vehicles'] = $this->vehiclesParseView($customerObj->getVehicles());
         $data['phone'] = json_decode($customerObj->getPhone());
         $data['usualTrip'] = $customerObj->getUsualTrip();
         $data['customerType'] = $this->jsonToString($customerObj->getCustomerType(), $this->customerType());
@@ -325,6 +326,25 @@ class CustomerController extends Controller
         
 
         return $this->render("admin/pages/customer/view.html.twig", ['customer' => $data]);
+    }
+    
+    public function vehiclesParseView($vehicles){
+        $data = [];
+        
+        foreach ($vehicles as $key => $value) {
+            if($value->getRegNumber() != '')
+                $data[$key]['regNumber'] = $value->getRegNumber();
+            
+            if($value->getVehicleModel() != '')
+                $data[$key]['vehicleModel'] = $value->getVehicleModel();
+            
+            $vehicleTypesArr = json_decode($value->getVehicleType());            
+            $vehicleTypes = implode(' / ', $vehicleTypesArr);
+            
+            if($vehicleTypes != '')
+                $data[$key]['vehicleTypes'] = $vehicleTypes;
+        }
+        return $data;
     }
     
     public function vehiclesParse($vehicles){
@@ -350,19 +370,23 @@ class CustomerController extends Controller
      */
     public function deleteAction(Request $request, Customer $customer)
     {
-
-        
-        $customer->getAddresses()->clear();
-        $customer->getVehicles()->clear();
-
         $em = $this->getDoctrine()->getManager();
-        $em->remove($customer);
-        $em->flush();
-        
-        
 
-        $this->addFlash('success', 'Customer Deleted successfully');
+        $trips = $em->getRepository(Trip::class)->findBy(['customer' => $customer->getId()]);
+                
+        if(count($trips) == 0){
+            $customer->getAddresses()->clear();
+            $customer->getVehicles()->clear();
 
+            $em->remove($customer);
+            $em->flush();                
+
+            $this->addFlash('success', 'Customer Deleted successfully');                        
+        }
+        else{
+            $this->addFlash('error', "Please remove customer's trips before deleting customer!");
+        }
+        
         return $this->redirectToRoute('customer_index');
     }    
  

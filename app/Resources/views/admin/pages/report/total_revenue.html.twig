@@ -1,10 +1,9 @@
 {% extends 'admin/layouts/layout.html.twig' %}
 
-
 {% block main %}
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Trips<a href="{{ path('trip_new') }}" class="btn btn-primary btn-group-sm" style="float: right;">Create</a></h1>
+            <h1 class="page-header">Total Revenue</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -13,35 +12,48 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Trips
+                    Total Revenue Report
                 </div>
                 <div class="panel-body">
 
 
                     {% for flashMessage in app.session.flashbag.get('success') %}    
+
                         <div class="alert alert-success" role="alert">
                             {{ flashMessage }}
                         </div>    
+
                     {% endfor %}
-                
                     
-                     <form method='post'>
+                    <form method='POST'>
                         <div class="row" style="margin-bottom: 50px;">
                             <div class="col-lg-2">
-                                <input name="start" type="text" class="datetimepicker form-control" placeholder="From Date" value = "{{ start }}">
+                                <input  name="start" type="text" class="datetimepicker form-control" placeholder="Start Date" value = "{{ start }}">
                             </div>   
                             <div class="col-lg-2">
-                                <input name="end" type="text" class="datetimepicker form-control" placeholder="To Date" value = "{{ end }}">
+                                <input  name="end" type="text" class="datetimepicker form-control" placeholder="End Date" value = "{{ end }}">
                             </div> 
                             <div class="col-lg-1">                            
                                 <button class="btn btn-primary">GO</button>
                             </div>
                         </div>    
                     </form>
+                            
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Total: <span class="form-control-static">{{total}}</span> </label>
+                      </div>
+                   
+                    </form>                            
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="table-responsive">
+
+                            
+                            </table>
+                                    
+                                    
+                                    <div class="table-responsive">
                                 <table class="table table-striped table-hover" style="width:100%">
                                     <thead>
                                         <tr>
@@ -52,8 +64,6 @@
                                             <th scope="col" class=""> Location</th>
                                             <th scope="col" class=""> Rate (Discount)</th>
                                             <th scope="col" class=""> Amount</th>
-                                            <th scope="col" class=""> Status</th>
-                                            <th scope="col" ></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,34 +76,20 @@
                                                 <td>{{ item.trip.location }}</td>
                                                 <td>{{ item.trip.rate }} {% if item.trip.discount !='' %} ({{item.trip.discount}}){% endif %}</td>
                                                 <td>{{ item.trip.amountCollected }}</td>
-                                                <td>{{ status[item.trip.status] }}</td>
-
-                                                <td class="text-right">
-                                                    <div class="item-actions">
-                                                        <a href="{{ path('trip_view', {id: item.trip.id}) }}" class="btn btn-primary btn-sm">
-                                                            <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                        </a>
-                                                        <a href="{{ path('trip_edit', {id: item.trip.id}) }}" class="btn btn-sm btn-success">
-                                                            <i class="fa fa-edit" aria-hidden="true"></i> Edit
-                                                        </a>
-
-                                                        <button data-url="{{ path('trip_delete', {id: item.trip.id}) }}" id="delete-button" class="btn btn-sm btn-danger">
-                                                            <i class="fa fa-remove" aria-hidden="true"></i> Delete
-                                                        </button>
-                                                    </div>
-                                                </td>
+      
                                             </tr>
-
+                               
                                         {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-
-                            {# display navigation #}
-                            {#  <div class="navigation">
-                                  {{ knp_pagination_render(trips) }}
-                              </div>#}
-
+                                    
+                                    
+                                    
+                                     
+                          {#          <div class="navigation">
+                                {{ knp_pagination_render(trips) }}
+                            </div>#}
                         </div>
 
                     </div>
@@ -108,45 +104,9 @@
     <!-- /.row -->
 
 {% endblock %}
-
 {% block javascripts %}
-    {{ parent() }}
-
-    <script>
-
-        $(document).ready(function () {
-
-            $("body").on('click', '#delete-button', function () {
-                if (confirm("Are you sure you want to delete this?")) {
-
-                    var url = $(this).data('url');
-
-                    location.href = url;
-                    // window.location = "www.example.com/index.php?id=" + this.id;
-                }
-                else {
-                    return false;
-                }
-            });
-            
-            $('.table').DataTable({
-                "order": [[0, "desc"]],
-                "columnDefs": [
-                    {
-                        "targets": [ 0 ],
-                        "visible": false,
-                        "searchable": false
-                    }
-                ]                
-            });
-            
-        });
-        
-        
-
-
-    </script>
-    <script type="text/javascript">
+    {{parent()}}
+<script type="text/javascript">
             $(document).ready(function () {
                 
                 $('.datetimepicker').datetimepicker({
@@ -159,8 +119,18 @@
                     format:'d-m-Y',
                     
                 });
+                
+            $('.table').DataTable({
+                "order": [[0, "desc"]],
+                "columnDefs": [
+                    {
+                        "targets": [ 0 ],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ]                
+            });                
 
             });
         </script>  
-
 {% endblock %}

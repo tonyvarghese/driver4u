@@ -38,31 +38,31 @@
                                 <tbody>
                                     {% for item in data %}
                                         <tr>
-                                           
+
                                             <td>{{ item[0]['name'] }}</td>
                                             <td>
                                                 {% for row in item %}
-                                                    {{row['cancelledBy']}} <hr>
-                                                          {% endfor %}
-                                                     <td>
+                                                    <p>{{row['cancelledBy']}}</p>
+                                                {% endfor %}
+                                            <td>
                                                 {% for row in item %}
-                                                    {{row['reason']}} <hr>
+                                                    <p>{{row['reason']}}</p>
                                                 {% endfor %}
                                             </td>
-                                            
+
                                         </tr>
                                     {% else %}
                                         <tr>
                                             <td colspan="6" align="center">No Items Found</td>
                                         </tr>
                                     {% endfor %}
-                                    
+
                                 </tbody>
                             </table>
-                                     <div class="navigation">
+                            <div class="navigation">
                                 {{ knp_pagination_render(data) }}
                             </div>
-                            
+
                         </div>
 
                     </div>

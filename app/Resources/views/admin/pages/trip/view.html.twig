@@ -33,7 +33,7 @@
                                         <td> {% if vehicle|length > 0 %}
                                             {%if vehicle.regNumber!=""%}{{vehicle.regNumber}}{%endif%}
                                             {%if vehicle.vehicleModel!=""%} - {{vehicle.vehicleModel}}{%endif%}
-                                            {%if vehicletypes!=""%} - {{vehicletypes|join(', ')}}{%endif%}
+                                            {%if vehicletypes!=""%}      {{vehicletypes|join(', ')}}{%endif%}
                                          
                                         
                                             {% endif %} </td>
@@ -115,10 +115,12 @@
                         <div class="col-lg-12">
                             {% if trip.status == 1 or trip.status == 2 %}    
                                 <p class="text-center">
-                                    <a href="{{ path('trip_close', {id: trip.id}) }}" class="btn btn-success btn-lg">CLOSE</a>
-                                    <a href="{{ path('trip_cancel', {id: trip.id}) }}" class="btn btn-danger btn-lg">CANCEL</a>
-                                </p>                
+                                    <a href="{{ path('trip_close', {id: trip.id}) }}" class="btn btn-success btn-lg">Close Trip</a>
+                                    <a href="{{ path('trip_cancel', {id: trip.id}) }}" class="btn btn-danger btn-lg">Cancel Trip</a>
+                                </p>   
+                                
                             {% endif %}  
+                            <a  href="#" onclick="window.history.back();" class="btn btn-primary"> Back </a> 
                         </div>
 
 

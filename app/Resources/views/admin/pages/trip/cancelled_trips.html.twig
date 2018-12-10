@@ -84,6 +84,7 @@
                 </div>
                 <!-- /.panel-body -->
             </div>
+      
             <!-- /.panel -->
         </div>
         <!-- /.col-lg-12 -->
@@ -112,6 +113,10 @@
                 }
             });
 
+            $('.table').DataTable({
+                "order": [[0, "desc"]]                            
+            });
+            
         });
 
 

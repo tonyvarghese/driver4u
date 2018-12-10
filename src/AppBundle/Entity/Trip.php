@@ -65,14 +65,14 @@ class Trip
     /**
      * @var int
      *
-     * @ORM\Column(name="rate", type="integer")
+     * @ORM\Column(name="rate", nullable=true, type="integer",options={"default" : 0})
      */
     private $rate;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="discount", type="integer")
+     * @ORM\Column(name="discount", nullable=true, type="integer",options={"default" : 0})
      */
     private $discount;
 
@@ -124,7 +124,7 @@ class Trip
     /**
      * @var int
      *
-     * @ORM\Column(name="amount_collected", type="smallint")
+     * @ORM\Column(name="amount_collected", type="smallint",options={"default" : 0})
      */
     private $amountCollected;    
     

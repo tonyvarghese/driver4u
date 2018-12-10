@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Driver;
+use AppBundle\Entity\Trip;
 use AppBundle\Entity\DriverAddress;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -129,6 +130,7 @@ class DriverController extends Controller {
             $driver->setEmail($request->request->get('email'));
             $driver->setPhone(json_encode($request->request->get('phone')));
             $driver->setLocation($request->request->get('location'));
+            if ($request->request->get('age') != '')
             $driver->setAge($request->request->get('age'));
             $driver->setDoj(new \DateTime($request->request->get('doj')));
             $driver->setDriverType(json_encode($request->request->get('drivertype')));
@@ -170,7 +172,7 @@ class DriverController extends Controller {
      * @Method({"GET", "POST"})
      */
     public function editAction(Request $request, $id) {
-        $driver = new Driver();
+   
         if ($request->request->has('submit')) {
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -270,12 +272,21 @@ class DriverController extends Controller {
      * @Method({"GET", "POST"})
      */
     public function deleteAction(Request $request, Driver $driver) {
+        
         $em = $this->getDoctrine()->getManager();
-        $em->remove($driver);
-        $em->flush();
-        //display the message
-        $this->addFlash('success', 'Post Deleted Successfully');
-        return $this->redirectToRoute('driver_index');
+        
+        $trips = $em->getRepository(Trip::class)->findBy(['driver' => $driver->getId()]);
+        
+        if(count($trips) == 0){
+            $em->remove($driver);
+            $em->flush();
+            //display the message
+            $this->addFlash('success', 'Driver Deleted Successfully');
+        }else{
+            $this->addFlash('error', "Please remove driver's trips before deleting driver!");
+        }
+
+        return $this->redirectToRoute('driver_index');        
     }
 
 }

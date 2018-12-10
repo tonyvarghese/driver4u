@@ -33,14 +33,37 @@ class TripController extends Controller
      *
      *
      * @Route("/admin/trips", name="trip_index")
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      */
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-       
-         
-        $trips = $em->getRepository(Trip::class)->findAll();
+
+        $qb = $em->createQueryBuilder();
+        
+        if($request->request->has('start') && $request->request->get('start') != ''){
+            $startDate = strtotime($request->request->get('start'));
+            $startDate = date("Y-m-d h:i a", $startDate);
+
+            $endDate = strtotime($request->request->get('end'));
+            $endDate = date("Y-m-d h:i a", $endDate);
+
+            $query = $qb->select('t as trip')
+                    ->from('AppBundle:Trip', 't')
+                    ->where('t.scheduledTime >= :start')
+                    ->andWhere('t.scheduledTime <= :end')
+                    ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
+                    ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
+        }
+        else{
+            $query = $qb->select('t as trip')
+                    ->from('AppBundle:Trip', 't');
+        }
+
+        $trips = $qb->getQuery()->getResult();
+
+//        $trips = $em->getRepository(Trip::class)->findAll();
+        
         
         
 //        $customer = $em->getRepository(Customer::class)->find($value->getCustomer());
@@ -72,7 +95,8 @@ class TripController extends Controller
 //            10/*limit per page*/
 //        );
         
-        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips, 'status' => $this->statusCodes()]);
+        return $this->render('admin/pages/trip/index.html.twig', ['trips' => $trips,  'start' => $request->request->get('start'), 'end' => $request->request->get('end'), 'status' => $this->statusCodes()]);
+
     }
     
 
@@ -135,9 +159,14 @@ class TripController extends Controller
             
             $trip->setScheduledTime($scheduledTime);
             $trip->setStatus(1);
-            $trip->setRate($request->request->get('rate'));
+            if($request->request->get('rate') != '')
+                $trip->setRate($request->request->get('rate'));
+            
             $trip->setLocation($request->request->get('location'));
-            $trip->setDiscount($request->request->get('discount'));
+            
+            if($request->request->get('discount') != '')
+                $trip->setDiscount($request->request->get('discount'));
+            
             $trip->setAmountCollected(0);
             $trip->setCreatedAt(new \DateTime("now"));
             $trip->setUpdatedAt(new \DateTime("now"));
@@ -162,6 +191,78 @@ class TripController extends Controller
 
 
         return $this->render('admin/pages/trip/new.html.twig', ['drivers' => $drivers, 'customers' => $customers]);
+    }
+      /**
+     * Creates a new Trip entity.
+     *
+     * @Route("home", name="home")
+     * @Method({"GET", "POST"})
+     *
+     * NOTE: the Method annotation is optional, but it's a recommended practice
+     * to constraint the HTTP methods each controller responds to (by default
+     * it responds to all methods).
+     */
+    public function homeAction(Request $request)
+    {        
+        $trip = new Trip();
+        
+        if ($request->request->has('submit')) {
+            
+            $scheduledTime = new \DateTime($request->request->get('stime'));            
+            
+            $em = $this->getDoctrine()->getManager();
+            $customer = $em->getRepository(Customer::class)->find($request->request->get('customer'));
+            $driver = $em->getRepository(Driver::class)->find($request->request->get('driver'));
+            
+            if($request->request->has('vehicle')){
+                //$vehicle = $em->getRepository(CustomerVehicle::class)->find($request->request->get('vehicle'));
+                $vehicle = $request->request->get('vehicle');
+                if($vehicle != '')
+                    $trip->setVehicle($vehicle);
+            }
+            
+
+            $trip->setCustomer($customer);
+            
+            if($driver)
+                $trip->setDriver($driver);            
+            
+            $trip->setScheduledTime($scheduledTime);
+            $trip->setStatus(1);
+            if($request->request->get('rate') != '')
+                $trip->setRate($request->request->get('rate'));
+            
+            $trip->setLocation($request->request->get('location'));
+            
+            if($request->request->get('discount') != '')
+                $trip->setDiscount($request->request->get('discount'));
+            
+            $trip->setAmountCollected(0);
+            $trip->setCreatedAt(new \DateTime("now"));
+            $trip->setUpdatedAt(new \DateTime("now"));
+            
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($trip);
+            $em->flush();
+        
+            // Flash messages are used to notify the user about the result of the
+            // actions. They are deleted automatically from the session as soon
+            // as they are accessed.
+            // See https://symfony.com/doc/current/book/controller.html#flash-messages
+            $this->addFlash('success', 'Trip Added Successfully');
+
+            return $this->redirectToRoute('home');
+        }
+        
+
+        $em = $this->getDoctrine()->getManager();
+        $drivers = $em->getRepository(Driver::class)->findAll();
+        $customers = $em->getRepository(Customer::class)->findAll();
+
+
+        return $this->render('admin/pages/trip/home.html.twig', ['drivers' => $drivers, 'customers' => $customers]);
+        
+        
     }
     
 
@@ -382,7 +483,7 @@ class TripController extends Controller
         $em->remove($trip);
         $em->flush();
 
-        $this->addFlash('success', 'Trip Deleted!');
+        $this->addFlash('success', 'Trip Deleted Successfully!');
 
         return $this->redirectToRoute('trip_index');
     }   
@@ -452,7 +553,16 @@ class TripController extends Controller
             
             $vehicleTypes = implode(', ', $vehicleTypesArr);
             
-            $vehicles[$key] = [$value->getId(), $value->getVehicleModel() . ' - ' . $vehicleTypes];
+            $vehicleData = [];
+                    
+            if($value->getVehicleModel() != '')
+                $vehicleData[] = $value->getVehicleModel();
+            
+            if($vehicleTypes != '')
+                $vehicleData[] = $vehicleTypes;
+            
+            
+            $vehicles[$key] = [$value->getId(), implode(' - ', $vehicleData)];
         }
         
         return new JsonResponse($vehicles);

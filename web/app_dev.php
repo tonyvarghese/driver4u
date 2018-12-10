@@ -1,5 +1,7 @@
 <?php
 
+//echo $_SERVER['REMOTE_ADDR']; die;
+
 /*
  * This file is part of the Symfony package.
  *
@@ -25,13 +27,15 @@ use Symfony\Component\HttpFoundation\Request;
 // This check prevents access to debug front controllers that are deployed by
 // accident to production servers. Feel free to remove this, extend it, or make
 // something more sophisticated.
-if (isset($_SERVER['HTTP_CLIENT_IP'])
-    || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-    || !(in_array(@$_SERVER['REMOTE_ADDR'], ['192.168.1.29', '192.168.1.101', '192.168.1.102', '127.0.0.1', 'fe80::1', '::1'], true) || PHP_SAPI === 'cli-server')
-) {
-    header('HTTP/1.0 403 Forbidden');
-    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
-}
+//if (isset($_SERVER['HTTP_CLIENT_IP'])
+//    || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+//    || !(in_array($_SERVER['REMOTE_ADDR'], ['192.168.1.22', '192.168.225.20', '122.165.154.34', '192.168.1.29', '192.168.1.28', '192.168.1.203', '192.168.1.101', '192.168.1.102', '127.0.0.1', 'fe80::1', '::1'], true) || PHP_SAPI === 'cli-server')
+//) {
+//    echo $_SERVER['HTTP_X_FORWARDED_FOR'] . "<br>";
+//    echo $_SERVER['REMOTE_ADDR'] . "<br>";
+//    header('HTTP/1.0 403 Forbidden');
+//    exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+//}
 
 /** @var Composer\Autoload\ClassLoader $loader */
 $loader = require __DIR__.'/../vendor/autoload.php';

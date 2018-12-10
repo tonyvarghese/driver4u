@@ -5,6 +5,7 @@
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Customer Details</h1>
+            
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -12,8 +13,14 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Customer Details
+                          
+                                  
+                                           
+
                 </div>
+               
                 <div class="panel-body">
+                      
                     <div class="row">
 
                         <div class="col-lg-6 ">
@@ -85,9 +92,11 @@
 
                                             {% for key, vehicle in customer.vehicles %}  
                                                 
-                                                 {% if vehicle.regNumber != '' %}{{vehicle.regNumber}}{% endif %}
+                                                {{ vehicle|join(', ') }}
+                                                
+{#                                                 {% if vehicle.regNumber != '' %}{{vehicle.regNumber}}{% endif %}
                                                  {% if vehicle.vehicleModel != '' %}, {{vehicle.vehicleModel}}{% endif %}
-                                                 {% if vehicle.vehicleTypes|length > 0 %} - {{ vehicle.vehicleTypes|join(', ') }}{% endif %}
+                                                 {% if vehicle.vehicleTypes|length > 0 %} - {{ vehicle.vehicleTypes|join(', ') }}{% endif %}#}
                                                  
                                                  <br>
 
@@ -97,11 +106,14 @@
                                     </tr>  
                                 </tbody>
                             </table>
-
+                                            
                         </div>
                     </div>
+                                            <a  href="{{ path('customer_index') }}" class="btn btn-primary"> Back </a>
                 </div>
+                                             
             </div>
+                                   
         </div>
     </div>
 

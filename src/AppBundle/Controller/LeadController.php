@@ -41,7 +41,7 @@ class LeadController extends Controller
             $data[$key]['fullName'] = $value->getFullName();
             $data[$key]['email'] = $value->getEmail();
             $data[$key]['phone'] = json_decode($value->getPhone());
-            $data[$key]['address'] = json_decode($value->getAddress());
+            $data[$key]['address'] = array_filter(json_decode($value->getAddress()));
             $data[$key]['location'] = $value->getLocation();
             $data[$key]['feedback'] = $value->getFeedback();
             $data[$key]['status'] = $this->statusValues()[$value->getStatus()];
@@ -194,7 +194,7 @@ class LeadController extends Controller
         $data['id'] = $leadObj->getId();
         $data['name'] = $leadObj->getFullName();
         $data['email'] = $leadObj->getEmail();
-        $data['address'] = json_decode($leadObj->getAddress());
+        $data['address'] = array_filter(json_decode($leadObj->getAddress()));
         $data['phone'] = json_decode($leadObj->getPhone());
         $data['location'] = $leadObj->getLocation();
         $data['status'] = $this->statusValues()[$leadObj->getStatus()];

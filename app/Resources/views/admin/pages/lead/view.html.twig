@@ -43,11 +43,7 @@
                                         <td>
                    
 
-                                                {% if lead.address[0] != '' %} {{lead.address[0]}} {% endif %}
-                                                 {% if lead.address[1] != '' %} ,{{lead.address[1]}} {% endif %}
-                                                 {% if lead.address[2] != '' %} ,{{lead.address[2]}} {% endif %}
-                                                {% if lead.address[3] != '' %} ,{{lead.address[3]}} {% endif %}
-                                      
+                                                {{lead.address|join(',')}}
                     
                                             </td>
                                         

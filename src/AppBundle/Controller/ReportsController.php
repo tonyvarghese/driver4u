@@ -424,22 +424,40 @@ class ReportsController extends Controller {
             $endDate = strtotime($request->request->get('end'));
             $endDate = date("Y-m-d", $endDate);
 
-            $query = $qb->select('t as trip', 'COUNT(t) as total')
+            $query = $qb->select('t as trip')
                     ->from('AppBundle:Trip', 't')
                     ->where('t.startedTime >= :start')
                     ->andWhere('t.startedTime <= :end')
                     ->andWhere('t.status = 3')
-                    ->groupBy('t.customer')
+//                    ->groupBy('t.customer')
                     ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
                     ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
         } else {
 
-            $query = $qb->select('t as trip', 'COUNT(t) as total')
+            $query = $qb->select('t as trip')
                     ->from('AppBundle:Trip', 't')
+//                    ->groupBy('t.customer')
                     ->where('t.status = 3');
         }
 
         $trips = $qb->getQuery()->getResult();
+        
+
+        $data = [];
+        foreach ($trips as $key => $value) {
+            
+            $customerId = $value['trip']->getCustomer()->getId();
+            $customerName = $value['trip']->getCustomer()->getFullName();
+            
+            if(isset($data[$customerId])){
+                $data[$customerId]['total']++;
+            }
+            else{
+                $data[$customerId]['total'] = 1;
+                $data[$customerId]['name'] = $customerName;
+            }                 
+        }
+        
 
 //        
 //        $paginator = $this->get('knp_paginator');
@@ -448,7 +466,7 @@ class ReportsController extends Controller {
 //                $trips, /* query NOT result */ $request->query->getInt('page', 1)/* page number */, 10/* limit per page */);
 
 
-        return $this->render('admin/pages/report/customer_service_frequency.html.twig', ['trips' => $trips, 'start' => $request->request->get('start'), 'end' => $request->request->get('end')]);
+        return $this->render('admin/pages/report/customer_service_frequency.html.twig', ['trips' => $data, 'start' => $request->request->get('start'), 'end' => $request->request->get('end')]);
     }
 
     /**

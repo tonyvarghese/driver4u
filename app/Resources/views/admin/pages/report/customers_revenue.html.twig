@@ -39,6 +39,13 @@
                             </div>
                         </div>    
                     </form>
+                                                        
+                    <form class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Total: <span class="form-control-static">{{total}}</span> </label>
+                      </div>
+                   
+                    </form>       
                             
 
                     <div class="row">
@@ -48,13 +55,13 @@
                                     <tr>
                                         <th scope="col">Customer</th>
                                         <th scope="col"> Total Revenue</th>
-                                    </tr>
+                                    </tr>   
                                 </thead>
                                 <tbody>
-                                    {% for item in data %}
+                                    {% for item in trips %}
                                         <tr>
-                                            <td>{{ item.trip.customer.fullName }}</td>
-                                            <td>{{ item.total }}</td>
+                                            <td>{{ item['name'] }}</td>
+                                            <td>{{ item['total'] }}</td>
                                         </tr>
                                     {% else %}
                                         <tr>

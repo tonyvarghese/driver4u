@@ -61,31 +61,51 @@ class ReportsController extends Controller {
             $endDate = strtotime($request->request->get('end'));
             $endDate = date("Y-m-d", $endDate);
             
-            $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+//            $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+                    $query = $qb->select('t as trip')
                 ->from('AppBundle:Trip', 't')
                 ->where('t.startedTime >= :start')
                 ->andWhere('t.startedTime <= :end')
                 ->andWhere('t.status = 3')
-                ->groupby('t.customer')
-                ->orderBy('total', 'DESC')
+//                ->groupby('t.customer')
+                ->orderBy('t.customer', 'DESC')
                 ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
                 ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
          }else 	
              {
-        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+//        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+              $query = $qb->select('t as trip')
                 ->from('AppBundle:Trip', 't')
                 ->Where('t.status = 3')
-                ->groupby('t.customer')
-                ->orderBy('total', 'DESC');
+//                ->groupby('t.customer')
+                ->orderBy('t.customer', 'DESC');
              }
                 
 
-        $data = $qb->getQuery()->getResult();
+        $trips = $qb->getQuery()->getResult();
+        $data = [];
+        $total = 0;
+        foreach ($trips as $key => $value) {
+            
+            $customerId = $value['trip']->getCustomer()->getId();
+            $customerName = $value['trip']->getCustomer()->getFullName();
+            $amountCollected = $value['trip']->getAmountCollected();
+            
+            if(isset($data[$customerId])){
+                $data[$customerId]['total'] += $amountCollected;
+            }
+            else{
+                $data[$customerId]['total'] = $amountCollected;
+                $data[$customerId]['name'] = $customerName;
+            }      
+            
+            $total += $amountCollected;
+        }    
 //        $paginator = $this->get('knp_paginator');
 //        $pagination = $paginator->paginate(
 //                $data, /* query NOT result */ $request->query->getInt('page', 1)/* page number */, 10/* limit per page */);
 
-        return $this->render('admin/pages/report/customers_revenue.html.twig', ['data' => $data, 'start' => $request->request->get('start'), 'end' => $request->request->get('end')]);
+        return $this->render('admin/pages/report/customers_revenue.html.twig', ['total' => $total, 'trips' => $data, 'start' => $request->request->get('start'), 'end' => $request->request->get('end')]);
     }
 
     /**
@@ -142,34 +162,56 @@ class ReportsController extends Controller {
             $endDate = strtotime($request->request->get('end'));
             $endDate = date("Y-m-d", $endDate);
        
-        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+//        $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+            $query = $qb->select('t as trip')
                 ->from('AppBundle:Trip', 't')
                 ->where('t.startedTime >= :start')
                 ->andWhere('t.startedTime <= :end')
                 ->andWhere('t.status = 3')
-                ->groupby('t.driver')
-                ->orderBy('total', 'DESC')
+                ->where('t.driver IS NOT NULL')
+//                ->groupby('t.driver')                
+                ->orderBy('t.driver', 'DESC')
                 ->setParameter('start', new \DateTime($startDate), \Doctrine\DBAL\Types\Type::DATETIME)
                 ->setParameter('end', new \DateTime($endDate), \Doctrine\DBAL\Types\Type::DATETIME);
          } else 
              {
-             $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+//             $query = $qb->select('t as trip', 'SUM(t.amountCollected) as total')
+             $query = $qb->select('t as trip')
                 ->from('AppBundle:Trip', 't')
                 ->Where('t.status = 3')
-                ->groupby('t.driver')
-                ->orderBy('total', 'DESC');
+                ->where('t.driver IS NOT NULL')
+//                ->groupby('t.driver')
+                ->orderBy('t.driver', 'DESC');
              }
 
         $trips = $qb->getQuery()->getResult();
+       
+        $data = [];
+        $total = 0;
+        foreach ($trips as $key => $value) {
+            
+            $driverId = $value['trip']->getDriver()->getId();
+            $driverName = $value['trip']->getDriver()->getFullName();
+            $amountCollected = $value['trip']->getAmountCollected();
+            
+            if(isset($data[$driverId])){
+                $data[$driverId]['total'] += $amountCollected;
+            }
+            else{
+                $data[$driverId]['total'] = $amountCollected;
+                $data[$driverId]['name'] = $driverName;
+            }      
+            
+            $total += $amountCollected;
+        }        
 
 //        $data = $query->getResult();
-
 //        $paginator = $this->get('knp_paginator');
 //
 //        $pagination = $paginator->paginate(
 //                $trips, /* query NOT result */ $request->query->getInt('page', 1)/* page number */, 10/* limit per page */);
 
-        return $this->render('admin/pages/report/drivers_revenue.html.twig', ['trips' => $trips, 'start' => $request->request->get('start'), 'end' => $request->request->get('end')]);
+        return $this->render('admin/pages/report/drivers_revenue.html.twig', ['total' => $total, 'trips' => $data,  'start' => $request->request->get('start'), 'end' => $request->request->get('end')]);
     }
 
     // 21/11/2018
